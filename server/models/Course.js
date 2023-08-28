@@ -43,4 +43,5 @@ const courseSchema = new mongoose.Schema({
         ref: "User"
     }
 });
-module.exports = mongoose.model("Course", courseSchema);
+const Course = mongoose.model("Course", courseSchema);
+export default Course

@@ -26,9 +26,16 @@ async function sendVerificationEmail(email,otp){
         throw error
     }
 }
+
 otpSchema.pre("save",async function(next){
     await sendVerificationEmail(this.email,this.otp)
-     // Call next to continue to the next middleware or save operation
+    
 
 })
-module.exports=mongoose.model("OTP",otpSchema)
+const OTP=mongoose.model("OTP",otpSchema)
+export default OTP
+
+
+
+
+ // Call next to continue to the next middleware or save operation

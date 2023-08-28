@@ -12,4 +12,5 @@ const tagSchema=new mongoose.Schema({
         ref:"Courses"
     }
 })
-module.exports=mongoose.model("Tags",tagSchema)
+const Tags=mongoose.model("Tags",tagSchema)
+export default Tags

@@ -12,4 +12,5 @@ const sectionSchema = new mongoose.Schema({
     ]
 
 });
-module.exports = mongoose.model("Section", sectionSchema);
+const  Section= mongoose.model("Section", sectionSchema);
+export default Section
