@@ -14,7 +14,7 @@ export const auth = async (req, res, next) => {
         }
         // verify the token
         try {
-            const decode =  jwt.verify(token, process.env.JWT_SECRET)
+            const decode = jwt.verify(token, process.env.JWT_SECRET)
             console.log(decode)
             req.user = decode
 
@@ -35,5 +35,53 @@ export const auth = async (req, res, next) => {
     }
 }
 // isStudent
+export const isStudent = async (req, res, next) => {
+    try {
+        if (req.user.accountType !== "Student") {
+            return res.status(401).json({
+                success: false,
+                message: "This is protected route for student only"
+            })
+        }
+
+    } catch (error) {
+        return req.status(500).json({
+            success: false,
+            message: "User role cannot be verified , please try again"
+        })
+    }
+}
 // isInstructor
+export const isInstructor = async (req, res, next) => {
+    try {
+        if (req.user.accountType !== "isInstructor") {
+            return res.status(401).json({
+                success: false,
+                message: "This is protected route for Instructor only"
+            })
+        }
+
+    } catch (error) {
+        return req.status(500).json({
+            success: false,
+            message: "User role cannot be verified , please try again"
+        })
+    }
+}
 // isAdmin
+export const isAdmin = async (req, res, next) => {
+    try {
+        if (req.user.accountType !== "isAdmin") {
+            return res.status(401).json({
+                success: false,
+                message: "This is protected route for Admin only"
+            })
+        }
+
+    } catch (error) {
+        return req.status(500).json({
+            success: false,
+            message: "User role cannot be verified , please try again"
+        })
+    }
+}

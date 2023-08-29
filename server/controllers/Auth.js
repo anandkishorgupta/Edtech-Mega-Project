@@ -152,7 +152,6 @@ export const login = async (req, res) => {
                 message: "All fields are required , please try again"
             })
         }
-
         // user exist check
         const user = await User.findOne({ email })
         // .populate("additionalDetails")
@@ -167,7 +166,7 @@ export const login = async (req, res) => {
             const payload = {
                 email: user.email,
                 id: user._id,
-                role: user.accountType
+                accountType: user.accountType
             }
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
                 expiresIn: "2h"

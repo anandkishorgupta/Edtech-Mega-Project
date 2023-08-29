@@ -44,6 +44,13 @@ const userSchema = new mongoose.Schema({
             ref: "CourseProgess",
         },
     ],
+    // this token is generated using crypto
+    token: {
+        type: String,
+    },
+    resetPasswordExpires: {
+        type: Date
+    }
 });
 const User = mongoose.model("User", userSchema);
 export default User
