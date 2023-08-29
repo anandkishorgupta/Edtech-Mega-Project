@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
-const tagSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+const tagSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
     },
-    description:{
-        type:String
+    description: {
+        type: String
     },
-    course:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Courses"
-    }
+    course: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Courses"
+    }]
 })
-const Tags=mongoose.model("Tags",tagSchema)
-export default Tags
+const Tag= mongoose.model("Tags", tagSchema)
+export default Tag
