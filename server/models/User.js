@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
             ref: "CourseProgess",
         },
     ],
-    // this token is generated using crypto
+    // this token is generated using crypto for password reset link 
     token: {
         type: String,
     },

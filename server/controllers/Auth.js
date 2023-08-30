@@ -26,7 +26,7 @@ const sendOTP = async (req, res) => {
         let otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, specialChars: false });
         console.log("otp generated ", otp)
         // check unique otp or not
-        const result = await OTP.findOne({ otp })
+        let result = await OTP.findOne({ otp })
         while (result) {
             otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, specialChars: false });
             result = await OTP.findOne({ otp })
@@ -34,7 +34,6 @@ const sendOTP = async (req, res) => {
         const otpPayload = { email, otp }
         // create an entry in db for otp
         const otpBody = await OTP.create(otpPayload)
-
         console.log(otpBody)
         // return response successful
         res.status(200).json({
@@ -120,7 +119,7 @@ const signUp = async (req, res) => {
             contactNumber,
             password: hashedPassword,
             accountType,
-            additionalDetails: profileDetails,
+            additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
         })
 

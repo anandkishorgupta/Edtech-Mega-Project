@@ -54,6 +54,7 @@ export const resetPassword = async (req, res) => {
                 message: "Password not matching"
             })
         }
+        
         // get user detail from db using token 
         const userDetails = await User.findOne({ token })
 
@@ -75,7 +76,7 @@ export const resetPassword = async (req, res) => {
         // hash password 
         const hashedPassword = await bcrypt.hash(password, 10)
         // password update 
-        await User.findOneAndReplace({ token }, { password: hashedPassword }, { new: true })
+        await User.findOneAndUpdate({ token }, { password: hashedPassword }, { new: true })
 
         // return response
         return res.status(200).json({
