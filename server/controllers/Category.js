@@ -1,6 +1,6 @@
-import Tag from "../models/Tags.js";
+import Category from "../models/Category.js";
 // craete a tag
-export const createTag = async (req, res) => {
+export const createCategory = async (req, res) => {
     try {
         const { name, description } = req.body
         if (!name || !description) {
@@ -10,8 +10,8 @@ export const createTag = async (req, res) => {
             })
         }
         // create entry in db
-        const tag = await Tag.create({ name, description })
-        console.log(tag)
+        const category = await Category.create({ name, description })
+        console.log(category)
         return res.status(200).json({
             success: true,
             message: 'Tag created successfully'
@@ -26,9 +26,9 @@ export const createTag = async (req, res) => {
 }
 
 // get all tags
-export const showAlltags = async (req, res) => {
+export const showAllCategory = async (req, res) => {
     try {
-        const allTags = await Tag.find({}, { name: true, description: true })
+        const allCategory = await Category.find({}, { name: true, description: true })
         return res.status(200).json({
             success: true,
             message: 'All tags returned successfully'

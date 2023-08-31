@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
+import Category from "../models/Category.js";
 import Course from "../models/Course.js";
-import Tag from "../models/Tags.js";
 import User from "../models/User.js";
 import { uploadImageToCloudinary } from "../utils/imageUploader.js";
 dotenv.config()
@@ -10,12 +10,12 @@ dotenv.config()
 export const createCourse = async (req, res) => {
     try {
         // fetch data 
-        const { courseName, courseDescription, whatYouWillLearn, price, tag } = req.body  //here tag is tag id 
+        const { courseName, courseDescription, whatYouWillLearn, price, category } = req.body  //here Category is Category id 
 
         // get thumbnail
         const thumbnail = req.files.thumbnailImages
         // validation
-        if (!courseName || !courseDescription || !whatYouWillLearn || !price || !tag || !thumbnail) {
+        if (!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail) {
             return req.status().json({
                 success: false,
                 message: "All fields are required "
@@ -34,12 +34,12 @@ export const createCourse = async (req, res) => {
                 message: "Instructor details not found"
             })
         }
-        // check given tag is valid or not 
-        const tagDetails = await Tag.findById(tag)
-        if (!tagDetails) {
+        // check given Category is valid or not
+        const categoryDetails = await Category.findById(category)
+        if (!categoryDetails) {
             return res.status(404).json({
                 success: false,
-                message: "Tag Details not found "
+                message: "Category Details not found "
             })
         }
         // upload image to cloudinary
@@ -51,8 +51,8 @@ export const createCourse = async (req, res) => {
             instructor: instructorDetail._id,
             whatYouWillLearn: whatYouWillLearn,
             price,
-            // tag:tag
-            tag: tagDetails._id,
+            // category:category
+            category: categoryDetails._id,
             thumbnail: thumbnailImage.secure_url
         })
         // add this course to the user schema of instructor 
@@ -61,8 +61,13 @@ export const createCourse = async (req, res) => {
                 courses: newCourse._id
             }
         }, { new: true })
-        // update the tag schema 
 
+        // update the category schema 
+        await Category.findByIdAndUpdate({ _id: category }, {
+            $push: {
+                course: newCourse._id
+            }
+        })
 
         // return response 
         return res.status(200).json({
