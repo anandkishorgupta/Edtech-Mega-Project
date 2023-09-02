@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary"
-export const uploadImageToCloudinary = async (file, folder, height, quality) => {
+export const uploadToCloudinary = async (file, folder, height, quality) => {
     const options = { folder: folder }
     if (height) {
         options.height

@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import Category from "../models/Category.js";
 import Course from "../models/Course.js";
 import User from "../models/User.js";
-import { uploadImageToCloudinary } from "../utils/imageUploader.js";
+import { uploadToCloudinary } from "../utils/imageUploader.js";
 dotenv.config()
 
 
@@ -43,7 +43,7 @@ export const createCourse = async (req, res) => {
             })
         }
         // upload image to cloudinary
-        const thumbnailImage = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME)
+        const thumbnailImage = await uploadToCloudinary(thumbnail, process.env.FOLDER_NAME)
         // create an entry for new course 
         const newCourse = await Course.create({
             courseName,

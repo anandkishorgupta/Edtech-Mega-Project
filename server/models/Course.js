@@ -19,17 +19,12 @@ const courseSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-
-    
     courseContent: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Section"
         }
     ],
-
-
-
     ratingAndReviews: [
 
         {
@@ -38,12 +33,10 @@ const courseSchema = new mongoose.Schema({
         }
     ]
     ,
-
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
     },
-
     studentsEnrolled: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

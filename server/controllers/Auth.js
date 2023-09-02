@@ -90,7 +90,7 @@ const signUp = async (req, res) => {
         if (recentOtp.length == 0) {
             return res.status(400).json({
                 success: false,
-                message: "OTP not found"
+                message: "OTP not found may be expired "
             })
         } else if (otp != recentOtp.otp) {
             // invalid otp
@@ -170,7 +170,7 @@ export const login = async (req, res) => {
             const token = jwt.sign(payload, process.env.JWT_SECRET, {
                 expiresIn: "2h"
             })
-            user.token = token
+            user.token = token  //token generated using jwt
             user.password = undefined
             // create cookie and send response
             const options = {

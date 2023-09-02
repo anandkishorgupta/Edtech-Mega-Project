@@ -46,7 +46,7 @@ export const resetPasswordToken = async (req, res, next) => {
 export const resetPassword = async (req, res) => {
     try {
         // data fetch
-        const { password, confirmPassword, token } = req.body
+        const { password, confirmPassword, token } = req.body // crypto generated token
         // validation
         if (password != confirmPassword) {
             return res.json({
