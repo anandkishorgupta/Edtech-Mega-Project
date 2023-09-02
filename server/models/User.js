@@ -26,6 +26,13 @@ const userSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true,
+    }, active: {
+        type: Boolean,
+        default: true,
+    },
+    approved: {
+        type: Boolean,
+        default: true,
     },
     additionalDetails: {
         type: mongoose.Schema.Types.ObjectId,
@@ -51,6 +58,8 @@ const userSchema = new mongoose.Schema({
     resetPasswordExpires: {
         type: Date
     }
-});
+},
+    { timestamps: true }
+);
 const User = mongoose.model("User", userSchema);
 export default User

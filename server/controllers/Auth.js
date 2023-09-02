@@ -111,6 +111,7 @@ const signUp = async (req, res) => {
             about: null,
             contactNumber: null
         })
+        
         // create entry in db
         const user = await User.create({
             firstName,
