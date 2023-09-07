@@ -7,10 +7,10 @@ const categorySchema = new mongoose.Schema({
     description: {
         type: String
     },
-    course: [{
+    courses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Courses"
     }]
 })
-const Category= mongoose.model("Category", tagSchema)
+const Category = mongoose.model("Category", tagSchema)
 export default Tag

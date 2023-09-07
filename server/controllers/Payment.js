@@ -8,7 +8,7 @@ import mailSender from "../utils/mailSender";
 export const capturePayment = async (req, res) => {
     // get course id and user id
     const { courseId } = req.body;
-    const userId = req.user._id;
+    const userId = req.user.id;
     // valid courseId
     if (!courseId) {
         return res.json({

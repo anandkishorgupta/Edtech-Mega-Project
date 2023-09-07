@@ -22,3 +22,8 @@ const ratingAndReviewsSchema = new mongoose.Schema({
 })
 const RatingAndReviews = mongoose.model("RatingAndReviews", ratingAndReviewsSchema)
 export default RatingAndReviews
+
+// here the rating is save like 
+// course     user    rating 
+// c1          u1       5
+// c1          u2       3

@@ -105,7 +105,7 @@ export const createCourse = async (req, res) => {
       { _id: category },
       {
         $push: {
-          course: newCourse._id,
+          courses: newCourse._id,
         },
       }
     );
@@ -169,7 +169,7 @@ export const getCourseDetails = async (req, res) => {
       });
     }
 
-    // find from db
+    // find courseDetails from db
     const courseDetails = await Course.findById(courseId)
       .populate({
         path: "instructor",
