@@ -19,7 +19,14 @@ export const createSection = async (req, res) => {
             $push: {
                 courseContent: newSection._id
             }
-        }, { new: true }).populate("Section").populate("SubSection").exec();
+        }, { new: true }).populate({
+            path: "courseContent",
+        // REUNDERSTAND *********************************
+            populate: {
+                path: "subSection"
+            }
+        }).exec();
+
         // populate section  and subsection
         // return response
         return res.status(200).json({

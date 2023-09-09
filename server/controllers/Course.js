@@ -49,7 +49,7 @@ export const createCourse = async (req, res) => {
     if (!status || status === undefined) {
       status = "Draft";
     }
-    // check for Instructor
+    // check user is instructor for Instructor
     const userId = req.user._id;
     const instructorDetail = await User.findById(userId, {
       accountType: "Instructor",
