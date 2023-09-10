@@ -9,7 +9,7 @@ import mailSender from "../utils/mailSender.js";
 dotenv.config()
 
 // sendOTP
-const sendOTP = async (req, res) => {
+export const sendOTP = async (req, res) => {
     try {
         // fetch email from request body
         const { email } = req.body
@@ -53,7 +53,7 @@ const sendOTP = async (req, res) => {
 }
 
 // signup
-const signUp = async (req, res) => {
+export const signUp = async (req, res) => {
     try {
         // data fetch from req body
         const { firstName, lastName, email, password, confirmPassword, accountType, contactNumber, otp } = req.body
