@@ -1,6 +1,6 @@
-import Course from "../models/Course";
-import Profile from "../models/Profile";
-import User from "../models/User";
+import Course from "../models/Course.js";
+import Profile from "../models/Profile.js";
+import User from "../models/User.js";
 
 // update Profile 
 export const updateProfile = async (req, res) => {

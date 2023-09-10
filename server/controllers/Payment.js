@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import { instance } from "../config/razorpay";
-import Course from "../models/Course";
-import User from "../models/User";
-import mailSender from "../utils/mailSender";
+import { instance } from "../config/razorpay.js";
+import Course from "../models/Course.js";
+import User from "../models/User.js";
+import mailSender from "../utils/mailSender.js";
 
 // capture the payment and initiate the razorpay order
 export const capturePayment = async (req, res) => {
