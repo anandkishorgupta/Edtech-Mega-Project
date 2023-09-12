@@ -56,7 +56,7 @@ export const sendOTP = async (req, res) => {
 export const signUp = async (req, res) => {
     try {
         // data fetch from req body
-        const { firstName, lastName, email, password, confirmPassword, accountType, contactNumber, otp } = req.body
+        const { firstName, lastName, email, password, confirmPassword, accountType, otp } = req.body
         // validation 
         if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
             return res.status(403).json({
@@ -72,7 +72,7 @@ export const signUp = async (req, res) => {
                 message: "Password and confirm Password values does not match, please try again"
             })
         }
-
+    
 
         // check user already exist
         const existingUser = await User.findOne({ email })
@@ -88,7 +88,7 @@ export const signUp = async (req, res) => {
 
 
         //validate Otp
-        if (recentOtp.length == 0) {
+        if (!recentOtp) {
             return res.status(400).json({
                 success: false,
                 message: "OTP not found may be expired "
@@ -118,7 +118,6 @@ export const signUp = async (req, res) => {
             firstName,
             lastName,
             email,
-            contactNumber,
             password: hashedPassword,
             accountType,
             additionalDetails: profileDetails._id,
@@ -136,10 +135,11 @@ export const signUp = async (req, res) => {
         console.log(error)
         return res.status(500).json({
             success: false,
-            message: "User cannot be registered , Please try again"
+            message: "User cannot be registered , Please try again",
+            error:error.message
         })
 
-    }
+    }   
 }
 //login
 export const login = async (req, res) => {
@@ -176,9 +176,11 @@ export const login = async (req, res) => {
             user.password = undefined
             // create cookie and send response
             const options = {
-                expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                expires: new Date(Date.now() + 2* 60 * 60 * 1000),
                 httpOnly: true
             }
+            
+            // COOKIE SEND TO CLIENT
             res.cookie("token", token, options).status(200).json({
                 success: true,
                 token,

@@ -14,11 +14,11 @@ export const createCategory = async (req, res) => {
         console.log(category)
         return res.status(200).json({
             success: true,
-            message: 'Tag created successfully'
+            message: 'Category created successfully'
         })
     } catch (error) {
         console.log(error)
-        res.status(500).json({
+        res.status(500).json({  
             success: false,
             message: error.message
         })

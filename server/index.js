@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import courseRoute from "./routes/Course.js";
 import paymentRoutes from "./routes/Payments.js";
 import profileRoutes from "./routes/Profile.js";
 import userRoutes from "./routes/User.js";
@@ -15,7 +16,7 @@ import { connectDB } from "./config/database.js";
 
 const PORT = process.env.PORT || 4000
 // db connect
-connectDB()
+connectDB()       
 // middlewares
 app.use(express.json())
 app.use(cookieParser())
@@ -35,7 +36,7 @@ cloudinaryConnect()
 // routes mount 
 app.use("/api/v1/auth", userRoutes)
 app.use("/api/v1/profile", profileRoutes)
-// app.use("/api/v1/course",courseRoute)
+app.use("/api/v1/course",courseRoute)
 app.use("/api/v1/payment", paymentRoutes)
 
 // default route

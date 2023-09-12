@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import User from "../models/User.js";
 import mailSender from "../utils/mailSender.js";
-
 // resetPasswordToken-- mail send 
 export const resetPasswordToken = async (req, res, next) => {
     try {
@@ -9,15 +9,15 @@ export const resetPasswordToken = async (req, res, next) => {
         const { email } = req.body;
         // check user for this email - email validation
         const user = await User.findOne({ email })
-        if (user) {
+        if (!user) {
             return res.json({
                 success: false,
                 message: "Email not registered "
             })
         }
         // generate token
-        // const token = crypto.randomUUID();
-        const token = crypto.randomBytes(20).toString("hex");
+        const token = crypto.randomUUID();
+        // const token = crypto.randomBytes(20).toString("hex");
         // update user by adding token and expiration time
         const updatedDetails = await User.findOneAndUpdate({ email }, {
             token,
@@ -39,6 +39,7 @@ export const resetPasswordToken = async (req, res, next) => {
         res.status(500).json({
             success: false,
             message: "Something went wrong while sending reset password link "
+            
         })
     }
 

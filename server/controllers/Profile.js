@@ -1,11 +1,12 @@
 import Course from "../models/Course.js";
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
+import { uploadToCloudinary } from "../utils/imageUploader.js";
 
 // update Profile 
 export const updateProfile = async (req, res) => {
     try {
-        // fetch profile Id
+        // fetch user Id
         const { gender, dateOfBirth = "", about = "", contactNumber } = req.body;
 
         // get userId
@@ -99,7 +100,7 @@ export const deleteAccount = async (req, res) => {
 export const getAllUserDetail = async (req, res) => {
     try {
         // get user id 
-        const { id } = req.user._id
+        const { id } = req.user
         // validation 
         if (!id) {
             return res.status(400).json({
@@ -120,6 +121,7 @@ export const getAllUserDetail = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "User data fetched successfully",
+            user
         })
 
     } catch (error) {
@@ -136,7 +138,7 @@ export const updateDisplayPicture = async (req, res) => {
     try {
       const displayPicture = req.files.displayPicture
       const userId = req.user.id
-      const image = await uploadImageToCloudinary(
+      const image = await uploadToCloudinary(
         displayPicture,
         process.env.FOLDER_NAME,
         1000,

@@ -12,5 +12,5 @@ const categorySchema = new mongoose.Schema({
         ref: "Courses"
     }]
 })
-const Category = mongoose.model("Category", tagSchema)
-export default Tag
+const Category = mongoose.model("Category", categorySchema)
+export default Category

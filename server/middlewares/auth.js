@@ -71,13 +71,13 @@ export const isInstructor = async (req, res, next) => {
 // isAdmin
 export const isAdmin = async (req, res, next) => {
     try {
-        if (req.user.accountType !== "isAdmin") {
+        if (req.user.accountType !== "Admin") {
             return res.status(401).json({
                 success: false,
                 message: "This is protected route for Admin only"
             })
         }
-
+        next()
     } catch (error) {
         return req.status(500).json({
             success: false,

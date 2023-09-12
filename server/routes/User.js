@@ -10,6 +10,7 @@ router.post("/sendotp", sendOTP)
 router.post("/changepassword", auth, changePassword) //auth check user is login or not 
 
 
+
 // reset password routes 
 router.post("/reset-password-token", resetPasswordToken)
 router.post("/reset-password", resetPassword)
