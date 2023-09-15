@@ -4,6 +4,8 @@ import Banner from "../assets/Images/banner.mp4";
 import CTAButton from "../components/core/HomePage/Button";
 import CodeBlock from "../components/core/HomePage/CodeBlocks";
 import HighLightText from "../components/core/HomePage/HighLightText";
+import LearingLanguageSection from "../components/core/HomePage/LearingLanguageSection";
+import TimeLineSection from "../components/core/HomePage/TimeLineSection";
 const Home = () => {
   return (
     <div>
@@ -21,7 +23,7 @@ const Home = () => {
           Empower Your Future with
           <HighLightText text={"Coding Skills"} />
         </div>
-        <div className="w-[90%] text-center mt-4 text-lg  text-richblack-300">
+        <div className="w-[90%] text-center mt-4 text-lg   text-richblack-300">
           with our online coding courses, you can learn at your own pace, from
           anywhere in the world, and get access to a wealth of resources,
           including hands-on projects, quizzes, and personalized feedback from
@@ -36,10 +38,10 @@ const Home = () => {
           </CTAButton>
         </div>
         <div
-          className="mx-3 my-12 shadow-blue-200 "
-          style={{ boxShadow: "18px 18px 0px 0px rgb(255, 255, 255)" }}
+          className="mx-3 my-12 shadow-[10px_-5px_50px_-5px]  shadow-blue-200"
+
         >
-          <video muted loop autoPlay>
+          <video muted loop autoPlay className="shadow-[20px_20px_0px_0px_rgb(255,255,255)]">
             <source src={Banner} type="video/mp4" />
           </video>
         </div>
@@ -67,7 +69,7 @@ const Home = () => {
               linkto: "/login",
               active: false,
             }}
-        
+
             codeblock={
               `<!DOCTYPE html>
               <html>
@@ -85,13 +87,13 @@ const Home = () => {
             codeColor={"text-yellow-25"}
           />
         </div>
-           {/* code section 2 */}
-           <div>
+        {/* code section 2 */}
+        <div>
           <CodeBlock
             position={"lg:flex-row-reverse"}
             heading={
               <div className="text-4xl font-semibold">
-                Start 
+                Start
                 <HighLightText text={"coding"} /> {" "}
                 <br />
                 <HighLightText text={"in Seconds"} /> {" "}
@@ -110,7 +112,7 @@ const Home = () => {
               linkto: "/login",
               active: false,
             }}
-        
+
             codeblock={
               `<!DOCTYPE html>
               <html>
@@ -125,12 +127,52 @@ const Home = () => {
                 </body>
               </html>`
             }
-            codeColor={"text-yellow-25"}
+            codeColor={"text-white"}
           />
         </div>
       </div>
-      {/* section 2 */}
 
+      {/* section 2 */}
+      <div className="bg-pure-greys-5 text-richblack-700">
+        <div className="homepage_bg h-[310px]">
+          <div className="w-11/12 max-w-maxContent flex  flex-col gap-5   mx-auto items-center justify-between">
+            <div className="h-[150px]"></div>
+            {/* button */}
+            <div className="flex gap-7 text-white ">
+              <CTAButton active={true} linkto={"/signup"}>
+                <div className="flex items-center gap-3">
+                  Explore Full Catalog
+                  <FaArrowRight />
+                </div>
+              </CTAButton>
+              <CTAButton active={false} linkto={"/signup"} >
+                Learn More
+
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+        <div className="w-11/12 max-w-maxContent mx-auto flex gap-7 flex-col items-center justify-between">
+          <div className="flex flex-row gap-5 mt-[90px] mb-10 justify-between">
+            <div className="w-[45%] text-4xl font-semibold">
+              Get the skills you need for a <HighLightText text={"job that is in demand"} />
+            </div>
+            <div className="flex flex-col gap-10 w-[40%] items-start">
+              <div className="text-[16px]">
+                The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
+              </div>
+              <CTAButton active={true}>
+                <div>
+                  Learn More
+                </div>
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+
+        <TimeLineSection/>
+        <LearingLanguageSection/>
+      </div>
       {/* section 3 */}
 
       {/* Footer */}
