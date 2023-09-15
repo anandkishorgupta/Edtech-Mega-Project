@@ -2,9 +2,9 @@ import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Banner from "../assets/Images/banner.mp4";
 import CTAButton from "../components/core/HomePage/Button";
-import CodeBlocks from "../components/core/HomePage/CodeBlocks";
+import CodeBlock from "../components/core/HomePage/CodeBlocks";
 import HighLightText from "../components/core/HomePage/HighLightText";
-export const Home = () => {
+const Home = () => {
   return (
     <div>
       {/* section 1 */}
@@ -35,21 +35,107 @@ export const Home = () => {
             Book a Demo
           </CTAButton>
         </div>
-        <div className="mx-3 my-12 shadow-blue-200 " style={{ boxShadow: '18px 18px 0px 0px rgb(255, 255, 255)' }}  >
+        <div
+          className="mx-3 my-12 shadow-blue-200 "
+          style={{ boxShadow: "18px 18px 0px 0px rgb(255, 255, 255)" }}
+        >
           <video muted loop autoPlay>
             <source src={Banner} type="video/mp4" />
           </video>
         </div>
         {/* code section 1 */}
         <div>
-          <CodeBlocks/>
+          <CodeBlock
+            position={"lg:flex-row"}
+            heading={
+              <div className="text-4xl font-semibold">
+                Unlock Your
+                <HighLightText text={"coding potential"} /> {" "}
+                with our online courses
+              </div>
+            }
+            subheading={
+              "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you "
+            }
+            ctabtn1={{
+              btnText: "try it yourself ",
+              linkto: "/signup",
+              active: true,
+            }}
+            ctabtn2={{
+              btnText: "learn more  ",
+              linkto: "/login",
+              active: false,
+            }}
+        
+            codeblock={
+              `<!DOCTYPE html>
+              <html>
+                <head>
+                  <title>Example</title>
+                  <link rel="stylesheet" href="style.css">
+                </head>
+                <body>
+                  <h1>
+                    <a href="/">Header</a>
+                  </h1>
+                </body>
+              </html>`
+            }
+            codeColor={"text-yellow-25"}
+          />
+        </div>
+           {/* code section 2 */}
+           <div>
+          <CodeBlock
+            position={"lg:flex-row-reverse"}
+            heading={
+              <div className="text-4xl font-semibold">
+                Start 
+                <HighLightText text={"coding"} /> {" "}
+                <br />
+                <HighLightText text={"in Seconds"} /> {" "}
+              </div>
+            }
+            subheading={
+              "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson. "
+            }
+            ctabtn1={{
+              btnText: "Continue Lesson",
+              linkto: "/signup",
+              active: true,
+            }}
+            ctabtn2={{
+              btnText: "learn more  ",
+              linkto: "/login",
+              active: false,
+            }}
+        
+            codeblock={
+              `<!DOCTYPE html>
+              <html>
+                <head>
+                  <title>Example</title>
+                  <link rel="stylesheet" href="style.css">
+                </head>
+                <body>
+                  <h1>
+                    <a href="/">Header</a>
+                  </h1>
+                </body>
+              </html>`
+            }
+            codeColor={"text-yellow-25"}
+          />
         </div>
       </div>
       {/* section 2 */}
 
-      {/* section 3 */}    
+      {/* section 3 */}
 
       {/* Footer */}
     </div>
   );
 };
+
+export default Home
