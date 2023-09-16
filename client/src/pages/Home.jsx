@@ -168,10 +168,11 @@ const Home = () => {
               </CTAButton>
             </div>
           </div>
+          <TimeLineSection />
+          <LearingLanguageSection />
         </div>
 
-        <TimeLineSection/>
-        <LearingLanguageSection/>
+
       </div>
       {/* section 3 */}
 
