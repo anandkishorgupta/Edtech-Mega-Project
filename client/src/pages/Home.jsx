@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import Banner from "../assets/Images/banner.mp4";
 import CTAButton from "../components/core/HomePage/Button";
 import CodeBlock from "../components/core/HomePage/CodeBlocks";
+import ExploreMore from "../components/core/HomePage/ExploreMore";
+import Footer from "../components/core/HomePage/Footer";
 import HighLightText from "../components/core/HomePage/HighLightText";
+import InstructorSection from "../components/core/HomePage/InstructorSection";
 import LearingLanguageSection from "../components/core/HomePage/LearingLanguageSection";
 import TimeLineSection from "../components/core/HomePage/TimeLineSection";
 const Home = () => {
@@ -88,6 +91,7 @@ const Home = () => {
           />
         </div>
         {/* code section 2 */}
+
         <div>
           <CodeBlock
             position={"lg:flex-row-reverse"}
@@ -130,6 +134,7 @@ const Home = () => {
             codeColor={"text-white"}
           />
         </div>
+        <ExploreMore/>
       </div>
 
       {/* section 2 */}
@@ -175,8 +180,19 @@ const Home = () => {
 
       </div>
       {/* section 3 */}
-
+      <div className="w-11/12 max-w-maxContent mx-auto flex-col items-center justify-between gap-8 first-letter:bg-richblack-900 text-white">
+        <InstructorSection />
+        <h2 className="text-center text-4xl font-semibold mt-10">Review from other learners </h2>
+      </div>
       {/* Footer */}
+      <div className="bg-richblack-800">
+        <div className="w-11/12 max-w-maxContent mx-auto flex-col items-center justify-between gap-8">
+          <div className="h-16"></div>
+          <Footer />
+          <div className="h-16"></div>
+        </div>
+      </div>
+
     </div>
   );
 };

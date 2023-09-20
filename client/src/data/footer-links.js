@@ -1,7 +1,8 @@
+
 export const FooterLink2 = [
   {
     title: "Subjects",
-    links: [
+    link: [
       { title: "Al", link: "/al" },
       { title: "Cloud Computing", link: "/cloud-computing" },
       { title: "Code Foundations", link: "/code-foundations" },
@@ -23,7 +24,7 @@ export const FooterLink2 = [
   },
   {
     title: "Languages",
-    links: [
+    link: [
       { title: "Bash", link: "/bash" },
       { title: "C++", link: "/c++" },
       { title: "C#", link: "/csharp" },
@@ -42,14 +43,14 @@ export const FooterLink2 = [
   },
   {
     title: "Career building",
-    links: [
-        {title: "Career paths", link: "/career-paths"},
-        {title: "Career services", link: "/career-services"},
-        {title: "Interview prep", link: "/interview-prep"},
-        {title: "Professional certification", link: "/professional-certification"},
-        {title: "-", link: "/hi"},
-        {title: "Full Catalog", link: "/full-catalog"},
-        {title: "Beta Content", link: "/beta-content"}
+    link: [
+      { title: "Career paths", link: "/career-paths" },
+      { title: "Career services", link: "/career-services" },
+      { title: "Interview prep", link: "/interview-prep" },
+      { title: "Professional certification", link: "/professional-certification" },
+      { title: "-", link: "/hi" },
+      { title: "Full Catalog", link: "/full-catalog" },
+      { title: "Beta Content", link: "/beta-content" }
     ]
   }
 ];
