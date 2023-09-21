@@ -134,14 +134,14 @@ const Home = () => {
             codeColor={"text-white"}
           />
         </div>
-        <ExploreMore/>
+          <ExploreMore />
       </div>
 
       {/* section 2 */}
       <div className="bg-pure-greys-5 text-richblack-700">
-        <div className="homepage_bg h-[310px]">
+        <div className="homepage_bg lg:h-[310px]">
           <div className="w-11/12 max-w-maxContent flex  flex-col gap-5   mx-auto items-center justify-between">
-            <div className="h-[150px]"></div>
+            <div className="lg:h-[200px]"></div>
             {/* button */}
             <div className="flex gap-7 text-white ">
               <CTAButton active={true} linkto={"/signup"}>
