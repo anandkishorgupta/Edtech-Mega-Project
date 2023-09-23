@@ -1,10 +1,10 @@
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Banner from "../assets/Images/banner.mp4";
+import Footer from "../components/common/Footer";
 import CTAButton from "../components/core/HomePage/Button";
 import CodeBlock from "../components/core/HomePage/CodeBlocks";
 import ExploreMore from "../components/core/HomePage/ExploreMore";
-import Footer from "../components/core/HomePage/Footer";
 import HighLightText from "../components/core/HomePage/HighLightText";
 import InstructorSection from "../components/core/HomePage/InstructorSection";
 import LearingLanguageSection from "../components/core/HomePage/LearingLanguageSection";

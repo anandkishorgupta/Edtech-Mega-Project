@@ -1,5 +1,5 @@
 import express from "express";
-import { createCategory } from "../controllers/Category.js";
+import { createCategory, showAllCategory } from "../controllers/Category.js";
 import { createCourse, getCourseDetails, showAllCourses } from "../controllers/Course.js";
 import { auth, isAdmin } from "../middlewares/auth.js";
 const router=express.Router();
@@ -12,4 +12,5 @@ router.get("/",getCourseDetails)
 
 // category
 router.post("/create-category",auth,isAdmin,createCategory)
+router.get("/showAllCategory", showAllCategory)
 export default router

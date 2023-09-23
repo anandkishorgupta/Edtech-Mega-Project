@@ -6,7 +6,6 @@ import profileRoutes from "./routes/Profile.js";
 import userRoutes from "./routes/User.js";
 const app = express();
 dotenv.config();
-// import courseRoutes from "./routes/Course.js"
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -21,7 +20,7 @@ connectDB()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "http:/localhost:3000"
+    origin: "http://localhost:3000"
 }))
 app.use(
     fileUpload({
@@ -36,7 +35,7 @@ cloudinaryConnect()
 // routes mount 
 app.use("/api/v1/auth", userRoutes)
 app.use("/api/v1/profile", profileRoutes)
-app.use("/api/v1/course",courseRoute)
+app.use("/api/v1/courses",courseRoute)
 app.use("/api/v1/payment", paymentRoutes)
 
 // default route
