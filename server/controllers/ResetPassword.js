@@ -39,10 +39,8 @@ export const resetPasswordToken = async (req, res, next) => {
         res.status(500).json({
             success: false,
             message: "Something went wrong while sending reset password link "
-            
         })
     }
-
 }
 // resetPassword--db entry
 
