@@ -37,16 +37,16 @@ const LoginForm = () => {
                         }}
                     />
 
-                    <div className="absolute right-2 top-0 translate-y-[50%] text-2xl" >
+                    <div className="absolute right-2 top-0 translate-y-[50%] text-2xl" onClick={() => setHidePassword((prev) => !prev)}>
                         {
-                            hidePassword ? (<BiHide onClick={() => setHidePassword(false)} />) : (<BiShow onClick={() => setHidePassword(true)} />)
+                            hidePassword ? <BiHide /> : <BiShow />
                         }
                     </div>
                 </div>
             </label>
             <Link to={"/forgot-password"} className="text-end text-xs text-blue-100  cursor-pointer -mt-4">
 
-                    Forgot password?
+                Forgot password?
             </Link>
             <button className="w-full bg-yellow-50 text-richblack-900 px-[12px] py-[8px] rounded-md mt-6">Sign In</button>
         </form>

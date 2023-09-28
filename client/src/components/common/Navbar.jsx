@@ -55,25 +55,25 @@ export const Navbar = () => {
                         group-hover:visible group-hover:opacity-100 lg:w-[300px] z-10"
                     >
                       <div className="absolute left-[50%] top-0 h-6 w-6 rotate-45 bg-richblack-5 translate-x-[80%] translate-y-[-45%] "></div>
-                      {subLinks.length > 0 ? (
-                        subLinks.map((subLink, index) => {
-                      return <Link to={"/"} key={index}>
-                            <p >{subLink.name}</p>
-                          </Link>;
-                        })
-                      ) : (
-                        <div>error</div>
-                      )}
+                      {
+                        subLinks.length > 0 ? (
+                          subLinks.map((subLink, index) => {
+                            return <Link to={"/"} key={index}>
+                              <p >{subLink?.name}</p>
+                            </Link>;
+                          })
+                        ) : (
+                          <div>error</div>
+                        )}
                     </div>
                   </div>
                 ) : (
                   <Link to={link?.path}>
                     <p
-                      className={`${
-                        matchRoute(link?.path)
+                      className={`${matchRoute(link?.path)
                           ? "text-yellow-25"
                           : "text-richblack-25"
-                      }`}
+                        }`}
                     >
                       {link.title}
                     </p>

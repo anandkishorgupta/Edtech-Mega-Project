@@ -10,5 +10,5 @@ export const connectDB = () => {
         console.log("Database connection failed ")
         console.error(error)
         process.exit(1)
-    })
+    })   
 }
