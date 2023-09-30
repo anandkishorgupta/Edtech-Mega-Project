@@ -24,12 +24,12 @@ export const sendOTP = async (req, res) => {
             })
         }
         // generate otp
-        let otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, specialChars: false });
+        let otp = otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
         console.log("otp generated ", otp)
         // check unique otp or not
         let result = await OTP.findOne({ otp })
         while (result) {
-            otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, specialChars: false });
+            otp = otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
             result = await OTP.findOne({ otp })
         }
         const otpPayload = { email, otp }

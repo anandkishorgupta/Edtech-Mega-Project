@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Spinner } from "../components/common/Spinner";
 import { sendOtp, signUp } from "../services/operations/authAPI";
 const VerifyEmail = () => {
-    const { loading, signupData } = useSelector((state) => state.auth);
+    const {loading,signupData}=useSelector((state)=>state.auth)
     const [otp, setOtp] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -68,7 +68,7 @@ const VerifyEmail = () => {
                                 <p className="text-richblack-5 ">Back to Login</p>
                             </Link>
                         </div>
-                        <button onClick={() => dispatch(sendOtp(signupData.email))}>
+                        <button onClick={() => dispatch(sendOtp(signupData.email,navigate))}>
                             Resend it
                         </button>
                     </div>

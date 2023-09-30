@@ -1,10 +1,31 @@
 import { useState } from "react"
 import { BiHide, BiShow } from "react-icons/bi"
-import { Link } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import { login } from "../../../services/operations/authAPI"
 const LoginForm = () => {
     const [hidePassword, setHidePassword] = useState(true)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
+    const { email, password } = formData
+    const handleOnChange = (e) => {
+        setFormData((prevData) => (
+            {
+                ...prevData,
+                [e.target.name]: e.target.value
+            }
+        ))
+    }
+    const handleOnSubmit = (e) => {
+        e.preventDefault()
+        dispatch(login(email, password, navigate))
+    }
     return (
-        <form className="flex flex-col gap-5 mt-3">
+        <form className="flex flex-col gap-5 mt-3" onSubmit={handleOnSubmit}>
             <label className="w-full" >
                 <p
                     className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
@@ -15,6 +36,8 @@ const LoginForm = () => {
                     required
                     name="email"
                     placeholder="Enter email address"
+                    value={email}
+                    onChange={handleOnChange}
                     className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5 outline-none"
                     style={{
                         boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)"
@@ -29,8 +52,10 @@ const LoginForm = () => {
                 <div className="relative">
                     <input type={`${hidePassword ? "password" : "text"}`}
                         required
-                        name="email"
+                        name="password"
                         placeholder="Enter password"
+                        value={password}
+                        onChange={handleOnChange}
                         className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5 outline-none"
                         style={{
                             boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)"
@@ -48,7 +73,7 @@ const LoginForm = () => {
 
                 Forgot password?
             </Link>
-            <button className="w-full bg-yellow-50 text-richblack-900 px-[12px] py-[8px] rounded-md mt-6">Sign In</button>
+            <button className="w-full bg-yellow-50 text-richblack-900 px-[12px] py-[8px] rounded-md mt-6" type="submit">Sign In</button>
         </form>
     )
 }

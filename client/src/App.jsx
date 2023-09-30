@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import "./App.css"
 import { Navbar } from "./components/common/Navbar"
 import OpenRoute from "./components/core/Auth/OpenRoute"
+import About from "./pages/About"
 import ForgotPassword from "./pages/ForgotPassword"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
@@ -40,6 +41,7 @@ const App = () => {
             <UpdatePassword />
           </OpenRoute>
         } />
+        <Route path="/about" element={<About/>}/>
       </Routes>
     </div>
   )
