@@ -149,7 +149,7 @@ export function login(email, password, navigate) {
         } catch (error) {
 
             console.log("login api error.......", error)
-            toast.error("Login failed ")
+            toast.error(error.response.data.message)
         }
         dispatch(setLoading(false))
         toast.dismiss(toastId)

@@ -28,7 +28,7 @@ const SignupForm = () => {
   const handleOnChange = (e) => {
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]:e.target.value
+      [e.target.name]: e.target.value
     }))
   }
 

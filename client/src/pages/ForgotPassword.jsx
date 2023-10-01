@@ -8,18 +8,17 @@ const ForgotPassword = () => {
     const [emailSent, setEmailSent] = useState(false)
     const [email, setEmail] = useState("")
     const { loading } = useSelector((state) => state.auth)
-    const dispatch=useDispatch()
-    function handleOnSubmit(event){
+    const dispatch = useDispatch()
+    function handleOnSubmit(event) {
         event.preventDefault();
-        
-        dispatch(getPasswordResetToken(email,setEmailSent))
+        dispatch(getPasswordResetToken(email, setEmailSent))
         
     }
     return (
         <div className=" grid place-items-center mx-auto min-h-[calc(100vh-3.5rem)] ">
 
             {
-                loading ? (<Spinner/>) : (
+                loading ? (<Spinner />) : (
                     <div className="flex flex-col justify-center max-w-[500px] p-4 lg:p-8">
                         <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-5">
                             {
@@ -63,7 +62,7 @@ const ForgotPassword = () => {
                         </form>
                         <div>
                             <Link to={"/login"} className="flex flex-row gap-3 mt-4  items-center">
-                                <AiOutlineArrowLeft/>
+                                <AiOutlineArrowLeft />
                                 <p className="text-richblack-5 ">Back to Login</p>
                             </Link>
                         </div>

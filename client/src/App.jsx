@@ -2,7 +2,13 @@ import { Route, Routes } from "react-router-dom"
 import "./App.css"
 import { Navbar } from "./components/common/Navbar"
 import OpenRoute from "./components/core/Auth/OpenRoute"
+import PrivateRoute from "./components/core/Auth/PrivateRoute"
+import MyProfile from "./components/core/Dashboard/MyProfile"
+import Settings from "./components/core/Dashboard/Settings/Settings"
 import About from "./pages/About"
+import ContactUs from "./pages/ContactUs"
+import Dashboard from "./pages/Dashboard"
+import Error from "./pages/Error"
 import ForgotPassword from "./pages/ForgotPassword"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
@@ -41,7 +47,20 @@ const App = () => {
             <UpdatePassword />
           </OpenRoute>
         } />
-        <Route path="/about" element={<About/>}/>
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactUs />} />
+
+        <Route
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        >
+          <Route path="/dashboard/my-profile" element={<MyProfile />} />
+          <Route path="/dashboard/settings" element={<Settings/>} />
+        </Route>
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   )

@@ -134,7 +134,7 @@ const Home = () => {
             codeColor={"text-white"}
           />
         </div>
-          <ExploreMore />
+        <ExploreMore />
       </div>
 
       {/* section 2 */}
@@ -185,14 +185,7 @@ const Home = () => {
         <h2 className="text-center text-4xl font-semibold mt-10">Review from other learners </h2>
       </div>
       {/* Footer */}
-      <div className="bg-richblack-800">
-        <div className="w-11/12 max-w-maxContent mx-auto flex-col items-center justify-between gap-8">
-          <div className="h-16"></div>
-          <Footer />
-          <div className="h-16"></div>
-        </div>
-      </div>
-
+      <Footer />
     </div>
   );
 };

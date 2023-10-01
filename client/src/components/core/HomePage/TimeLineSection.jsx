@@ -46,6 +46,7 @@ const TimeLineSection = () => {
         {/* right part */}
         <div className="relative">
           <img src={timelineImage} alt="timlelineImage " />
+
           <div className="absolute bg-caribbeangreen-700 flex flex-row text-white uppercase py-7 
           translate-x-[-50%] 
           translate-y-[-50%]
