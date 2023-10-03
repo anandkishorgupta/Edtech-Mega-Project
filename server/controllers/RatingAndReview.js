@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 import Course from "../models/Course.js"
-import RatingAndReviews from "../models/RatingAndReviews"
+import RatingAndReviews from "../models/RatingAndReviews.js"
 
 
 // createRating

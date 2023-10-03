@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import contactUsRoute from "./routes/Contact.js";
 import courseRoute from "./routes/Course.js";
 import paymentRoutes from "./routes/Payments.js";
 import profileRoutes from "./routes/Profile.js";
@@ -10,7 +11,7 @@ dotenv.config();
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import fileUpload from "express-fileupload";
-import { cloudinaryConnect } from "./config/cloudinary.js";
+// import { cloudinaryConnect } from "./config/cloudinary.js";
 import { connectDB } from "./config/database.js";
 
 const PORT = process.env.PORT || 4000
@@ -30,13 +31,14 @@ app.use(
 )
 
 // cloudinary connection
-cloudinaryConnect()
+// cloudinaryConnect()
 
 // routes mount 
 app.use("/api/v1/auth", userRoutes)
-app.use("/api/v1/profile", profileRoutes)
-app.use("/api/v1/courses",courseRoute)
+app.use("/api/v1/profile", profileRoutes)   
+app.use("/api/v1/course",courseRoute)
 app.use("/api/v1/payment", paymentRoutes)
+app.use("/api/v1/reach",contactUsRoute)
 
 // default route
 app.get("/", (req, res) => {

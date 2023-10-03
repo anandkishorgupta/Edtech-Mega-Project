@@ -3,6 +3,7 @@ import "./App.css"
 import { Navbar } from "./components/common/Navbar"
 import OpenRoute from "./components/core/Auth/OpenRoute"
 import PrivateRoute from "./components/core/Auth/PrivateRoute"
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses"
 import MyProfile from "./components/core/Dashboard/MyProfile"
 import Settings from "./components/core/Dashboard/Settings/Settings"
 import About from "./pages/About"
@@ -58,7 +59,8 @@ const App = () => {
           }
         >
           <Route path="/dashboard/my-profile" element={<MyProfile />} />
-          <Route path="/dashboard/settings" element={<Settings/>} />
+          <Route path="/dashboard/settings" element={<Settings />} />
+          <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses />} />
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>

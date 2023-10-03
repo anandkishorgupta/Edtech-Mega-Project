@@ -2,19 +2,21 @@ import jwt from "jsonwebtoken";
 // auth
 export const auth = async (req, res, next) => {
     try {
+        
         // extract token
-        const token = req.cookies.token || req.body.token || req.header("Authorisation").replace("Bearer", "");
+        const token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ","");
+        // console.log(token)
         // if token missing then return response
         if (!token) {
             return res.status(401).json({
                 success: false,
                 message: "Token is missing"
             })
-
         }
         // verify the token
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET)
+            console.log(decode)
             console.log(decode)
             req.user = decode
 
@@ -24,6 +26,7 @@ export const auth = async (req, res, next) => {
                 message: "token is invalid"
             })
         }
+
         next();
 
 
