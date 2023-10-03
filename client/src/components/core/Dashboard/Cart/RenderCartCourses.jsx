@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "../../../../slices/cartSlice";
 const RenderCartCourses = () => {
     const { cart } = useSelector((state) => state.cart)
-const dispatch=useDispatch()
+    const dispatch = useDispatch()
 
     return (
         <div>
@@ -34,7 +34,7 @@ const dispatch=useDispatch()
                         </div>
                         <div>
                             <button
-                            onClick={()=>dispatch(removeFromCart(course._id))}
+                                onClick={() => dispatch(removeFromCart(course._id))}
                             >
                                 <MdDeleteForever />
                                 <span>Remove</span>
