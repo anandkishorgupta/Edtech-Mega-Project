@@ -19,7 +19,7 @@ const RenderSteps = () => {
     ]
     return (
         <>
-            <div>
+            <div className="flex">
                 {
                     steps.map((item) => (
                         <>
@@ -35,7 +35,7 @@ const RenderSteps = () => {
                     ))
                 }
             </div>
-            <div>
+            <div className="flex mb-16">
                 {steps.map((item) => (
                     <>
                         <div>

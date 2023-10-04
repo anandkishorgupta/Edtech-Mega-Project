@@ -2,16 +2,16 @@ import RenderSteps from "./RenderSteps"
 const AddCourse = () => {
   return (
     <>
-      <div className="flex flex-row text-white">
-        <div>
-          <h1>Add Course</h1>
+      <div className="flex flex-row  justify-between">
+        <div className="">
+          <h1 className="mb-14 text-3xl font-medium text-richblack-5">Add Course</h1>
           <div>
             <RenderSteps />
           </div>
         </div>
-        <div>
-          <p>Code Upload Tips</p>
-          <ul>
+        <div className="rounded-md max-w-[400px] border-[1px] border-richblack-700 h-fit  bg-richblack-800 px-6 py-5 sticky top-10">
+          <p className="text-lg text-richblack-5 mb-8"> ⚡  Code Upload Tips</p>
+          <ul className="text-xs text-richblack-5  gap-y-4 list-disc ml-5 flex flex-col ">
             <li>Set the Course Price option or make it free.</li>
             <li>Standard size for the course thumbnail is 1024x576.</li>
             <li>Video section controls the course overview video.</li>

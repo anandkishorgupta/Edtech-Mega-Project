@@ -9,6 +9,7 @@ const ContactForm = () => {
     reset,
     formState: { errors, isSubmitSuccessful },
   } = useForm();
+  
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset({
@@ -134,7 +135,7 @@ const ContactForm = () => {
               })}
             />
 
-  
+
           </div>
           {
             errors.phoneNo && <span className="text-[12px] text-yellow-100 ">please, enter phone no.</span>

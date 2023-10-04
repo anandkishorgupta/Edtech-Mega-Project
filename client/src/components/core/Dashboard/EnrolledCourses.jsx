@@ -15,7 +15,6 @@ const EnrolledCourses = () => {
       console.log("Unable to fetch  Enrolled Courses ");
     }
   };
-
   useEffect(() => {
     getEnrolledCourses();
   }, []);
