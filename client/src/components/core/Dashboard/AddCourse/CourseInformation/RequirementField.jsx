@@ -65,7 +65,7 @@ const RequirementField = ({
                     </div>
                 ))}
 
-            {errors[name] && (
+            {errors.name && (
                 <span>
                     {label} is required
                 </span>

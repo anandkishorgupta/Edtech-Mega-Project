@@ -7,14 +7,19 @@ dotenv.config();
 
 // create course handler function
 export const createCourse = async (req, res) => {
+
+  console.log("*************************************************************")
+  console.log(process.env.FOLDER_NAME)
   try {
+    // get user id from request body
+    const userId = req.user.id
     // fetch data
     const {
       courseName,
       courseDescription,
       whatYouWillLearn,
       price,
-      category,
+      category, // this is id of category
       instructions: _instructions, //'["Step 1: Install Node.js", "Step 2: Create a Mongoose model"]'
       tag: _tag, //'["JavaScript", "Node.js", "Mongoose"]'
       status,
@@ -34,26 +39,26 @@ export const createCourse = async (req, res) => {
       !courseDescription ||
       !whatYouWillLearn ||
       !price ||
-      !category ||
-      !thumbnail ||
-      !instructions.length ||
       !tag.length ||
-      !status
+      !thumbnail ||
+      !category ||
+      !instructions.length
     ) {
       return req.status().json({
         success: false,
         message: "All fields are required ",
       });
-    }
+    }   
 
     if (!status || status === undefined) {
       status = "Draft";
     }
+
     // check user is instructor for Instructor
-    const userId = req.user._id;
     const instructorDetail = await User.findById(userId, {
       accountType: "Instructor",
     });
+
     console.log("instructorDetail: ", instructorDetail);
 
     if (!instructorDetail) {
@@ -64,24 +69,28 @@ export const createCourse = async (req, res) => {
     }
     // check given Category is valid or not
     const categoryDetails = await Category.findById(category);
+
     if (!categoryDetails) {
       return res.status(404).json({
         success: false,
         message: "Category Details not found ",
       });
     }
+
     // upload image to cloudinary
     const thumbnailImage = await uploadToCloudinary(
       thumbnail,
       process.env.FOLDER_NAME
     );
+    console.log("after cloudinart")
+
     // create an entry for new course
     const newCourse = await Course.create({
       courseName,
       courseDescription,
       instructor: instructorDetail._id,
       instructions,
-      whatYouWillLearn: whatYouWillLearn,
+      whatYouWillLearn,
       price,
       category: categoryDetails._id,
       tag,
@@ -121,10 +130,15 @@ export const createCourse = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Failed to create Course ",
-      error: error.message,
+      error: error,
+
     });
   }
 };
+
+
+
+
 // getAllCourses handler function
 export const showAllCourses = async (req, res) => {
   try {
@@ -192,15 +206,15 @@ export const getCourseDetails = async (req, res) => {
       })
     }
     res.status(200).json({
-      success:true,
-      message:"Course data fetched successfully",
-      data:courseDetails
+      success: true,
+      message: "Course data fetched successfully",
+      data: courseDetails
     })
-  } catch (error) { 
+  } catch (error) {
     console.log(error)
     res.status(500).json({
-      success:false,
-      error:error.message
+      success: false,
+      error: error.message
     })
   }
 };

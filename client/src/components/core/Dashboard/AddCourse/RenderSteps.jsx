@@ -21,26 +21,23 @@ const RenderSteps = () => {
         <>
             <div className="flex">
                 {
-                    steps.map((item) => (
-                        <>
-                            <div>
-                                <div className={`${step === item.id ? "bg-yellow-900 border-r-yellow-50 text-yellow-50" : " border-richblack-700 bg-richblack-800 text-richblack-300"}`}>
-                                    {
-                                        step > item.id ? (<FaCheck />) : (item.id)
-                                    }
+                    steps.map((item, index) => (
+                        <div key={index}>
+                            <div className={`${step === item.id ? "bg-yellow-900 border-r-yellow-50 text-yellow-50" : " border-richblack-700 bg-richblack-800 text-richblack-300"}`}>
+                                {
+                                    step > item.id ? (<FaCheck />) : (item.id)
+                                }
 
-                                </div>
                             </div>
-                        </>
+                        </div>
                     ))
                 }
             </div>
             <div className="flex mb-16">
-                {steps.map((item) => (
-                    <>
-                        <div>
-                            <p>{item.title}</p>
-                        </div></>
+                {steps.map((item, index) => (
+                    <div key={index}>
+                        <p>{item.title}</p>
+                    </div>
                 ))}
             </div>
             {

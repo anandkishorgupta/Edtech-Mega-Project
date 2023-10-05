@@ -11,7 +11,7 @@ dotenv.config();
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import fileUpload from "express-fileupload";
-// import { cloudinaryConnect } from "./config/cloudinary.js";
+import { cloudinaryConnect } from "./config/cloudinary.js";
 import { connectDB } from "./config/database.js";
 
 const PORT = process.env.PORT || 4000
@@ -31,7 +31,7 @@ app.use(
 )
 
 // cloudinary connection
-// cloudinaryConnect()
+cloudinaryConnect()
 
 // routes mount 
 app.use("/api/v1/auth", userRoutes)

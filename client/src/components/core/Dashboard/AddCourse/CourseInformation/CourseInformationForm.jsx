@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCourseCategories } from "../../../../../services/operations/courseDetailsAPI";
-import { setStep } from "../../../../../slices/courseSlice";
+import { addCourseDetails, editCourseDetails, fetchCourseCategories } from "../../../../../services/operations/courseDetailsAPI";
+import { setCourse, setStep } from "../../../../../slices/courseSlice";
+import { COURSE_STATUS } from "../../../../../utils/constants";
 import IconBtn from "../../../../common/IconBtn";
 import Upload from "../Upload";
 import ChipInput from "./ChipInput";
-import RequirementField from "./RequirementField";
+import RequirementField from './RequirementField';
 const CourseInformationForm = () => {
     const {
         register,
@@ -43,8 +44,9 @@ const CourseInformationForm = () => {
             setValue("courseTitle", course.courseName);
             setValue("courseShortDesc", course.courseDescription);
             setValue("coursePrice", course.price);
-            setValue("courseCategory", course.category);
+            setValue("courseTags", course.tag)
             setValue("coursebenefits", course.whatYouWillLearn);
+            setValue("courseCategory", course.category);
             setValue("courseRequirements", course.instructions);
             setValue("courseImage", course.thumbnail);
         }
@@ -56,12 +58,12 @@ const CourseInformationForm = () => {
             currentValues.courseTitle !== course.courseName ||
             currentValues.courseShortDesc !== course.description ||
             currentValues.coursePrice !== course.price ||
-            currentValues.courseCategory !== course.category ||
             currentValues.courseTags.toString() !== course.tags.toString() ||
-            currentValues.courseImage !== course.thumbnail ||
             currentValues.courseBenefits !== course.whatYouWillLearn ||
+            currentValues.courseCategory._id !== course.category._id ||
             currentValues.courseRequirements.toString() !==
-            course.instructions.toString()
+            course.instructions.toString()||
+            currentValues.courseImage !== course.thumbnail 
         ) {
             return true;
         } else {
@@ -70,6 +72,8 @@ const CourseInformationForm = () => {
     };
 
     async function onsubmit(data) {
+        console.log("**************************************************************************************************")
+        // return
         if (editCourse) {
             if (isFormUpdated()) {
                 const currentValues = getValues()
@@ -119,6 +123,7 @@ const CourseInformationForm = () => {
             }
             return
         }
+        // add new course 
         const formData = new FormData()
         formData.append("courseName", data.courseTitle)
         formData.append("courseDescription", data.courseShortDesc)
@@ -128,7 +133,7 @@ const CourseInformationForm = () => {
         formData.append("category", data.courseCategory)
         formData.append("status", COURSE_STATUS.DRAFT)
         formData.append("instructions", JSON.stringify(data.courseRequirements))
-        formData.append("thumbnailImage", data.courseImage)
+        formData.append("thumbnailImages", data.courseImage)
         setLoading(true)
         const result = await addCourseDetails(formData, token)
         if (result) {
@@ -137,6 +142,7 @@ const CourseInformationForm = () => {
         }
         setLoading(false)
     }
+
     return (
 
         <form
@@ -144,10 +150,11 @@ const CourseInformationForm = () => {
             className="rounded-md  bg-richblack-800  space-y-8 text-caribbeangreen-100  p-6 border border-richblack-700"
         >
             <div className="flex flex-col gap-y-1 ">
-                <label className="text-sm text-richblack-5">Course Title <sup className="text-pink-200"> *</sup> </label>
+                <label htmlFor="courseTitle" className="text-sm text-richblack-5">Course Title <sup className="text-pink-200"> *</sup> </label>
                 <input
                     id="courseTitle"
                     placeholder="Enter Course Title"
+
                     {...register("courseTitle", { required: true })}
                     className="form-style w-full"
 
@@ -156,7 +163,7 @@ const CourseInformationForm = () => {
             </div>
 
             <div>
-                <label className="text-sm text-richblack-5">Course Short Description <sup className="text-pink-200"> *</sup></label>
+                <label htmlFor="courseShortDesc" className="text-sm text-richblack-5">Course Short Description <sup className="text-pink-200"> *</sup></label>
                 <textarea
                     id="courseShortDesc"
                     placeholder="Enter Description"
@@ -168,7 +175,7 @@ const CourseInformationForm = () => {
                 )}
             </div>
             <div className="relative">
-                <label className="text-sm text-richblack-5">Course Price <sup className="text-pink-200"> *</sup></label>
+                <label htmlFor="coursePrice" className="text-sm text-richblack-5">Course Price <sup className="text-pink-200"> *</sup></label>
                 <input
                     id="coursePrice"
                     placeholder="Enter Course price"
@@ -176,11 +183,11 @@ const CourseInformationForm = () => {
                     className="form-style w-full px-10"
 
                 />
-                <HiOutlineCurrencyRupee className="absolute text-richblack-400 top-[50%]  text-2xl  ml-2"  />
+                <HiOutlineCurrencyRupee className="absolute text-richblack-400 top-[50%]  text-2xl  ml-2" />
                 {errors.coursePrice && <span>Course Price is Required**</span>}
             </div>
             <div className="flex flex-col gap-y-1">
-                <label  htmlFor="courseCategory" className="text-sm text-richblack-5">
+                <label htmlFor="courseCategory" className="text-sm text-richblack-5">
                     {" "}
                     course category <sup className="text-pink-200"> *</sup>
                 </label>
@@ -198,7 +205,7 @@ const CourseInformationForm = () => {
                     </option>
                     {!loading &&
                         courseCategories.map((category, index) => (
-                            <option key={index} value={category?.id}>
+                            <option key={index} value={category?._id}>
                                 {category?.name}
                             </option>
                         ))}
@@ -219,14 +226,14 @@ const CourseInformationForm = () => {
                 name="courseImage"
                 label="Course Thumbnail"
                 register={register}
-                errors={errors}
+                errors={errors}  
                 setValue={setValue}
                 editData={editCourse ? course?.thumbnail : null}
             />
 
             {/* benefits of course */}
             <div>
-                <label htmlFor="" className="text-sm text-richblack-5">
+                <label htmlFor="courseBenefits" className="text-sm text-richblack-5">
                     Benefit of course <sup className="text-pink-200"> *</sup>
                 </label>
                 <textarea
@@ -246,16 +253,25 @@ const CourseInformationForm = () => {
                 setValue={setValue}
                 getValues={getValues}
             />
-            <button type="submit">
-                <div>
-                    {editCourse && (
-                        <button onClick={() => dispatch(setStep(2))}>
-                            Continue without Saving
-                        </button>
-                    )}
-                    <IconBtn text={!editCourse ? "Next" : "Save Changes"} />
-                </div>
-            </button>
+            <div className="flex justify-end gap-x-2">
+
+                {editCourse && (
+                    <button
+                        onClick={() => dispatch(setStep(2))}
+                        disabled={loading}
+                        type="submit"
+
+                    >
+                        Continue Wihout Saving
+                    </button>
+                )}
+                <IconBtn
+                    disabled={loading}
+                    text={!editCourse ? "Next" : "Save Changes"}
+                >
+                </IconBtn>
+            </div>
+            {/* <button type="submit">submit</button> */}
         </form>
 
     );

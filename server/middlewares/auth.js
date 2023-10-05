@@ -57,13 +57,13 @@ export const isStudent = async (req, res, next) => {
 // isInstructor
 export const isInstructor = async (req, res, next) => {
     try {
-        if (req.user.accountType !== "isInstructor") {
+        if (req.user.accountType !== "Instructor") {
             return res.status(401).json({
                 success: false,
                 message: "This is protected route for Instructor only"
             })
         }
-
+        next();
     } catch (error) {
         return req.status(500).json({
             success: false,

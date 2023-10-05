@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { RxCross2 } from "react-icons/rx"
 const ChipInput = ({ label, name, placeholder, register, errors, setValue, getValues }) => {
     // chips holda all tags 
@@ -22,13 +22,19 @@ const ChipInput = ({ label, name, placeholder, register, errors, setValue, getVa
         setChips(newChips)
 
     }
+    useEffect(() => {
+
+        register(name, { required: true, validate: (value) => value.length > 0 })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     // chips data and input field data are in same state 
-    // useEffect(() => {
-    //     setValue(name, chips)
-    // }, [chips])
+    useEffect(() => {
+        setValue(name, chips)
+    }, [chips])
     return (
         <div className="flex flex-col gap-y-1">
-            <label htmlFor={name}  className="text-sm text-richblack-5">{label} <sup className="text-pink-200" > *</sup></label>
+            <label htmlFor={name} className="text-sm text-richblack-5">{label} <sup className="text-pink-200" > *</sup></label>
             <div>
                 <div className="flex flex-row gap-x-2 items-center">
                     {
@@ -54,11 +60,12 @@ const ChipInput = ({ label, name, placeholder, register, errors, setValue, getVa
                     placeholder={placeholder}
                     onKeyDown={handleKeyDown}
                     className="form-style w-full"
+                // {...register(name)}
 
                 />
             </div>
             {
-                errors[name] && (
+                errors.name && (
                     <span>
                         {label} is required
                     </span>
