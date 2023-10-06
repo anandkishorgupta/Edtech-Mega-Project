@@ -2,8 +2,8 @@ import RenderSteps from "./RenderSteps"
 const AddCourse = () => {
   return (
     <>
-      <div className="flex flex-row  justify-between">
-        <div className="">
+      <div className="flex flex-row  justify-between gap-x-5">
+        <div className=" flex-1">
           <h1 className="mb-14 text-3xl font-medium text-richblack-5">Add Course</h1>
           <div>
             <RenderSteps />

@@ -19,7 +19,9 @@ const CourseInformationForm = () => {
         formState: { errors },
     } = useForm();
     const dispatch = useDispatch();
+    
     const { course, editCourse } = useSelector((state) => state.course);
+
     const [loading, setLoading] = useState(false);
     const [courseCategories, setCourseCategories] = useState([]);
     const { token } = useSelector((state) => state.auth)
@@ -62,8 +64,8 @@ const CourseInformationForm = () => {
             currentValues.courseBenefits !== course.whatYouWillLearn ||
             currentValues.courseCategory._id !== course.category._id ||
             currentValues.courseRequirements.toString() !==
-            course.instructions.toString()||
-            currentValues.courseImage !== course.thumbnail 
+            course.instructions.toString() ||
+            currentValues.courseImage !== course.thumbnail
         ) {
             return true;
         } else {
@@ -72,8 +74,6 @@ const CourseInformationForm = () => {
     };
 
     async function onsubmit(data) {
-        console.log("**************************************************************************************************")
-        // return
         if (editCourse) {
             if (isFormUpdated()) {
                 const currentValues = getValues()
@@ -147,7 +147,7 @@ const CourseInformationForm = () => {
 
         <form
             onSubmit={handleSubmit(onsubmit)}
-            className="rounded-md  bg-richblack-800  space-y-8 text-caribbeangreen-100  p-6 border border-richblack-700"
+            className="rounded-md  bg-richblack-800  space-y-8  p-6 border border-richblack-700 "
         >
             <div className="flex flex-col gap-y-1 ">
                 <label htmlFor="courseTitle" className="text-sm text-richblack-5">Course Title <sup className="text-pink-200"> *</sup> </label>
@@ -159,7 +159,7 @@ const CourseInformationForm = () => {
                     className="form-style w-full"
 
                 />
-                {errors.courseTitle && <span >Course Title is Required**</span>}
+                {errors.courseTitle && <span className="addCourseError">Course Title is Required**</span>}
             </div>
 
             <div>
@@ -171,7 +171,7 @@ const CourseInformationForm = () => {
                     className="min-h-[140px] w-full form-style"
                 />
                 {errors.courseShortDesc && (
-                    <span >Course Description is Required**</span>
+                    <span className="addCourseError">Course Description is Required**</span>
                 )}
             </div>
             <div className="relative">
@@ -184,8 +184,9 @@ const CourseInformationForm = () => {
 
                 />
                 <HiOutlineCurrencyRupee className="absolute text-richblack-400 top-[50%]  text-2xl  ml-2" />
-                {errors.coursePrice && <span>Course Price is Required**</span>}
             </div>
+            {errors.coursePrice && <span className="addCourseError">Course Price is Required**</span>}
+
             <div className="flex flex-col gap-y-1">
                 <label htmlFor="courseCategory" className="text-sm text-richblack-5">
                     {" "}
@@ -210,7 +211,7 @@ const CourseInformationForm = () => {
                             </option>
                         ))}
                 </select>
-                {errors.courseCategory && <span>Course Category is required </span>}
+                {errors.courseCategory && <span className="addCourseError">Course Category is required </span>}
             </div>
             <ChipInput
                 label="Tags"
@@ -226,7 +227,7 @@ const CourseInformationForm = () => {
                 name="courseImage"
                 label="Course Thumbnail"
                 register={register}
-                errors={errors}  
+                errors={errors}
                 setValue={setValue}
                 editData={editCourse ? course?.thumbnail : null}
             />
@@ -237,7 +238,7 @@ const CourseInformationForm = () => {
                     Benefit of course <sup className="text-pink-200"> *</sup>
                 </label>
                 <textarea
-                    name=""
+                    name="courseBenefits"
                     id="courseBenefits"
                     placeholder="Enter benefits of course"
                     {...register("courseBenefits", { required: true })}

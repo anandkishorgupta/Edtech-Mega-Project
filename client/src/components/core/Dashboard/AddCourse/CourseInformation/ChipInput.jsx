@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 import { RxCross2 } from "react-icons/rx"
 const ChipInput = ({ label, name, placeholder, register, errors, setValue, getValues }) => {
     // chips holda all tags 
@@ -13,6 +14,9 @@ const ChipInput = ({ label, name, placeholder, register, errors, setValue, getVa
                 // setChips(newChips)
                 setChips((prev) => [...prev, chipValue])
                 event.target.value = ""
+            }
+            if (chipValue && chips.includes(chipValue)) {
+                toast.error(`${chipValue} already added`)
             }
         }
 
@@ -36,11 +40,11 @@ const ChipInput = ({ label, name, placeholder, register, errors, setValue, getVa
         <div className="flex flex-col gap-y-1">
             <label htmlFor={name} className="text-sm text-richblack-5">{label} <sup className="text-pink-200" > *</sup></label>
             <div>
-                <div className="flex flex-row gap-x-2 items-center">
+                <div className="flex flex-row gap-x-2 items-center flex-wrap">
                     {
                         chips.map((chip, index) => (
                             <div key={index}
-                                className=" rounded-full bg-yellow-400 px-2 py-1 text-sm text-richblack-5 flex gap-x-2 items-center"
+                                className=" rounded-full bg-yellow-400 px-2 py-1 text-sm text-richblack-5 flex gap-x-2 items-center mb-2"
                             >
                                 {chip}
                                 <RxCross2
@@ -65,8 +69,8 @@ const ChipInput = ({ label, name, placeholder, register, errors, setValue, getVa
                 />
             </div>
             {
-                errors.name && (
-                    <span>
+                errors[name] && (
+                    <span className="addCourseError">
                         {label} is required
                     </span>
                 )

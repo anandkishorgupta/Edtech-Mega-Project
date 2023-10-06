@@ -37,9 +37,9 @@ const RequirementField = ({
     },[requirementList])
 
     return (
-        <div>
-            <label htmlFor={label}>
-                {label} <sup>*</sup>
+        <div className="flex flex-col"> 
+            <label htmlFor={label} className="text-sm text-richblack-5">
+                {label} <sup className="text-pink-200">*</sup>
             </label>
             <input
                 type="text"
@@ -47,26 +47,28 @@ const RequirementField = ({
                 id={label}
                 value={requirements}
                 onChange={(e) => setRequirements(e.target.value.trim())}
+                className="form-style"
             />
-            <p onClick={handleAddRequirements} className="cursor-pointer">
-                {" "}
+            <button type="button" onClick={handleAddRequirements} className="cursor-pointer text-yellow-50 font-semibold text-start mt-2">
+                {" "} 
+                {/* if not use type="button" then the button works as submit */}
                 Add
-            </p>
+            </button>
             {requirementList.length > 0 &&
                 requirementList.map((item, index) => (
-                    <div key={index} className="flex justify-between ">
+                    <div key={index} className="flex  ">
                         <p>{item}</p>
-                        <p
-                            className="cursor-pointer text-xs text-pure-greys-900"
+                        <button type="button"
+                            className="cursor-pointer ml-2 text-xs text-pure-greys-300"
                             onClick={() => handleClearRequirements(index)}
                         >
                             clear
-                        </p>
+                        </button>
                     </div>
                 ))}
 
             {errors.name && (
-                <span>
+                <span className="addCourseError">
                     {label} is required
                 </span>
             )}

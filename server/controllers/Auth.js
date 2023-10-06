@@ -73,7 +73,7 @@ export const signUp = async (req, res) => {
                 message: "Password and confirm Password values does not match, please try again"
             })
         }
-    
+
 
         // check user already exist
         const existingUser = await User.findOne({ email })
@@ -137,10 +137,10 @@ export const signUp = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "User cannot be registered , Please try again",
-            error:error.message
+            error: error.message
         })
 
-    }   
+    }
 }
 //login
 export const login = async (req, res) => {
@@ -170,17 +170,18 @@ export const login = async (req, res) => {
                 id: user._id,
                 accountType: user.accountType
             }
-            const token = jwt.sign(payload, process.env.JWT_SECRET, {
-                expiresIn: "2h"
-            })
+            // const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            //     expiresIn: "2h"
+            // })
+            const token = jwt.sign(payload, process.env.JWT_SECRET)
             user.token = token  //token generated using jwt
             user.password = undefined
             // create cookie and send response
             const options = {
-                expires: new Date(Date.now() + 2* 60 * 60 * 1000),
+                expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
                 httpOnly: true
             }
-            
+
             // COOKIE SEND TO CLIENT
             res.cookie("token", token, options).status(200).json({
                 success: true,

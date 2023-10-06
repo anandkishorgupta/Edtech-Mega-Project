@@ -50,12 +50,14 @@ const Upload = ({
 
     return (
         <div>
-            <label htmlFor={name}>{label}</label>
-            <div>
+            <label htmlFor={label} className="text-richblack-5 text-sm">{label}
+            <sup className="text-pink-200">*</sup>
+            </label>
+            <div className="bg-richblack-700 flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500">
                 {previewSource ? (
-                    <div>
+                    <div className="p-5  flex justify-center flex-col items-center">
                         {!video ? (
-                            <img src={previewSource} alt="preview" />
+                            <img src={previewSource} alt="preview"  className="rounded-md object-cover"/>
                         ) : (
                             <Player src={previewSource} aspectRatio="16:9" playsInline />
                         )}
@@ -67,27 +69,27 @@ const Upload = ({
                                     setSelectedFile(null);
                                     setValue(name, null);
                                 }}
-                                className="mt-3 text-richblack-400 underline"
+                                className="mt-3 text-richblack-400 underline cursor-pointer"
                             >
                                 Cancel
                             </button>
                         )}
                     </div>
                 ) : (
-                    <div {...getRootProps()}>
-                        <input {...getInputProps()} ref={inputRef} />
-                        <div>
+                    <div {...getRootProps()} className="flex flex-col items-center w-full">
+                        <input {...getInputProps()} ref={inputRef}  id={label}/>
+                        <div className="bg-richblack-900 rounded-full w-fit p-4 text-yellow-50 text-2xl">
                             <FiUploadCloud />
                         </div>
-                        <p>
+                        <p className="max-w-[200px] text-sm text-center text-richblack-200">
                             Drag and drop on {!video ? "image" : "video"},
                             or click to {" "}
-                            <span>
-                                Browse a
+                            <span className="font-semibold text-yellow-50">
+                                Browse 
                             </span>
-                            file
+                            a file
                         </p>
-                        <ul>
+                        <ul className="flex justify-evenly w-full text-xs text-richblack-200 list-disc mt-10">
                             <li>Aspect ratio 16:9</li>
                             <li>Recommended size 1024x576</li>
                         </ul>
@@ -96,7 +98,7 @@ const Upload = ({
             </div>
             {
                 errors.name && (
-                    <span>
+                    <span className="addCourseError">
                         {label} is required
                     </span>
                 )

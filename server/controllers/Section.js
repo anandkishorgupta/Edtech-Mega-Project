@@ -21,7 +21,7 @@ export const createSection = async (req, res) => {
             }
         }, { new: true }).populate({
             path: "courseContent",
-        // REUNDERSTAND *********************************
+            // REUNDERSTAND *********************************
             populate: {
                 path: "subSection"
             }
@@ -48,7 +48,7 @@ export const createSection = async (req, res) => {
 export const updateSection = async (req, res) => {
     try {
         // data input 
-        const { sectionName, sectionId } = req.body
+        const { sectionName, sectionId, courseId } = req.body
         // data validation
         if (!sectionName || !sectionId) {
             return res.status(400).json({
@@ -58,10 +58,21 @@ export const updateSection = async (req, res) => {
         }
         // update data 
         const section = await Section.findByIdAndUpdate(sectionId, { sectionName }, { new: true })
+        // get the course data
+        const course = await Course.findById(courseId)
+            .populate({
+                path: "courseContent",
+                populate: {
+                    path: "subSection",
+                },
+            })
+            .exec();
+
         // return res
         return res.status(200).json({
             success: true,
             message: "Section updated  successfully",
+            data:course
 
         })
     } catch (error) {

@@ -1,5 +1,6 @@
 import { FaCheck } from "react-icons/fa"
 import { useSelector } from "react-redux"
+import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm"
 import CourseInformationForm from "./CourseInformation/CourseInformationForm"
 const RenderSteps = () => {
     const { step } = useSelector((state) => state.course)
@@ -44,11 +45,11 @@ const RenderSteps = () => {
                 step == 1 &&
                 <CourseInformationForm />
             }
-            {/* {
+            {
                 step == 2 &&
                 <CourseBuilderForm />
             }
-            {
+            {/* {
                 step == 3 &&
                 <PublishCourse />
             } */}
