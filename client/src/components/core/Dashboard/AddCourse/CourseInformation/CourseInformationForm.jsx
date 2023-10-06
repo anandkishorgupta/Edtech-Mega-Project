@@ -139,6 +139,7 @@ const CourseInformationForm = () => {
         if (result) {
             dispatch(setStep(2))
             dispatch(setCourse(result))
+            console.log(course)
         }
         setLoading(false)
     }
