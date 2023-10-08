@@ -32,6 +32,7 @@ const Upload = ({
 
     const onDrop = (acceptedFiles) => {
         const file = acceptedFiles[0];
+        console.log(file)
         if (file) {
             previewFile(file);
             setSelectedFile(file);
@@ -69,9 +70,13 @@ const Upload = ({
                 {label}
                 <sup className="text-pink-200">*</sup>
             </label>
-            <div className="bg-richblack-700 flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500">
+            <div className={`${isDragActive ? "bg-richblack-600" : "bg-richblack-700"
+                } flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}>
                 {previewSource ? (
-                    <div className="p-5  flex justify-center flex-col items-center">
+                    <div
+                        className="p-5  flex justify-center flex-col items-center"
+
+                    >
                         {!video ? (
                             <img
                                 src={previewSource}
@@ -80,6 +85,7 @@ const Upload = ({
                             />
                         ) : (
                             <Player src={previewSource} aspectRatio="16:9" playsInline />
+                           
                         )}
                         {!viewData && (
                             <button

@@ -103,7 +103,7 @@ export const updateSubSection = async (req, res) => {
         })
     }
 };
-// delete subssection
+// delete subSection
 export const deleteSubSection = async (req, res) => {
     try {
         // fetch sub section id from body
@@ -118,15 +118,18 @@ export const deleteSubSection = async (req, res) => {
         // delete from sub section
         const deletedSubsection = await SubSection.findByIdAndDelete(subSectionId);
         // delete from section
-        await Section.findByIdAndDelete(sectionId, {
+        await Section.findByIdAndUpdate(sectionId, {
             $pull: {
                 subSection: subSectionId,
             },
         });
+        const updatedSection = await Section.findById(sectionId)
+            .populate("subSection").exec()
         // return response
         res.status(200).json({
             success: true,
             message: "sub section deleted successfully",
+            data: updatedSection
         });
     } catch (error) {
         return res.status(500).json({

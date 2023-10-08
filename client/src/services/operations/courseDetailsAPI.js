@@ -233,10 +233,35 @@ export const updateSubSection = async (data, token) => {
         const response = await apiConnector("POST", UPDATE_SUBSECTION_API, data, {
             Authorization: `Bearer ${token}`
         })
+        if (!response?.data?.success) {
+            throw new Error("Unable to update sub section")
+        }
         console.log(response)
         toast.success("subSection updated successfully")
         result = response?.data?.updatedSection
 
+    } catch (error) {
+        console.log(error)
+        toast.error(error)
+    }
+    toast.dismiss(toastId)
+    return result
+}
+
+// delete subSection
+export const deleteSubSection = async (data, token) => {
+    let result = null;
+    const toastId = toast.loading("loading....")
+    try {
+        const response = await apiConnector("POST", DELETE_SUBSECTION_API, data, {
+            Authorization: `Bearer ${token}`
+        })
+
+        if (!response?.data?.success) {
+            throw new Error("Unable to update sub section")
+        }
+        console.log(response)
+        result = response?.data?.data
     } catch (error) {
         console.log(error)
         toast.error(error)

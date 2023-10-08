@@ -37,7 +37,7 @@ const SubSectionModal = ({ modalData, setModalData, add = false, view = false, e
             console.log('from useeffect')
 
         }
-    }, [edit])
+    }, [])
 
     // check the form is updated/edited
     const isFormUpdated = () => {
@@ -71,10 +71,10 @@ const SubSectionModal = ({ modalData, setModalData, add = false, view = false, e
         const result = await updateSubSection(fromData, token)
 
         if (result) {
-            let updatedCourse = course.courseContent.map((section) => (
+            let updatedCourseContent = course.courseContent.map((section) => (
                 section._id === modalData.sectionId ? result : section
             ))
-            dispatch(setCourse({ ...course, courseContent: updatedCourse }))
+            dispatch(setCourse({ ...course, courseContent: updatedCourseContent }))
         }
         setModalData(null)
         setLoading(false)
@@ -89,7 +89,7 @@ const SubSectionModal = ({ modalData, setModalData, add = false, view = false, e
                 toast.error("No changes made to the form")
             }
             else {
-                handleEditSubSection()
+                await handleEditSubSection()
             }
             return
         }
@@ -118,7 +118,7 @@ const SubSectionModal = ({ modalData, setModalData, add = false, view = false, e
     }
 
     return (
-        <div className="pt-32 fixed inset-0 z-[1000] !mt-0  flex justify-center items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
             <div className=" my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
                 <div className="flex justify-between items-center h-[65px] bg-richblack-700 px-5">
                     {/* {
@@ -128,7 +128,9 @@ const SubSectionModal = ({ modalData, setModalData, add = false, view = false, e
                                 : ""
                 } */}
                     <p className="text-xl font-semibold text-richblack-5">{view && "Viewing"}{edit && "Editing"}{add && "Adding"} Lecture</p>
-                    <RxCross2 onClick={() => setModalData(null)} className="text-2xl cursor-pointer" />
+                    <button type="button" onClick={() => (!loading ? setModalData(null) : {})}>
+                        <RxCross2 className="text-2xl cursor-pointer" />
+                    </button>
                 </div>
                 <div className="h-[40px]"></div>
                 <form onSubmit={handleSubmit(onsubmit)} className="px-8 flex flex-col gap-y-8" >
@@ -139,16 +141,18 @@ const SubSectionModal = ({ modalData, setModalData, add = false, view = false, e
                         setValue={setValue}
                         errors={errors}
                         video={true}
-                        viewData={view ? modalData.video : null}
+                        viewData={view ? modalData.videoUrl : null}
                         editData={edit ? modalData.videoUrl : null}
                     />
                     {/* // at intial viewSubSection modalData->subSection Data
                     // at intial editSubSection modalData->subsection data+sectionId  */}
                     <div >
                         <label htmlFor="lectureTitle" className="mb-2 block text-richblack-5 text-sm">
-                            Lecture Title<sup className="text-pink-200">*</sup>
+                            Lecture Title
+                            {!view && <sup className="text-pink-200">*</sup>}
                         </label>
                         <input type="text"
+                            disabled={view || loading}
                             id="lectureTitle"
                             placeholder="Enter lecture title"
                             className="w-full form-style "
@@ -157,8 +161,9 @@ const SubSectionModal = ({ modalData, setModalData, add = false, view = false, e
                         {errors.lectureTitle && <span>
                             Lecture Title is required</span>}
                     </div>
+                    {/* lecture description */}
                     <div>
-                        <label htmlFor="lectureTitle" className="mb-2 block text-richblack-5 text-sm">
+                        <label htmlFor="lectureDesc" className="mb-2 block text-richblack-5 text-sm">
                             Lecture Description<sup className="text-pink-200">*</sup>
                         </label>
                         <textarea type="text"
