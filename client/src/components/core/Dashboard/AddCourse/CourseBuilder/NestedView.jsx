@@ -4,7 +4,9 @@ import { MdArrowDropDown, MdEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { RxDropdownMenu } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteSection } from "../../../../../services/operations/courseDetailsAPI";
 import { setCourse } from "../../../../../slices/courseSlice";
+import ConfirmationModal from "../../../../common/ConfirmationModal";
 import SubSectionModal from "./SubSectionModal";
 const NestedView = ({ handleChangeEditSectionName }) => {
     const { course } = useSelector((state) => state.course);
@@ -27,6 +29,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
         }
         setConfirmationModal(null)
     }
+
     async function handleDeleteSubSection(subSectionId, sectionId) {
         const result = await deleteSubSection({ subSectionId, sectionId, token })
         if (result) {
@@ -45,9 +48,10 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                 <RxDropdownMenu />
                                 <p>{section.sectionName}</p>
                             </div>
-                            <div className="flex items-center gap-x-3">
+                            <div className="flex ite
+                            ms-center gap-x-3">
                                 <button
-                                    onClick={handleChangeEditSectionName(
+                                    onClick={() => handleChangeEditSectionName(
                                         section._id,
                                         section.sectionName
                                     )}
@@ -73,7 +77,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                 <MdArrowDropDown className={`text-3xl text-richblack-300`} />
                             </div>
                         </summary>
-                        <div>
+                        <div className="ml-5 mt-2">
                             {section.subSection.map((data) => (
                                 <div
                                     key={data?._id}
@@ -123,23 +127,24 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                     </details>
                 ))}
             </div>
+
             {addSubSection ? (
                 <SubSectionModal
-                    modalData={addSubSection}
+                    modalData={addSubSection} //add subsection contain section id
                     setModalData={setAddSubSection}
                     add={true}
                 />
             ) : viewSubSection ? (
                 <SubSectionModal
-                    modalData={viewSubSection}
+                    modalData={viewSubSection}  //view subsection contain subsection data
                     setModalData={setViewSubSection}
                     add={true}
                 />
             ) : editSubSection ? (
                 <SubSectionModal
-                    modalData={editSubSection}
+                    modalData={editSubSection}  // editSsection contain subsection data+sectionId 
                     setModalData={setEditSubSection}
-                    add={true}
+                    edit={true}
                 />
             ) : (
                 <div></div>

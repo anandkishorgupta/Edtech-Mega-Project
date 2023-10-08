@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const RequirementField = ({
     name,
@@ -10,10 +11,10 @@ const RequirementField = ({
 }) => {
     const [requirements, setRequirements] = useState("");
     const [requirementList, setRequirementList] = useState([]);
-
+    const { course, editCourse } = useSelector((state) => state.course)
     function handleAddRequirements() {
         if (requirements) {
-            setRequirementList((prev) => [...prev, requirements]);
+            setRequirementList((prev) => [...prev, requirements.trim()]);
             setRequirements("");
         }
     }
@@ -30,31 +31,37 @@ const RequirementField = ({
         register(name, {
             required: true,
             validate: (value) => value.length > 0
-        })
+        }) // found only useful for displaying validation error , if not used errors[name]..  dont works ,You can use these methods to control the input’s value, validate it, and display error messages
+
+        if (editCourse) {
+            setRequirementList(course?.instructions)
+        }
     }, []);
-    useEffect(()=>{
-        setValue(name,requirementList)
-    },[requirementList])
+
+    useEffect(() => {
+        // valuabe in edit mode , means the input tag is in sync with requirement lists while editing
+        setValue(name, requirementList)
+    }, [requirementList])
 
     return (
-        <div className="flex flex-col"> 
+        <div className="flex flex-col">
             <label htmlFor={label} className="text-sm text-richblack-5">
                 {label} <sup className="text-pink-200">*</sup>
             </label>
             <input
-                type="text"
                 name={name}
                 id={label}
                 value={requirements}
-                onChange={(e) => setRequirements(e.target.value.trim())}
+                onChange={(e) => setRequirements(e.target.value)}
                 className="form-style"
             />
+
             <button type="button" onClick={handleAddRequirements} className="cursor-pointer text-yellow-50 font-semibold text-start mt-2">
-                {" "} 
+                {" "}
                 {/* if not use type="button" then the button works as submit */}
                 Add
             </button>
-            {requirementList.length > 0 &&
+            {requirementList?.length > 0 &&
                 requirementList.map((item, index) => (
                     <div key={index} className="flex  ">
                         <p>{item}</p>
@@ -67,7 +74,7 @@ const RequirementField = ({
                     </div>
                 ))}
 
-            {errors.name && (
+            {errors[name] && (
                 <span className="addCourseError">
                     {label} is required
                 </span>

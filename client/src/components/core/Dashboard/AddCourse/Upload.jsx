@@ -12,52 +12,72 @@ const Upload = ({
     viewData = null,
     editData = null,
 }) => {
+
+    // initially in courseInformation components where i call upload
+    // name="courseImage"
+    // label="Course Thumbnail"
+    // register={register}
+    // errors={errors}
+    // setValue={setValue}
+    // editData={editCourse ? course?.thumbnail : null}
+
     const [selectedFile, setSelectedFile] = useState(null);
+
     const [previewSource, setPreviewSource] = useState(
         viewData ? viewData : editData ? editData : ""
-    )
-    const inputRef = useRef(null)
+        // editData contain videoUrl
+    );
+
+    const inputRef = useRef(null);
+
     const onDrop = (acceptedFiles) => {
-        const file = acceptedFiles[0]
+        const file = acceptedFiles[0];
         if (file) {
-            previewFile(file)
-            setSelectedFile(file)
+            previewFile(file);
+            setSelectedFile(file);
         }
     };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        accept: !video ? { "image/*": [".jpeg", ".jpg", ".png"] } :
-            { "video/*": [".mp4"] }
-        , onDrop
+        accept: !video
+            ? { "image/*": [".jpeg", ".jpg", ".png"] }
+            : { "video/*": [".mp4"] },
+        onDrop,
     });
 
     function previewFile(file) {
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setPreviewSource(reader.result)
-        }
+            setPreviewSource(reader.result);
+        };
     }
-    useEffect(() => {
-        register(name, { required: true })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [register])
 
     useEffect(() => {
-        setValue(name, selectedFile)
+        register(name, { required: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedFile, setValue])
+    }, [register]);
+
+    useEffect(() => {
+        setValue(name, selectedFile);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedFile, setValue]);
 
     return (
         <div>
-            <label htmlFor={label} className="text-richblack-5 text-sm">{label}
-            <sup className="text-pink-200">*</sup>
+            <label htmlFor={label} className="text-richblack-5 text-sm mb-2 block">
+                {label}
+                <sup className="text-pink-200">*</sup>
             </label>
             <div className="bg-richblack-700 flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500">
                 {previewSource ? (
                     <div className="p-5  flex justify-center flex-col items-center">
                         {!video ? (
-                            <img src={previewSource} alt="preview"  className="rounded-md object-cover"/>
+                            <img
+                                src={previewSource}
+                                alt="preview"
+                                className="rounded-md object-cover"
+                            />
                         ) : (
                             <Player src={previewSource} aspectRatio="16:9" playsInline />
                         )}
@@ -76,18 +96,21 @@ const Upload = ({
                         )}
                     </div>
                 ) : (
-                    <div {...getRootProps()} className="flex flex-col items-center w-full">
-                        <input {...getInputProps()} ref={inputRef}  id={label}/>
+                    <div
+                        {...getRootProps()}
+                        className="flex flex-col items-center w-full"
+                    >
+                        <label htmlFor={label} className="text-richblack-5 text-sm mb-2 block invisible">
+                            {label}
+                            <sup className="text-pink-200">*</sup>
+                        </label>
+                        <input {...getInputProps()} ref={inputRef} id={label} />
                         <div className="bg-richblack-900 rounded-full w-fit p-4 text-yellow-50 text-2xl">
                             <FiUploadCloud />
                         </div>
                         <p className="max-w-[200px] text-sm text-center text-richblack-200">
-                            Drag and drop on {!video ? "image" : "video"},
-                            or click to {" "}
-                            <span className="font-semibold text-yellow-50">
-                                Browse 
-                            </span>
-                            a file
+                            Drag and drop on {!video ? "image" : "video"}, or click to{" "}
+                            <span className="font-semibold text-yellow-50">Browse</span>a file
                         </p>
                         <ul className="flex justify-evenly w-full text-xs text-richblack-200 list-disc mt-10">
                             <li>Aspect ratio 16:9</li>
@@ -96,13 +119,9 @@ const Upload = ({
                     </div>
                 )}
             </div>
-            {
-                errors.name && (
-                    <span className="addCourseError">
-                        {label} is required
-                    </span>
-                )
-            }
+            {errors[name] && (
+                <span className="addCourseError">{label} is required</span>
+            )}
         </div>
     );
 };

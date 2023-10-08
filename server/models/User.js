@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,   
+        required: true,
         trim: true,
     },
     password: {
@@ -61,7 +61,10 @@ const userSchema = new mongoose.Schema({
 },
     { timestamps: true }
 );
-
-
+userSchema.methods.toJSON = function () {
+    const user = this.toObject();
+    delete user.password;
+    return user;
+};
 const User = mongoose.model("User", userSchema);
 export default User

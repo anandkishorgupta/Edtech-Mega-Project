@@ -6,11 +6,12 @@ import { uploadToCloudinary } from "../utils/imageUploader.js";
 export const createSubSection = async (req, res) => {
     try {
         // fetch data
-        const { title, timeDuration, description, sectionId } = req.body;
+        const { title, description, sectionId } = req.body;
+        console.log("from create sub section")
         // extract video file
         const video = req.files.videoFile;
         // validation
-        if (!title || !timeDuration || !description || !sectionId || !video) {
+        if (!title || !description || !sectionId || !video) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required  ",
@@ -25,7 +26,7 @@ export const createSubSection = async (req, res) => {
         // save to SubSection collection
         const subSectionDetails = await SubSection.create({
             title,
-            timeDuration,
+            timeDuration: `${uploadDetails.duration}`,
             description,
             videoUrl: uploadDetails.secure_url,
         });
@@ -38,13 +39,14 @@ export const createSubSection = async (req, res) => {
                 },
             },
             { new: true }
-        ).populate("subSection");
+        ).populate("subSection").exec();
         res.status(200).json({
             success: true,
             message: "sub section created  successfully",
             updatedSection,
         });
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             success: false,
             message: "internal server error ",
@@ -74,8 +76,8 @@ export const updateSubSection = async (req, res) => {
         if (description !== undefined) {
             subSection.description = description
         }
-        if (req.files && req.files.video !== undefined) {
-            const video = req.files.video
+        if (req.files && req.files.videoFile !== undefined) {
+            const video = req.files.videoFile
             const uploadDetails = await uploadToCloudinary(
                 video,
                 process.env.FOLDER_NAME
@@ -86,9 +88,12 @@ export const updateSubSection = async (req, res) => {
 
         await subSection.save()
 
+        const updatedSection = await Section.findById(sectionId).populate("subSection")
+
         return res.json({
             success: true,
-            message: "Section updated successfully",
+            message: "sub Section updated successfully",
+            data: updatedSection
         })
     } catch (error) {
         console.error(error)
