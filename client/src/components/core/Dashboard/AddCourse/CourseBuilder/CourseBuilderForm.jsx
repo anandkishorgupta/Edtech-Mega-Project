@@ -65,6 +65,7 @@ const CourseBuilderForm = () => {
         dispatch(setStep(3))
     }
 
+    
     function cancelEdit() {
         setEditSectionName(false)
         setValue("sectionName", "")

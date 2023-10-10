@@ -4,7 +4,7 @@ const ConfirmationModal = ({ modalData }) => {
     return (
         <div className="fixed inset-0 z-[1000] !mt-0 flex justify-center items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
             <div className="flex flex-col gap-y-3 border border-richblack-400 bg-richblack-800
-             rounded-xl px-9 py-5">
+             rounded-xl px-9 py-5 w-[350px]">
                 <p className="text-2xl font-semibold">
                     {modalData.text1}
                 </p>

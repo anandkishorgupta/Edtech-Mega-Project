@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         ref: "Profile",
     },
+    // this is the enrolled courses by students 
     courses: [
         {
             type: mongoose.Schema.Types.ObjectId,

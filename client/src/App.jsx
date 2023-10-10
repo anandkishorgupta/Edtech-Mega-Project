@@ -7,6 +7,7 @@ import PrivateRoute from "./components/core/Auth/PrivateRoute"
 import AddCourse from "./components/core/Dashboard/AddCourse"
 import Cart from "./components/core/Dashboard/Cart/index"
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses"
+import MyCourses from "./components/core/Dashboard/MyCourses"
 import MyProfile from "./components/core/Dashboard/MyProfile"
 import Settings from "./components/core/Dashboard/Settings/Settings"
 import About from "./pages/About"
@@ -64,7 +65,7 @@ const App = () => {
           }
 
         >
-        
+
           <Route path="/dashboard/my-profile" element={<MyProfile />} />
           <Route path="/dashboard/settings" element={<Settings />} />
           {
@@ -75,14 +76,21 @@ const App = () => {
               </>
             )
           }
+          
           {
             user?.accountType == ACCOUNT_TYPE.INSTRUCTOR && (
               <>
                 <Route path="/dashboard/add-course" element={<AddCourse />} />
               </>
             )
+          }    
+          {
+            user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+              <>
+                <Route path="/dashboard/my-courses" element={<MyCourses />} />
+              </>
+            )
           }
-
         </Route>
 
 

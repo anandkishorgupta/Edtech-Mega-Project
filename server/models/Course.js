@@ -5,7 +5,7 @@ const courseSchema = new mongoose.Schema({
     },
     courseDescription: {
         type: String
-    }, 
+    },
     price: {
         type: Number
     },
@@ -48,10 +48,10 @@ const courseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
     },
-    studentsEnrolled: {
+    studentsEnrolled: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    },
+    }],
     status: {
         type: String,
         enum: ["Draft", "Published"],

@@ -1,8 +1,8 @@
 
 export const Spinner = () => {
     return (
-        <div>
-            <div className="loader"></div>
+        <div className="flex items-center justify-center">
+            <div className="loader "></div>
         </div>
 
     )

@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 import Category from "../models/Category.js";
 import Course from "../models/Course.js";
+import Section from "../models/Section.js";
+import SubSection from "../models/SubSection.js";
 import User from "../models/User.js";
 import { uploadToCloudinary } from "../utils/imageUploader.js";
 dotenv.config();
@@ -292,3 +295,99 @@ export const updateCourse = async (req, res) => {
     });
   }
 };
+
+
+
+// get instrctor courses
+export const getInstructorCourses = async (req, res) => {
+  try {
+    const instructorId = req.user.id;
+
+    // Find the courses belonging to the instructor
+    const instructorCourses = await Course.find({
+      instructor: instructorId
+    }).sort({ createdAt: -1 });
+
+    // Respond with the instructor's courses
+    res.status(200).json({
+      success: true,
+      data: instructorCourses
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to retrieve instructor courses",
+      error: error.message
+    });
+  }
+};
+
+
+// delete a course 
+export const deleteCourse = async (req, res) => {
+  console.log("hello from delete course ")
+  try {
+    const { courseId } = req.body
+
+    // find the course 
+    const course = await Course.findById(courseId)
+
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found"
+      })
+    }
+    // Unenroll students from the course ************
+
+    const studentsEnrolled = course.studentsEnrolled
+    //i get the array of  id of students enrolled in that course [studentId]
+    // for (const studentId of studentsEnrolled) {
+    //   await User.findByIdAndUpdate(studentId, {
+    //     $pull: {
+    //       courses: courseId
+    //     }
+    //   })
+    // }
+    // alternative way
+    // const studentsId = studentsEnrolled.map((id) => new mongoose.Types.ObjectId(id))
+    await User.updateMany(
+      { _id: { $in: studentsEnrolled } },
+      {
+        $pull: { courses: new mongoose.Types.ObjectId(courseId) }
+      }
+    )
+    // DELETE SECTION AND SUBSECTION OF THIS COURSE 
+    const courseSections = course.courseContent //courseSection contains the section id of that course -- not populated 
+
+    for (const sectionId of courseSections) {
+      const { subSection } = await Section.findById(sectionId).select("subSection").exec()
+      console.log("susectionsid...........", subSection)
+      // delete subsections
+      await SubSection.deleteMany({
+        _id: { $in: subSection }
+      })
+
+    }
+
+    // delete section***************
+    await Section.deleteMany(
+      { _id: { $in: courseSections } }
+    )
+
+    // FINALLY DELETE THE COURSE 
+    await Course.findByIdAndDelete(courseId)
+
+    return res.status(200).json({
+      success: true,
+      message: "Course deleted successfully",
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    })
+  }
+}

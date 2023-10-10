@@ -30,3 +30,73 @@
   .addCourseError{
     @apply ml-2 text-xs tracking-wide text-pink-200
   }
+
+
+
+  /* Base styles for the entire table */
+.table-auto {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Style for table headers (th) */
+.table-auto th {
+  /* background-color: #f0f0f0; */
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+}
+
+/* Style for table rows (tr) */
+.table-auto tr {
+  border-bottom: 1px solid #ccc;
+}
+
+/* Style for table data cells (td) */
+.table-auto td {
+  padding: 10px;
+}
+
+/* Style for buttons within table cells */
+.table-auto button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+/* Style for the "No Courses found" message */
+.table-auto tr.no-courses td {
+  font-style: italic;
+  color: #999;
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  /* Reduce padding for table cells on smaller screens */
+  .table-auto td {
+    padding: 5px;
+  }
+
+  /* Center-align text in table headers on smaller screens */
+  .table-auto th {
+    text-align: center;
+  }
+
+  /* Center-align text in table data cells on smaller screens */
+  .table-auto td {
+    text-align: center;
+  }
+
+  /* Hide some columns on smaller screens */
+  .table-auto td.hide-on-small-screen {
+    display: none;
+  }
+
+  /* Style for buttons on smaller screens */
+  .table-auto button {
+    padding: 5px 8px;
+  }
+}
