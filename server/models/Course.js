@@ -48,6 +48,7 @@ const courseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"
     },
+    // array of students enrolled in particular course
     studentsEnrolled: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

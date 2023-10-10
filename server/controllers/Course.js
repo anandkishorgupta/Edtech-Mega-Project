@@ -218,6 +218,49 @@ export const getCourseDetails = async (req, res) => {
   }
 };
 
+// get full course details       
+export const getFullCourseDetails = async (req, res) => {
+  try {
+    const { courseId } = req.body
+    const userId = req.user.id
+    const courseDetails = await Course.findById(courseId)
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionalDetails"
+        }
+      })
+      .populate("ratingAndReviews")
+      .populate("category")
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection"
+        }
+      }).exec()
+
+    if (!courseDetails) {
+      return res.status(400).json({
+        success: false,
+        message: `course with course id ${courseId} not exist`
+      })
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {courseDetails}
+
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      success: false,
+      message: error
+    })
+
+  }
+}
+
 // update course detail
 export const updateCourse = async (req, res) => {
   console.log(
@@ -298,7 +341,7 @@ export const updateCourse = async (req, res) => {
 
 
 
-// get instrctor courses
+// get instructor courses
 export const getInstructorCourses = async (req, res) => {
   try {
     const instructorId = req.user.id;

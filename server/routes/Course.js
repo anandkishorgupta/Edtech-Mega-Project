@@ -1,6 +1,6 @@
 import express from "express";
 import { categoryPageDetails, createCategory, showAllCategory } from "../controllers/Category.js";
-import { createCourse, deleteCourse, getCourseDetails, getInstructorCourses, showAllCourses, updateCourse } from "../controllers/Course.js";
+import { createCourse, deleteCourse, getCourseDetails, getFullCourseDetails, getInstructorCourses, showAllCourses, updateCourse } from "../controllers/Course.js";
 import { createRating, getAllRating, getAverageRating } from "../controllers/RatingAndReview.js";
 import { createSection, deleteSection, updateSection } from "../controllers/Section.js";
 import { createSubSection, deleteSubSection, updateSubSection } from "../controllers/SubSection.js";
@@ -15,12 +15,16 @@ router.post("/createCourse", auth, isInstructor, createCourse)
 router.get("/getAllCourses", showAllCourses)
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails)
+// getFullCourseDetails
+router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 // update course 
 router.patch("/editCourse", auth, isInstructor, updateCourse)
 // delete course
 router.post("/deleteCourse", auth, isInstructor, deleteCourse)
 // getInstructorCourses
 router.post("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
+
+
 
 // add section to the course 
 router.post("/addSection", auth, isInstructor, createSection)

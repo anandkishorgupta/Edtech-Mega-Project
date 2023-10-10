@@ -1,5 +1,6 @@
 import RenderSteps from "./RenderSteps"
 const AddCourse = () => {
+  
   return (
     <>
       <div className="flex flex-row  justify-between gap-x-5">

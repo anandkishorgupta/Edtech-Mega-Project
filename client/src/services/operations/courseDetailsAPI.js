@@ -70,9 +70,6 @@ export const fetchCourseDetails = async (courseId) => {
 
         }
         result = response.data
-
-
-
     } catch (error) {
         console.log("course detail api error", error)
         result = error.response.data
@@ -81,6 +78,29 @@ export const fetchCourseDetails = async (courseId) => {
     toast.dismiss(toastId)
     return result
 }
+// getFullCourseDetails
+export const getFullCourseDetails = async (courseId, token) => {
+    let result;
+    const toastId = toast.loading("loading....")
+    try {
+        const response = await apiConnector("POST", GET_FULL_COURSE_DETAILS_AUTHENTICATED, { courseId }, {
+            Authorization: `Bearer ${token}`
+        })
+        if (!response) {
+            throw new Error("unable to get full course details")
+        }
+        console.log("GET_FULL_COURSE_DETAILS_AUTHENTICATED.......", response)
+        result = response?.data?.data
+    } catch (error) {
+        console.log(error)
+        toast.error(error)
+    }
+    toast.dismiss(toastId)
+    return result
+}
+
+
+
 
 
 // create course  

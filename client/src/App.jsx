@@ -6,6 +6,7 @@ import OpenRoute from "./components/core/Auth/OpenRoute"
 import PrivateRoute from "./components/core/Auth/PrivateRoute"
 import AddCourse from "./components/core/Dashboard/AddCourse"
 import Cart from "./components/core/Dashboard/Cart/index"
+import EditCourse from "./components/core/Dashboard/EditCourse"
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses"
 import MyCourses from "./components/core/Dashboard/MyCourses"
 import MyProfile from "./components/core/Dashboard/MyProfile"
@@ -76,14 +77,14 @@ const App = () => {
               </>
             )
           }
-          
+
           {
             user?.accountType == ACCOUNT_TYPE.INSTRUCTOR && (
               <>
                 <Route path="/dashboard/add-course" element={<AddCourse />} />
               </>
             )
-          }    
+          }
           {
             user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
               <>
@@ -91,6 +92,13 @@ const App = () => {
               </>
             )
           }
+          {
+            user?.accountType === ACCOUNT_TYPE.INSTRUCTOR &&
+            <>
+              <Route path="/dashboard/add-course/:courseId" element={<EditCourse />} />
+            </>
+          }
+
         </Route>
 
 

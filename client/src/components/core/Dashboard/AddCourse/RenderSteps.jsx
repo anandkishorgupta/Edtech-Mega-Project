@@ -19,6 +19,7 @@ const RenderSteps = () => {
             title: "Publish"
         }
     ]
+
     return (
         <>
             <div className="flex">
