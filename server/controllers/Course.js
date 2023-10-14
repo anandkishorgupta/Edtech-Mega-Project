@@ -10,8 +10,7 @@ dotenv.config();
 
 // create course handler function
 export const createCourse = async (req, res) => {
-  console.log("*************************************************************");
-  console.log(process.env.FOLDER_NAME);
+
   try {
     // get user id from request body
     const userId = req.user.id;
@@ -111,7 +110,7 @@ export const createCourse = async (req, res) => {
       { new: true }
     );
 
-    // update the category schema
+    // update the category schema-- include the course in category schema 
     await Category.findByIdAndUpdate(
       { _id: category },
       {
@@ -218,7 +217,7 @@ export const getCourseDetails = async (req, res) => {
   }
 };
 
-// get full course details       
+// get full course details authenticated       
 export const getFullCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body
@@ -248,7 +247,7 @@ export const getFullCourseDetails = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: {courseDetails}
+      data: { courseDetails }
 
     })
   } catch (error) {
@@ -369,7 +368,6 @@ export const getInstructorCourses = async (req, res) => {
 
 // delete a course 
 export const deleteCourse = async (req, res) => {
-  console.log("hello from delete course ")
   try {
     const { courseId } = req.body
 
@@ -393,7 +391,6 @@ export const deleteCourse = async (req, res) => {
     //   })
     // }
     // alternative way
-    // const studentsId = studentsEnrolled.map((id) => new mongoose.Types.ObjectId(id))
     await User.updateMany(
       { _id: { $in: studentsEnrolled } },
       {
@@ -427,6 +424,64 @@ export const deleteCourse = async (req, res) => {
     })
   } catch (error) {
     console.error(error)
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    })
+  }
+}
+
+
+// DELETE MANY COURSES AT ONCE 
+export const deleteManyCourses = async (req, res) => {
+  try {
+
+    const { courseId } = req.body
+
+    // find the course 
+    const course = await Course.findById(courseId)
+
+    if (!course) {
+      return res.status(404).json({
+        message: "Course not found"
+      })
+    }
+    // Unenroll students from the course ************
+
+    const studentsEnrolled = course.studentsEnrolled
+    await User.updateMany(
+      { _id: { $in: studentsEnrolled } },
+      {
+        $pull: { courses: new mongoose.Types.ObjectId(courseId) }
+      }
+    )
+    // DELETE SECTION AND SUBSECTION OF THIS COURSE 
+    const courseSections = course.courseContent //courseSection contains the section id of that course -- not populated 
+
+    for (const sectionId of courseSections) {
+      const { subSection } = await Section.findById(sectionId).select("subSection").exec()
+      console.log("susectionsid...........", subSection)
+      // delete subsections
+      await SubSection.deleteMany({
+        _id: { $in: subSection }
+      })
+
+    }
+
+    // delete section***************
+    await Section.deleteMany(
+      { _id: { $in: courseSections } }
+    )
+
+    // FINALLY DELETE THE COURSE 
+    await Course.findByIdAndDelete(courseId)
+
+    return res.status(200).json({
+      success: true,
+      message: "Course deleted successfully",
+    })
+  } catch (error) {
     return res.status(500).json({
       success: false,
       message: "Server error",

@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks } from "../../data/navbar-links";
-import { apiConnector } from "../../services/apiconnector";
-import { categories } from "../../services/apis";
+import { fetchCourseCategories } from "../../services/operations/courseDetailsAPI";
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
 export const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
@@ -18,8 +17,9 @@ export const Navbar = () => {
 
   const fetchSublinks = async () => {
     try {
-      const result = await apiConnector("GET", categories.CATEGORIES_API);
-      setSubLinks(result.data.allCategory);
+      const result = await fetchCourseCategories()
+      console.log("categories...................", result)
+      setSubLinks(result);
     } catch (error) {
       console.log("cannot fetch the category list");
     }
@@ -48,7 +48,6 @@ export const Navbar = () => {
                   <div className="relative flex flex-row items-center group ">
                     <p>{link.title}</p>
                     <BiChevronDown />
-
                     <div
                       className="opacity-0 invisible  absolute left-[50%] top-[50%] translate-x-[-51%] translate-y-[32%] flex 
                         flex-col rounded-md bg-richblack-5 p-4 text-richblue-900 transition-all duration-200 
@@ -56,23 +55,22 @@ export const Navbar = () => {
                     >
                       <div className="absolute left-[50%] top-0 h-6 w-6 rotate-45 bg-richblack-5 translate-x-[80%] translate-y-[-45%] "></div>
                       {
-                        subLinks.length > 0 ? (
-                          subLinks.map((subLink, index) => {
-                            return <Link to={"/"} key={index}>
-                              <p >{subLink?.name}</p>
-                            </Link>;
-                          })
-                        ) : (
-                          <div>error</div>
-                        )}
+                        subLinks?.length > 0
+                        && subLinks.filter((sublink) => sublink?.courses?.length > 0)
+                          .map((subLink, index) => (
+                            <Link to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`} key={index}>
+                              <p className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50">{subLink?.name}</p>
+                            </Link>
+                          ))
+                      }
                     </div>
                   </div>
                 ) : (
                   <Link to={link?.path}>
                     <p
                       className={`${matchRoute(link?.path)
-                          ? "text-yellow-25"
-                          : "text-richblack-25"
+                        ? "text-yellow-25"
+                        : "text-richblack-25"
                         }`}
                     >
                       {link.title}

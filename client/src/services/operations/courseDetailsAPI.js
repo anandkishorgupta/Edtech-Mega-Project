@@ -38,6 +38,11 @@ export const fetchCourseCategories = async () => {
     }
     return result
 }
+
+
+
+
+
 //   GET ALL COURSES 
 export const getAllCourses = async () => {
     const toastId = toast.loading("Loading.....")

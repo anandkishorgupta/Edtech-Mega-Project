@@ -12,6 +12,7 @@ import MyCourses from "./components/core/Dashboard/MyCourses"
 import MyProfile from "./components/core/Dashboard/MyProfile"
 import Settings from "./components/core/Dashboard/Settings/Settings"
 import About from "./pages/About"
+import Catalog from "./pages/Catalog"
 import ContactUs from "./pages/ContactUs"
 import Dashboard from "./pages/Dashboard"
 import Error from "./pages/Error"
@@ -57,6 +58,8 @@ const App = () => {
         } />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
+
+        <Route path="/catalog/:catalogName" element={<Catalog />} />
 
         <Route
           element={

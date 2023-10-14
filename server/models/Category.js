@@ -2,14 +2,16 @@ import mongoose from "mongoose";
 const categorySchema = new mongoose.Schema({
     name: {
         type: String,
+        trim:true,
         required: true
+  
     },
     description: {
         type: String
     },
     courses: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Courses"
+        ref: "Course"
     }]
 })
 const Category = mongoose.model("Category", categorySchema)

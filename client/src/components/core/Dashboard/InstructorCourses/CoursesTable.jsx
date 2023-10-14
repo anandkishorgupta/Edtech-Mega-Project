@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCourse, fetchInstructorCourse } from "../../../../services/operations/courseDetailsAPI";
@@ -10,6 +11,13 @@ const CoursesTable = ({ courses, setCourses, loading, setLoading }) => {
     const dispatch = useDispatch()
     const { token } = useSelector((state) => state.auth)
     const navigate = useNavigate()
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm();
+    const TRUNCATE_LENGTH = 30;
     // const [loading, setLoading] = useState(false)
     const [confirmationModal, setConfirmationModal] = useState(null)
     async function handleCourseDelete(courseId) {
@@ -27,12 +35,10 @@ const CoursesTable = ({ courses, setCourses, loading, setLoading }) => {
 
 
         loading ? (<Spinner />) : (
-
-
-
             <table className="table-auto w-full">
                 <thead>
                     <tr className=" ">
+
                         <th>
                             Courses
                         </th>
@@ -58,11 +64,20 @@ const CoursesTable = ({ courses, setCourses, loading, setLoading }) => {
                     ) : (
                         courses?.map((course) => (
                             <tr key={course._id} >
+
                                 <td className="flex ">
                                     <img src={course?.thumbnail} alt="" className="h-[150px] w-[220px] rounded-lg object-cover" />
                                     <div className="flex flex-col">
                                         <p>{course.courseName}</p>
-                                        <p>{course.courseDescription}</p>
+
+                                        <p className="text-xs text-richblack-300"
+                                        >
+                                            {
+                                                course.courseDescription > TRUNCATE_LENGTH
+                                                    ? course.courseDescription.split(" ").slice(0, TRUNCATE_LENGTH).join(" ")
+                                                    + "..." : course.courseDescription
+                                            }
+                                        </p>
                                         <p>Created: {dateFormatter(course?.createdAt)}</p>
                                         {
                                             course.status === COURSE_STATUS.DRAFT ? (
@@ -72,6 +87,7 @@ const CoursesTable = ({ courses, setCourses, loading, setLoading }) => {
                                             )
                                         }
                                     </div>
+
                                 </td>
                                 <td>
                                     duration
@@ -111,11 +127,7 @@ const CoursesTable = ({ courses, setCourses, loading, setLoading }) => {
                 {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
 
             </table>
-
-
         )
-
-
     )
 }
 

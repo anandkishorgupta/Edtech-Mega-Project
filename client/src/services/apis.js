@@ -14,7 +14,10 @@ export const endpoints = {
 export const categories = {
     CATEGORIES_API: BASE_URL + "/course/showAllCategory" //fetch all categories
 }
-
+// catalog page data
+export const catalogData = {
+    CATALOGPAGEDATA_API: BASE_URL + "/course/getCategoryPageDetails"
+}
 
 // PROFILE ENDPOINTS 
 export const profileEndpoints = {
@@ -30,7 +33,7 @@ export const courseEndpoints = {
     COURSE_CATEGORIES_API: BASE_URL + "/course/showAllCategory",
     CREATE_COURSE_API: BASE_URL + "/course/createCourse",
     CREATE_SECTION_API: BASE_URL + "/course/addSection",
-    CREATE_SUBSECTION_API: BASE_URL + "/course/addSubSection",  
+    CREATE_SUBSECTION_API: BASE_URL + "/course/addSubSection",
     UPDATE_SECTION_API: BASE_URL + "/course/updateSection",
     UPDATE_SUBSECTION_API: BASE_URL + "/course/updateSubSection",
     GET_ALL_INSTRUCTOR_COURSES_API: BASE_URL + "/course/getInstructorCourses",
