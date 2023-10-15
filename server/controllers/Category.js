@@ -59,7 +59,7 @@ export const categoryPageDetails = async (req, res) => {
                 populate: "ratingAndReviews"
             }).exec()  //return the document having course status "published"
 
-        console.log("selected category data ....", selectedCategory)
+        // console.log("selected category data ....", selectedCategory)
         // validation
         if (!selectedCategory) {
             return res.status(400).json({
@@ -80,15 +80,15 @@ export const categoryPageDetails = async (req, res) => {
         const categoriesExceptSelected = await Category.find({
             _id: { $ne: new mongoose.Types.ObjectId(categoryId) }
         })
-
+        // console.log("categoriesExceptSelected....", categoriesExceptSelected)
         let differentCategory = await Category.findOne(
             categoriesExceptSelected[Math.floor(Math.random() * (categoriesExceptSelected.length))]
                 ._id
-        )
-            .populate({
-                path: "courses",
-                match: { status: "Published" }
-            }).exec()
+        ).populate({
+            path: "courses",
+            match: { status: "Published" },
+            populate: "ratingAndReviews"
+        }).exec()
 
         // top selling courses
         const allCategories = await Category.find()
@@ -96,16 +96,18 @@ export const categoryPageDetails = async (req, res) => {
                 path: "courses",
                 match: { status: "Published" },
                 populate: {
-                    path: "instructor"
+                    path: "instructor",
+                    select: '-password' //password is ignored 
                 }
             }).exec()
-        console.log(allCategories)
+        // console.log("allCategories...............", allCategories)
         // const allCourses = [].concat(...allCategories.map(category => category.courses))
         const allCourses = allCategories.flatMap((category) => category.courses)
-        console.log(allCourses)
+        // console.log("all courses ............", allCourses)
         const mostSellingCourses = allCourses
             .sort((a, b) => b.sold - a.sold)
             .slice(0, 10)
+        console.log("mostSellingCourses.....", mostSellingCourses)
         // return response 
         res.status(200).json({
             success: true,

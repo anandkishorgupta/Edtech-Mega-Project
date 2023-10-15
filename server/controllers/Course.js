@@ -172,8 +172,9 @@ export const getCourseDetails = async (req, res) => {
   try {
     // fetch courseId
     const { courseId } = req.body;
-    // validation
-    if (courseId) {
+    console.log(courseId)
+    // validation    
+    if (!courseId) {
       return res.status(400).json({
         success: false,
         message: "Invalid course Id ",

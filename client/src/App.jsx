@@ -14,6 +14,7 @@ import Settings from "./components/core/Dashboard/Settings/Settings"
 import About from "./pages/About"
 import Catalog from "./pages/Catalog"
 import ContactUs from "./pages/ContactUs"
+import CourseDetails from "./pages/CourseDetails"
 import Dashboard from "./pages/Dashboard"
 import Error from "./pages/Error"
 import ForgotPassword from "./pages/ForgotPassword"
@@ -60,7 +61,7 @@ const App = () => {
         <Route path="/contact" element={<ContactUs />} />
 
         <Route path="/catalog/:catalogName" element={<Catalog />} />
-
+        <Route path="/courses/:courseId" element={<CourseDetails />} />
         <Route
           element={
             <PrivateRoute>

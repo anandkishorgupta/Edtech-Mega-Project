@@ -36,51 +36,56 @@ const Catalog = () => {
         }
     }, [categoryId]);
     return (
-        <div className="text-white">
-            <div>
-                <p>{`Home / Catalog / `}
-                    <span>
+        <div >
+            <div className="bg-richblack-800">
+
+                <div className="w-11/12 max-w-maxContent mx-auto min-h-[250px] flex flex-col justify-center">
+                    <p className="text-sm text-richblack-300">{`Home / Catalog / `}
+                        <span className="text-yellow-25 font-semibold">
+                            {catalogPageData?.data?.selectedCategory?.name}
+                        </span>
+                    </p>
+                    <p className="text-3xl text-richblack-5">
                         {catalogPageData?.data?.selectedCategory?.name}
-                    </span>
-                </p>
-                <p>
-                    {catalogPageData?.data?.selectedCategory?.name}
 
-                </p>
-                <p>
-                    {catalogPageData?.data?.selectedCategory?.description}
+                    </p>
+                    <p className="max-w-[870px] text-richblack-200">
+                        {catalogPageData?.data?.selectedCategory?.description}
 
-                </p>
+                    </p>
+                </div>
             </div>
-            <div>
+
+            <div className="text-white w-11/12 max-w-maxContent mx-auto flex flex-col gap-y-20" >
                 {/* section 1 */}
-                <div>
-                    <div>Courses to get you started</div>
+                <div className="mt-16">
+                    <div className="font-bold text-4xl mb-6">Courses to get you started</div>
                     <div className=" gap-x-3 my-4 flex border-b border-b-richblack-600 text-sm">
                         <p onClick={() => setClickedTab("Most popular")}
-                            className={`${clickedTab === "Most popular" ? "text-yellow-200 border-b-2 border-yellow-200" : " "}`}
+                            className={`${clickedTab === "Most popular" ? "border-b border-b-yellow-25 text-yellow-25 " : " "} cursor-pointer px-4 py-2`}
                         >Most popular</p>
                         <p onClick={() => setClickedTab("New")}
-                            className={`${clickedTab === "New" ? "text-yellow-200  border-b-2 border-yellow-200" : " "}`}
+                            className={`${clickedTab === "New" ? " border-b border-b-yellow-25 text-yellow-25 " : " "} cursor-pointer px-4 py-2`}
                         >new</p>
                     </div>
                     <CourseSlider courses={catalogPageData?.data?.selectedCategory?.courses} />
                 </div>
                 {/* section 2 */}
                 <div>
-                    <p>Top courses in {catalogPageData?.data?.selectedCategory?.name}</p>
-                    <div>
+                    <p className="font-bold text-4xl mb-10">Top courses in {catalogPageData?.data?.selectedCategory?.name}</p>
+                    <div  >
                         <CourseSlider courses={catalogPageData?.data?.differentCategory?.courses} />
                     </div>
                 </div>
                 {/* section 3 */}
                 <div>
-                    <p>Frequently bought </p>
+                    <p className="font-bold text-4xl mb-10">Frequently bought </p>
                     <div className="py-8">
-                        <div className="grid grid-cols-1 lg:grid-cols-2">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-10 gap-x-10">
+
                             {
                                 catalogPageData?.data?.mostSellingCourses?.slice(0, 4).map((course, index) => (
-                                    <Course_Card course={course} key={index} Height={"h-[400px]"} />
+                                    <Course_Card course={course} key={index} Height={"h-[250px]"} />
                                 ))
                             }
                         </div>

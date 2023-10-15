@@ -12,19 +12,19 @@ const Course_Card = ({ course, Height }) => {
     return (
         <div>
             <Link to={`/courses/${course._id}`}>
-                <div className='flex flex-col'>
-                    <div >
+                <div className='flex flex-col gap-y-2 '>
+                    <div>
                         <img src={course?.thumbnail} alt="" className={`${Height} w-full rounded-xl object-cover`} />
                     </div>
-                    <div>
-                        <p>{course.courseName}</p>
+                    <div className='flex flex-col gap-y-1'>
+                        <p className='text-xl text-richblack-5 font-semibold'>{course.courseName}</p>
                         <p>By {course?.instructor?.firstName} {course?.instructor?.lastName}</p>
                         <div className='flex gap-x-3'>
-                            <span>{avgReviewCount || 0}</span>
+                            <span className='text-yellow-5'>{avgReviewCount || 0}</span>
                             <RatingStars Review_Count={avgReviewCount} />
-                            <span>{course?.ratingAndReviews?.length} ratings</span>
+                            <span className='text-richblack-400'>{course?.ratingAndReviews?.length} ratings</span>
                         </div>
-                        <p>{course.price}</p>
+                        <p className='text-xl text-richblack-5'>Rs. {course.price}</p>
                     </div>
                 </div>
             </Link>
