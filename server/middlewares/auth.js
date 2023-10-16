@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 // auth
 export const auth = async (req, res, next) => {
     try {
-        console.log("from auth")
+        // console.log("from auth")
         // extract token
         const token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "");
         console.log(token)
@@ -16,8 +16,8 @@ export const auth = async (req, res, next) => {
         // verify the token
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET)
-            console.log(decode)
-            console.log(decode)
+            // console.log(decode)
+            // console.log(decode)
             req.user = await decode
 
         } catch (error) {
@@ -46,7 +46,7 @@ export const isStudent = async (req, res, next) => {
                 message: "This is protected route for student only"
             })
         }
-
+        next()
     } catch (error) {
         return req.status(500).json({
             success: false,

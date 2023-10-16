@@ -4,7 +4,7 @@ import { auth, isStudent } from "../middlewares/auth.js";
 const router = express.Router()
 
 router.post("/capturePayment", auth, isStudent, capturePayment)
-router.post("/verifySignature", auth, isStudent, verifyPayment)
+router.post("/verifyPayment", auth, isStudent, verifyPayment)
 router.post("/sendPaymentSuccessEmail", auth, isStudent, sendPaymentSuccessEmail)
 
 export default router

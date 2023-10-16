@@ -10,6 +10,7 @@ const EnrolledCourses = () => {
   const getEnrolledCourses = async () => {
     try {
       const response = await geUserEnrolledCourses(token); // i am returning course data
+      console.log(response)
       setEnrolledCourses(response);
     } catch (error) {
       console.log("Unable to fetch  Enrolled Courses ");
@@ -26,9 +27,9 @@ const EnrolledCourses = () => {
       ) : !enrolledCourses.length ? (
         <p>not enrolled yet</p>
       ) : (
-        <div>
+        <div>   
           <div>
-            <p>Course Name</p>
+            <p>{enrolledCourses.courseName}</p>
             <p>Duration</p>
             <p>Progress</p>
           </div>

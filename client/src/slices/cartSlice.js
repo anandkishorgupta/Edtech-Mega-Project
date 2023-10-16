@@ -14,7 +14,6 @@ const cartSlice = createSlice({
     name: "cart",
     initialState: initialState,
     reducers: {
-
         addToCart(state, action) {
             const course = action.payload
             const index = state.cart.findIndex((item) => item._id === course._id)
@@ -23,7 +22,7 @@ const cartSlice = createSlice({
                 return
             }
             // add the course to cart
-            state.push(course)
+            state.cart.push(course)
             // update the total quantity and price
             state.totalItems++
             state.total += course.price
@@ -66,5 +65,5 @@ const cartSlice = createSlice({
         }
     }
 })
-export const { addToCart,removeFromCart,resetCart } = cartSlice.actions
+export const { addToCart, removeFromCart, resetCart } = cartSlice.actions
 export default cartSlice.reducer

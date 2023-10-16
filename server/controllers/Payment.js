@@ -1,10 +1,6 @@
-// import mongoose from "mongoose";
-import { instance } from "../config/razorpay.js";
-// import Course from "../models/Course.js";
-// import User from "../models/User.js";
-// import mailSender from "../utils/mailSender.js";
-
+import crypto from "crypto";
 import mongoose from "mongoose";
+import { instance } from "../config/razorpay.js";
 import { courseEnrollmentEmail } from "../mail/templates/courseEnrollmentEmail.js";
 import { paymentSuccessEmail } from "../mail/templates/paymentSuccessEmail.js";
 import Course from "../models/Course.js";
@@ -13,6 +9,7 @@ import mailSender from "../utils/mailSender.js";
 
 export const capturePayment = async (req, res) => {
     const { courses } = req.body // id of all courses
+    console.log("courses**********************************", courses)
     const userId = req.user.id
     if (courses.length === 0) {
         return res.json({
@@ -75,12 +72,12 @@ export const capturePayment = async (req, res) => {
 
 // verify the payment
 export const verifyPayment = async (req, res) => {
+    console.log("from very payment backed...........", req.body)
     const razorpay_order_id = req.body?.razorpay_order_id
     const razorpay_payment_id = req.body?.razorpay_payment_id
     const razorpay_signature = req.body?.razorpay_signature
-
-    const courses = req.body?.courses; //courses id 
-    const userId = req.body.id
+    const courses = req.body?.courses; //courses id array
+    const userId = req.user.id
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
         return res.status(200).json({
@@ -89,32 +86,36 @@ export const verifyPayment = async (req, res) => {
         })
     }
     let body = razorpay_order_id + "|" + razorpay_payment_id
-    const expectedSignature = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET)
+    const expectedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_SECRET)
         .update(body.toString())
         .digest("hex")
 
     if (expectedSignature === razorpay_signature) {
+        console.log("signature matched ............")
         // enroll the student
         await enrolledStudent(courses, userId, res)
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             message: "payement verified"
         })
     }
-    return res.status(200).json({
-        success: false,
-        message: "Payment failed"
-    })
+    else {
+        return res.status(200).json({
+            success: false,
+            message: "Payment failed"
+        })
+    }
 }
 
 const enrolledStudent = async (courses, userId, res) => {
-    if (!courses || !userId) {
+    console.log("-----------------------------------------------------", courses)
+    if (courses.length === 0 || !userId) {
         return res.status(400).json({
             success: false,
             message: "Please provide data for courses or UserId"
         })
     }
-
     try {
         for (const courseId of courses) {
             // enroll the user id in course document
@@ -163,7 +164,7 @@ const enrolledStudent = async (courses, userId, res) => {
 }
 
 // send email succesfull
-export const sendPaymentSuccessEmail = async (req, res){
+export const sendPaymentSuccessEmail = async (req, res) => {
     const { orderId, paymentId, amount } = req.body
     const userId = req.user.id
     if (!orderId || !paymentId || !amount || !userId) {
