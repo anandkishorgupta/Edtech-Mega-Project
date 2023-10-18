@@ -416,9 +416,17 @@ export const deleteCourse = async (req, res) => {
       { _id: { $in: courseSections } }
     )
 
+    // DELETE COURSE FROM CATEGORY
+    await Category.findByIdAndUpdate(course.category, {
+      $pull: {
+        courses: course._id
+      }
+    })
+
     // FINALLY DELETE THE COURSE 
     await Course.findByIdAndDelete(courseId)
 
+    // SEND RESPONSE
     return res.status(200).json({
       success: true,
       message: "Course deleted successfully",

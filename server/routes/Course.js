@@ -42,12 +42,6 @@ router.post("/updateSubSection", auth, isInstructor, updateSubSection)
 router.post("/deleteSubSection", auth, isInstructor, deleteSubSection)
 
 
-
-
-
-
-
-
 // category
 router.post("/create-category", auth, isAdmin, createCategory)
 router.get("/showAllCategory", showAllCategory)

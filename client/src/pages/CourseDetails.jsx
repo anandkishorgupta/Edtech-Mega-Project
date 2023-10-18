@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react'
 import { toast } from "react-hot-toast"
+import { AiOutlineInfoCircle } from "react-icons/ai"
+import { CiGlobe } from "react-icons/ci"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import ConfirmationModal from '../components/common/ConfirmationModal'
+import Footer from '../components/common/Footer'
 import RatingStars from '../components/common/RatingStars'
 import { Spinner } from '../components/common/Spinner'
 import CourseDetailsCard from '../components/core/course/CourseDetailsCard'
+import CoursesCollapse from '../components/core/course/CoursesCollapse'
 import { fetchCourseDetails } from '../services/operations/courseDetailsAPI'
 import { buyCourse } from "../services/operations/studentsFeaturesAPI"
 import { GetAvgRatings } from '../utils/avgratings'
@@ -46,7 +50,7 @@ const CourseDetails = () => {
     }, [courseData])
 
     const [isActive, setIsActive] = useState([])
-    
+
     const handleActive = (id) => {
         setIsActive(
             !isActive.includes(id)
@@ -104,15 +108,16 @@ const CourseDetails = () => {
 
     return (
         <>
-            <div className='w-11/12 max-w-maxContent mx-auto'>
+            <div >
                 {
                     courseData &&
-                    <div>
+                    <div className=' bg-richblack-800'>
                         {/* section 1 */}
-                        <div className='relative'>
-                            <div className='flex flex-col '>
-                                <p>{courseData.courseName}</p>
-                                <p>{courseData.courseDescription}</p>
+                        <div className='relative w-11/12 max-w-maxContent mx-auto'>
+                            <div className='h-[100px]'></div>
+                            <div className='flex flex-col gap-y-3 w-[65%]'>
+                                <p className='text-4xl font-bold text-richblack-5 sm:text-[42px]'>{courseData.courseName}</p>
+                                <p className='text-richblack-200'>{courseData.courseDescription}</p>
                                 <div className='flex flex-row items-center'>
                                     <span>{avgReviewCount}</span>
                                     {" "}
@@ -123,36 +128,79 @@ const CourseDetails = () => {
                                     <span>{`${courseData.courseContent.length} students`}</span>
                                 </div>
                                 <p>Created By: {courseData.instructor.firstName} {courseData.instructor.lastName}</p>
-                                <div className='flex flex-row'>
+                                <div className='flex flex-row items-center gap-x-2 text-richblack-5'>
+                                    <AiOutlineInfoCircle/>
                                     <p>Created at : {dateFormatter(courseData.createdAt)}</p>
+                                    {" "}
+                                    <CiGlobe className='text-richblack-5' />
                                     <p>English</p>
                                 </div>
                             </div>
-                            <div>
+                            <div className='absolute right-0 top-0 translate-y-[7%] max-w-[410px] '>
                                 <CourseDetailsCard
                                     courseData={courseData}
                                     setConfirmationModal={setConfirmationModal}
                                     handleBuyCourse={handleBuyCourse}
-
                                 />
                             </div>
+                            <div className='h-[100px]'></div>
                         </div>
-                        <div>
-                            <p>What you&apos;ll learn</p>
-                            <p>{courseData?.whatYouWillLearn}</p>
-                        </div>
-                        <div className='flex flex-row gap-x-2 justify-between'>
-                            <div className='flex flex-row gap-x-2'>
-                                <p>{courseData?.courseContent?.length} section(s)</p>
-                                <p>{totalNoOfLectures} lecture(s)</p>
-                                <p>{parseFloat(timeDuration).toFixed(2)} total length</p>
+                        {/* section 2 */}
+                        <div className='bg-richblack-900'>
+                            <div className='h-[50px]'></div>
+                            <div className='w-11/12 mx-auto max-w-maxContent '>
+                                {/* what you will learn */}
+                                <div className='w-[65%]'>
+                                    <div className=' flex flex-col gap-y-3 p-8 border border-richblack-600 '>
+                                        <p className='font-semibold text-3xl'>What you&apos;ll learn</p>
+                                        {/* <pre>
+                                            <ul className='list-disc'>
+                                                <li className='list-disc'>
+                                                    {courseData?.whatYouWillLearn}
+                                                </li>
+                                            </ul>
+                                        </pre> */}
+                                        <pre>
+                                            <ul className='list-disc'>
+                                                {
+                                                    courseData?.whatYouWillLearn.split('\n').map((line, index) => (
+                                                        <li key={index}>
+                                                            {line}
+                                                        </li>
+                                                    ))
+                                                }
+                                            </ul>
+                                        </pre>
+
+                                    </div>
+                                    <div className='h-[50px]'></div>
+                                    <p className='text-4xl font-bold mb-2'>Course Content</p>
+                                    <div className='flex flex-row gap-x-2 justify-between mb-2'>
+                                        <div className='flex flex-row gap-x-2'>
+                                            <p>{courseData?.courseContent?.length} section(s)</p>
+                                            <p>{totalNoOfLectures} lecture(s)</p>
+                                            <p>{parseFloat(timeDuration).toFixed(2)} total length</p>
+                                        </div>
+                                        <button onClick={() => setIsActive([])}
+                                            className='text-yellow-25'
+                                        >
+                                            Collapse all sections
+                                        </button>
+                                    </div>
+                                    <div className='mb-20'>
+                                        <CoursesCollapse
+                                            handleActive={handleActive}
+                                            courseData={courseData}
+                                            isActive={isActive}
+                                            setIsActive={setIsActive}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <button onClick={()=>setIsActive([])}>
-                                collapse all
-                            </button>
                         </div>
                     </div>
                 }
+                <Footer />
             </div>
             {
                 confirmationModal && <ConfirmationModal modalData={confirmationModal} />

@@ -167,11 +167,17 @@ export const updateDisplayPicture = async (req, res) => {
 export const getEnrolledCourses = async (req, res) => {
   try {
     const userId = req.user.id
-    const userDetails = await User.findOne({
-      _id: userId,
-    })
-      .populate("courses")
-      .exec()
+    const userDetails = await User.findOne({ _id: userId })
+      .populate({
+        path: "courses",
+        populate: {
+          path: "courseContent",
+          populate: {
+            path: "subSection"
+          }
+        }
+      })
+      .exec();
     if (!userDetails) {
       return res.status(400).json({
         success: false,

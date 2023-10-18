@@ -11,6 +11,7 @@ import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses"
 import MyCourses from "./components/core/Dashboard/MyCourses"
 import MyProfile from "./components/core/Dashboard/MyProfile"
 import Settings from "./components/core/Dashboard/Settings/Settings"
+import VideoDetails from "./components/core/ViewCourse/VideoDetails"
 import About from "./pages/About"
 import Catalog from "./pages/Catalog"
 import ContactUs from "./pages/ContactUs"
@@ -23,6 +24,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import UpdatePassword from "./pages/UpdatePassword"
 import VerifyEmail from "./pages/VerifyEmail"
+import ViewCourse from "./pages/ViewCourse"
 import { ACCOUNT_TYPE } from "./utils/constants"
 const App = () => {
   const { user } = useSelector((state) => state.profile)
@@ -105,6 +107,24 @@ const App = () => {
 
         </Route>
 
+        {/* Course view  */}
+        <Route
+          element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+          }
+        >
+          {
+            user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <Route
+                path="/view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
+              />
+            )
+          }
+
+        </Route>
 
         <Route path="*" element={<Error />} />
       </Routes>

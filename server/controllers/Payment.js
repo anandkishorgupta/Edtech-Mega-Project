@@ -48,9 +48,8 @@ export const capturePayment = async (req, res) => {
 
         }
     }
-
     const options = {
-        amount: totalAmount,
+        amount: totalAmount*100,
         currency: "INR",
         receipt: Date.now().toString()
     }

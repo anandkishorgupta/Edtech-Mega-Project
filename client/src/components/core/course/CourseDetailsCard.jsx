@@ -14,7 +14,7 @@ const CourseDetailsCard = ({ courseData, handleBuyCourse, setConfirmationModal }
     const dispatch = useDispatch()
     const navigate = useNavigate()
     function handleAddToCart() {
-        
+
         if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
             toast.error("you are instructor, you are not allowed ")
             return
@@ -40,13 +40,14 @@ const CourseDetailsCard = ({ courseData, handleBuyCourse, setConfirmationModal }
 
     }
     return (
-        <div className="bg-richblack-700">
-            <img src={courseData?.thumbnail} alt="" />
-            <p>Rs. {courseData?.price}</p>
+        <div className="bg-richblack-700 px-6 rounded-lg flex flex-col gap-y-4 py-6">
+            <img src={courseData?.thumbnail} alt="" className='max-h-[300px] min-h-[180px] w-[400px] overflow-hidden rounded-2xl object-cover md:max-w-full' />
+            <p className='text-3xl font-semibold'>Rs. {courseData?.price}</p>
             <button
                 onClick={courseData?.studentsEnrolled.includes(user?._id)
                     ? () => navigate("/dashboard/enrolled-courses")
                     : handleBuyCourse}
+                className='bg-yellow-100 rounded-md text-richblack-900 font-semibold py-2 inline-block'
             >
                 {
                     courseData?.studentsEnrolled.includes(user?._id) ? "Go to course" : "Buy Course"
@@ -55,13 +56,13 @@ const CourseDetailsCard = ({ courseData, handleBuyCourse, setConfirmationModal }
 
             {
                 !courseData?.studentsEnrolled.includes(user?._id) &&
-                <button className="bg-richblack-800 text-richblack-5" onClick={handleAddToCart}>
+                <button className="inline-block bg-richblack-800 text-richblack-5 font-semibold py-2 rounded-md " onClick={handleAddToCart}>
                     Add to Cart
                 </button>
             }
-            <p>30-Day Money-Back Guarantee</p>
-            <p>This Course Includes :</p>
-            <div>
+            <p className='text-sm text-richblack-25 text-center'>30-Day Money-Back Guarantee</p>
+            <p className='text-xl font-semibold'>This Course Includes :</p>
+            <div className='text-sm text-caribbeangreen-100'>
                 {
                     courseData?.instructions.map((item, index) => (
                         <p key={index} className="flex items-center gap-x-1">
@@ -73,8 +74,8 @@ const CourseDetailsCard = ({ courseData, handleBuyCourse, setConfirmationModal }
             <div onClick={
                 handleShare
 
-            }>
-                <IoMdShareAlt />
+            } className='text-yellow-100 flex items-center gap-2 justify-center cursor-pointer'>
+                <IoMdShareAlt /> share
             </div>
 
         </div>

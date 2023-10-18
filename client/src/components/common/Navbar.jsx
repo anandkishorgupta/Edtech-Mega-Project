@@ -7,12 +7,13 @@ import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks } from "../../data/navbar-links";
 import { fetchCourseCategories } from "../../services/operations/courseDetailsAPI";
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
+
 export const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
-  const { totalItem } = useSelector((state) => state.cart);
+  const { totalItems } = useSelector((state) => state.cart);
   const location = useLocation();
-
+  const { course } = useSelector((state) => state.course)
   const [subLinks, setSubLinks] = useState([]);
 
   const fetchSublinks = async () => {
@@ -28,7 +29,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     fetchSublinks();
-  }, []);
+  }, [course]);
 
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname);
@@ -86,7 +87,7 @@ export const Navbar = () => {
           {user && user?.accountType != "Instructor" && (
             <Link to={"/dashboard/cart"} className="relative">
               <AiOutlineShoppingCart />
-              {totalItem > 0 && <span>{totalItem}</span>}
+              {totalItems > 0 && <span className="absolute -right-2  -top-1  text-xs w-4 h-4 rounded-full animate-bounce flex justify-center items-center  text-richblack-900 bg-caribbeangreen-300">{totalItems}</span>}
             </Link>
           )}
           {token === null && (

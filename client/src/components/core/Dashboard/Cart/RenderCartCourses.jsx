@@ -10,14 +10,13 @@ const RenderCartCourses = () => {
         <div>
             {
                 cart.map((course) => (
-                    <div key={course._id}>
-                        <div>
-                            <img src={course?.thumbnail} alt="" />
-                            <div>
-                                <p>{course?.courseName}</p>
-                                <p>{course.category?.name}</p>
-                                <div>
-                                    average ratings
+                    <div key={course._id} className="flex justify-between w-full gap-x-6 border-b border-b-richblack-400 py-6">
+                        <div className="flex gap-x-6">
+                            <img src={course?.thumbnail} alt="" className="w-[220px] h-[148px] object-cover"/>
+                            <div className="flex flex-col gap-y-2">
+                                <p className="text-lg font-medium text-richblack-5">{course?.courseName}</p>
+                                <p className="text-sm text-richblack-300">{course.category?.name}</p>
+                                <div className="flex gap-x-2 items-center">
                                     <ReactStars
                                         count={5}
                                         size={20}
@@ -27,18 +26,19 @@ const RenderCartCourses = () => {
                                         emptyIcon={<AiOutlineStar />}
                                         fullIcon={<AiFillStar />}
                                     />
-                                    <span>{course?.ratingAndReviews?.length}</span>
+                                    <span className="text-richblack-400">{course?.ratingAndReviews?.length} Ratings</span>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <button
                                 onClick={() => dispatch(removeFromCart(course._id))}
+                                className="flex gap-x-2 items-center border border-richblack-600 bg-richblack-700 text-pink-200 py-3 px-[12px] rounded-md"
                             >
                                 <MdDeleteForever />
                                 <span>Remove</span>
                             </button>
-                            <p>Rs {course?.price}</p>
+                            <p className="text-3xl font-medium text-yellow-100 mt-4">Rs {course?.price}</p>
                         </div>
 
                     </div>

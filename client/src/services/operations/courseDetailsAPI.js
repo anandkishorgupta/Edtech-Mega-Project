@@ -84,7 +84,7 @@ export const fetchCourseDetails = async (courseId) => {
     toast.dismiss(toastId)
     return result
 }
-// getFullCourseDetails
+// getFullCourseDetails authenticated 
 export const getFullCourseDetails = async (courseId, token) => {
     let result;
     const toastId = toast.loading("loading....")
@@ -335,4 +335,21 @@ export const deleteSubSection = async (data, token) => {
     }
     toast.dismiss(toastId)
     return result
+}
+
+
+
+// create rating
+export const createRating = async (data, token) => {
+    let toastId = toast.loading("loading....")
+    try {
+        const response = await apiConnector("POST", data, {
+            Authorization: `Bearer ${token}`
+        })
+        console.log(response)
+    } catch (error) {
+        console.log(error)
+
+    }
+    toast.dismiss(toastId)
 }
