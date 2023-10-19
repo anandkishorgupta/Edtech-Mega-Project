@@ -4,6 +4,7 @@ import { instance } from "../config/razorpay.js";
 import { courseEnrollmentEmail } from "../mail/templates/courseEnrollmentEmail.js";
 import { paymentSuccessEmail } from "../mail/templates/paymentSuccessEmail.js";
 import Course from "../models/Course.js";
+import CourseProgress from "../models/CourseProgress.js";
 import User from "../models/User.js";
 import mailSender from "../utils/mailSender.js";
 
@@ -49,7 +50,7 @@ export const capturePayment = async (req, res) => {
         }
     }
     const options = {
-        amount: totalAmount*100,
+        amount: totalAmount * 100,
         currency: "INR",
         receipt: Date.now().toString()
     }
@@ -131,10 +132,19 @@ const enrolledStudent = async (courses, userId, res) => {
                 })
 
             }
+
+            // course progress
+            const courseProgress = await CourseProgress.create({
+                courseID: courseId,
+                userID: userId,
+                completedVideo:[]
+
+            })
             // enroll the courses in user document
             const enrolledStudent = await User.findByIdAndUpdate(userId, {
                 $push: {
-                    courses: courseId
+                    courses: courseId,
+                    courseProgress: courseProgress._id
                 }
             }, { new: true })
 
@@ -145,6 +155,7 @@ const enrolledStudent = async (courses, userId, res) => {
                 })
 
             }
+
             const emailResponse = await mailSender(
                 enrolledStudent.email,
                 `Successfully enrolled into ${enrolledCourse.courseName}`,

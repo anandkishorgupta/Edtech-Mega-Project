@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Player } from 'video-react';
 import 'video-react/dist/video-react.css';
+import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
+import { updateCompletedLectures } from "../../../slices/viewCourseSlice";
 import IconBtn from "../../common/IconBtn";
 import { Spinner } from "../../common/Spinner";
 const VideoDetails = () => {
@@ -40,7 +42,7 @@ const VideoDetails = () => {
             setVideoSpecificDetails()
             console.log(location.pathname)
         }
-    }, [courseSectionData, courseEntireData, location.pathname])
+    }, [courseSectionData, courseEntireData, location.pathname, subSectionId, sectionId])
 
     const isFirstVideo = () => {
         if (courseSectionData.length > 0) {
@@ -79,16 +81,14 @@ const VideoDetails = () => {
             )
 
             if (currentSubSectionIndex !== noOfSubSections - 1) {
-                //same section ki next video me jao
-                const nextSubSectionId = courseSectionData[currentSectionIndex].subSection[currentSectionIndex + 1]._id;
-                //next video pr jao
+                //go to the next video of same section
+                const nextSubSectionId = courseSectionData[currentSectionIndex].subSection[currentSubSectionIndex + 1]._id;
                 navigate(`/view-course/${courseId}/section/${sectionId}/sub-section/${nextSubSectionId}`)
             }
             else {
-                //different section ki first video
+                // go to the first video of next subsection
                 const nextSectionId = courseSectionData[currentSectionIndex + 1]._id;
                 const nextSubSectionId = courseSectionData[currentSectionIndex + 1]?.subSection[0]._id;
-                ///iss voide par jao 
                 navigate(`/view-course/${courseId}/section/${nextSectionId}/sub-section/${nextSubSectionId}`)
             }
         }
@@ -99,17 +99,13 @@ const VideoDetails = () => {
             const currentSectionIndex = courseSectionData.findIndex(
                 (data) => data._id === sectionId
             )
-
-            const noOfSubSections = courseSectionData[currentSectionIndex].subSection.length;
-
             const currentSubSectionIndex = courseSectionData[currentSectionIndex].subSection.findIndex(
                 (data) => data._id === subSectionId
             )
 
             if (currentSubSectionIndex != 0) {
                 //same section , prev video
-                const prevSubSectionId = courseSectionData[currentSectionIndex].subSection[currentSubSectionIndex - 1];
-                //iss video par chalge jao
+                const prevSubSectionId = courseSectionData[currentSectionIndex].subSection[currentSubSectionIndex - 1]._id;
                 navigate(`/view-course/${courseId}/section/${sectionId}/sub-section/${prevSubSectionId}`)
             }
             else {
@@ -117,13 +113,24 @@ const VideoDetails = () => {
                 const prevSectionId = courseSectionData[currentSectionIndex - 1]._id;
                 const prevSubSectionLength = courseSectionData[currentSectionIndex - 1].subSection.length;
                 const prevSubSectionId = courseSectionData[currentSectionIndex - 1].subSection[prevSubSectionLength - 1]._id;
-                //iss video par chalge jao
                 navigate(`/view-course/${courseId}/section/${prevSectionId}/sub-section/${prevSubSectionId}`)
 
             }
         }
     }
-    const handleLectureCompletion = () => {
+    const handleLectureCompletion = async () => {
+        setLoading(true)
+        const res = await markLectureAsComplete({
+            courseId: courseId,
+            subSectionId: subSectionId
+        },
+            token
+        )
+
+        if (res) {
+            dispatch(updateCompletedLectures(subSectionId))
+        }
+        setLoading(false)
 
     }
     return (
@@ -141,50 +148,55 @@ const VideoDetails = () => {
                                     playsInline
                                     onEnded={() => setVideoEnded(true)}
                                 >
-                                    <source src={videoData?.videoUrl} />
+                                    <source src={videoData.videoUrl} />
                                     <AiOutlinePlayCircle />
-                                    {
-                                        videoEnded && (
-                                            <div>
-                                                {
-                                                    !completedLectures.includes(subSectionId) &&
-                                                    <IconBtn
-                                                        onClick={() => handleLectureCompletion()}
-                                                        text={!loading ? "Mark as completed" : "Loading....."}
-                                                    />
-                                                }
-                                                <IconBtn
-                                                    onClick={() => {
-                                                        if (playerRef?.current) {
-                                                            playerRef.current.seek(0)
-                                                            setVideoEnded(false)
-                                                        }
-                                                    }}
-                                                    text={"ReWatch"}
-                                                />
-
-                                            </div>
-                                        )
-                                    }
                                     <div>
-                                        {!isFirstVideo() && (
-                                            <button
-                                                disabled={loading}
-                                                onClick={goToPreviousVideo}
-                                                className='blackButton'
-                                            >
-                                                Prev
-                                            </button>
-                                        )}
-                                        {!isLastVideo() && (
-                                            <button
-                                                // disabled={loading}
-                                                onClick={goToNextVideo}
-                                                className='blackButton'>
-                                                Next
-                                            </button>
-                                        )}
+
+                                        {
+                                            videoEnded && (
+                                                <div>
+                                                    {
+                                                        !completedLectures.includes(subSectionId) &&
+                                                        <IconBtn
+                                                            onClick={() => handleLectureCompletion()}
+                                                            text={!loading ? "Mark as completed" : "Loading....."}
+                                                        />
+                                                    }
+                                                    <IconBtn
+                                                        onClick={() => {
+                                                            if (playerRef?.current) {
+                                                                playerRef.current.seek(0)
+                                                                setVideoEnded(false)
+                                                            }
+                                                        }}
+                                                        text={"ReWatch"}
+                                                    />
+
+                                                </div>
+                                            )
+                                        }
+                                        <div className="flex gap-x-3"
+                                        >
+                                            {!isFirstVideo() && (
+                                                <button
+                                                    disabled={loading}
+                                                    onClick={goToPreviousVideo}
+                                                    className='text-caribbeangreen-600 bg-yellow-25'
+                                                >
+                                                    Prev
+                                                </button>
+                                            )}
+                                            {!isLastVideo() && (
+                                                <button
+                                                    // disabled={loading}
+                                                    onClick={goToNextVideo}
+                                                    className='text-caribbeangreen-600 bg-yellow-25'>
+                                                    Next
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
+
                                 </Player>
 
                             )

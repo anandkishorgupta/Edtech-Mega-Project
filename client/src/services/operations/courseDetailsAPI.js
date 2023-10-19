@@ -353,3 +353,27 @@ export const createRating = async (data, token) => {
     }
     toast.dismiss(toastId)
 }
+
+
+// LECTURE COMPLETION
+export const markLectureAsComplete = async (data, token) => {
+    let result = null
+    const toastId = toast.loading("loading...")
+    try {
+        const response = await apiConnector("POST", LECTURE_COMPLETION_API, data, {
+            Authorization: `Bearer ${token}`
+        })
+        console.log("LECTURE_COMPLETION_API response......", response)
+        if (!response.data.success) {
+            throw new Error("error occurrerd while updating completed video")
+        }
+        toast.success("lecture completed ")
+        result = true
+    } catch (error) {
+        console.log(error)
+        toast.error(error.response.data.error)
+        result = null
+    }
+    toast.dismiss(toastId)
+    return result
+}

@@ -5,7 +5,7 @@ import CourseReviewModal from "../components/core/ViewCourse/CourseReviewModal"
 import VideoDetailSidebar from "../components/core/ViewCourse/VideoDetailSidebar"
 import { getFullCourseDetails } from "../services/operations/courseDetailsAPI"
 import {
-    // setCompletedLectures,
+    setCompletedLectures,
     setCourseSectionData, setEntireCourseData,
     setTotalNoOfLectures
 } from "../slices/viewCourseSlice"
@@ -22,7 +22,7 @@ const ViewCourse = () => {
 
         dispatch(setCourseSectionData(courseData.courseDetails.courseContent))
         dispatch(setEntireCourseData(courseData.courseDetails))
-        // dispatch(setCompletedLectures(courseData.completed))
+        dispatch(setCompletedLectures(courseData.completedVideos))
         let lectures = 0
         courseData?.courseDetails?.courseContent?.forEach((sec) => {
             lectures += sec.subSection.length
@@ -40,7 +40,7 @@ const ViewCourse = () => {
                     setReviewModal={setReviewModal}
 
                 />
-                <div className="flex-1">
+                <div className="w-7/12">
                     <Outlet />
                 </div>
                 {

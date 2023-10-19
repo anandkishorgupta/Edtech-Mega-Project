@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema({
     courseProgress: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "CourseProgess",
+            ref: "CourseProgress",
         },
     ],
     // this token is generated using crypto for password reset link 

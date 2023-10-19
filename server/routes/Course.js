@@ -4,6 +4,7 @@ import { createCourse, deleteCourse, getCourseDetails, getFullCourseDetails, get
 import { createRating, getAllRating, getAverageRating } from "../controllers/RatingAndReview.js";
 import { createSection, deleteSection, updateSection } from "../controllers/Section.js";
 import { createSubSection, deleteSubSection, updateSubSection } from "../controllers/SubSection.js";
+import { updateCourseProgress } from "../controllers/courseProgress.js";
 import { auth, isAdmin, isInstructor, isStudent } from "../middlewares/auth.js";
 const router = express.Router();
 
@@ -52,4 +53,13 @@ router.post("/getCategoryPageDetails", categoryPageDetails)
 router.post("/createRating", auth, isStudent, createRating)
 router.get("/getAverageRating", getAverageRating)
 router.get("/getReviews", getAllRating)
+
+
+// @COURSE COMPLETION
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress)
+
+
+
 export default router
+
+

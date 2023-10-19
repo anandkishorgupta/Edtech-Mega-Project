@@ -2,10 +2,12 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import Category from "../models/Category.js";
 import Course from "../models/Course.js";
+import CourseProgress from "../models/CourseProgress.js";
 import Section from "../models/Section.js";
 import SubSection from "../models/SubSection.js";
 import User from "../models/User.js";
 import { uploadToCloudinary } from "../utils/imageUploader.js";
+import { secondsToHMS } from "../utils/secondsToHMS.js";
 dotenv.config();
 
 // create course handler function
@@ -140,7 +142,8 @@ export const createCourse = async (req, res) => {
 export const showAllCourses = async (req, res) => {
   try {
     const allCourses = await Course.find(
-      {},
+      { status: "Published" },
+      // fields to include in the result
       {
         courseName: true,
         price: true,
@@ -195,6 +198,7 @@ export const getCourseDetails = async (req, res) => {
         path: "courseContent",
         populate: {
           path: "subSection",
+          select: "-videoUrl"
         },
       })
       .exec();
@@ -239,6 +243,7 @@ export const getFullCourseDetails = async (req, res) => {
         }
       }).exec()
 
+
     if (!courseDetails) {
       return res.status(400).json({
         success: false,
@@ -246,9 +251,27 @@ export const getFullCourseDetails = async (req, res) => {
       })
     }
 
+    let courseProgressCount = await CourseProgress.findOne({
+      courseID: courseId,
+      userID: userId
+    })
+
+    let totalDurationInSeconds = 0
+    courseDetails.courseContent.forEach((section) => {
+      section.subSection.forEach((sub) => {
+        const timeLengthInSecond = parseInt(sub.timeDuration)
+        totalDurationInSeconds += timeLengthInSecond
+      })
+    })
+
+    const totalDuration = secondsToHMS(totalDurationInSeconds)
     res.status(200).json({
       success: true,
-      data: { courseDetails }
+      data: {
+        courseDetails,
+        totalDuration,
+        completedVideos: courseProgressCount?.completedVideo ? courseProgressCount?.completedVideo : []
+      }
 
     })
   } catch (error) {
@@ -498,3 +521,5 @@ export const deleteManyCourses = async (req, res) => {
     })
   }
 }
+
+
