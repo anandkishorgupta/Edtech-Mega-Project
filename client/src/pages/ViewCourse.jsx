@@ -19,7 +19,6 @@ const ViewCourse = () => {
 
         const courseData = await getFullCourseDetails(courseId, token)
         console.log("courseData.........", courseData)
-
         dispatch(setCourseSectionData(courseData.courseDetails.courseContent))
         dispatch(setEntireCourseData(courseData.courseDetails))
         dispatch(setCompletedLectures(courseData.completedVideos))
@@ -34,20 +33,21 @@ const ViewCourse = () => {
         setCourseSpecificDetails()
     }, [])
     return (
-        <>
-            <div className="flex">
+        <div>
+            <div className="flex gap-x-5">
                 <VideoDetailSidebar
                     setReviewModal={setReviewModal}
 
                 />
-                <div className="w-7/12">
+                <div className="mx-auto w-10/12 max-w-[1000px] py-1  ">
                     <Outlet />
                 </div>
-                {
-                    reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />
-                }
+
             </div>
-        </>
+            {
+                reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />
+            }
+        </div>
 
     )
 }

@@ -58,7 +58,8 @@ export const createCourse = async (req, res) => {
     }
 
     // check user is instructor for Instructor
-    const instructorDetail = await User.findById(userId, {
+    const instructorDetail = await User.findOne({
+      _id: userId,
       accountType: "Instructor",
     });
 
@@ -170,7 +171,7 @@ export const showAllCourses = async (req, res) => {
   }
 };
 
-// get  particular course details
+// get  particular course details-- used when user click on specific course 
 export const getCourseDetails = async (req, res) => {
   try {
     // fetch courseId
@@ -186,12 +187,7 @@ export const getCourseDetails = async (req, res) => {
 
     // find courseDetails from db
     const courseDetails = await Course.findById(courseId)
-      .populate({
-        path: "instructor",
-        populate: {
-          path: "additionalDetails",
-        },
-      })
+      .populate("instructor")
       .populate("ratingAndReviews")
       .populate("category")
       .populate({

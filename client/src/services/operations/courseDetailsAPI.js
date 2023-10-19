@@ -43,7 +43,7 @@ export const fetchCourseCategories = async () => {
 
 
 
-//   GET ALL COURSES 
+//   GET ALL COURSES array
 export const getAllCourses = async () => {
     const toastId = toast.loading("Loading.....")
     let result = []
@@ -84,6 +84,8 @@ export const fetchCourseDetails = async (courseId) => {
     toast.dismiss(toastId)
     return result
 }
+
+
 // getFullCourseDetails authenticated 
 export const getFullCourseDetails = async (courseId, token) => {
     let result;
@@ -191,6 +193,10 @@ export const deleteCourse = async (data, token) => {
     toast.dismiss(toastId)
     return result
 }
+
+
+
+
 
 
 
@@ -343,7 +349,8 @@ export const deleteSubSection = async (data, token) => {
 export const createRating = async (data, token) => {
     let toastId = toast.loading("loading....")
     try {
-        const response = await apiConnector("POST", data, {
+        console.log("from create rating api.........", data)
+        const response = await apiConnector("POST",CREATE_RATING_API,data, {
             Authorization: `Bearer ${token}`
         })
         console.log(response)

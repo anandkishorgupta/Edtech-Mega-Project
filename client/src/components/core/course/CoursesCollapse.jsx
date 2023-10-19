@@ -31,9 +31,9 @@ const CoursesCollapse = ({ isActive, courseData, handleActive }) => {
                     {/* subSection */}
                     <div className="h-0 overflow-hidden bg-richblack-900 transition-[height] duration-[0.34s] ease-[ease]" style={{
                         height: sectionHeight,
-                    }}
+                        }}
                         ref={contentEl}
-                    >
+                             >
                         {section?.subSection?.map((subSection) => (
                             <div key={subSection._id}
                             >

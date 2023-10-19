@@ -195,3 +195,40 @@ export const getEnrolledCourses = async (req, res) => {
     })
   }
 };
+
+
+// instructor  dashboard 
+export const instructorDashboard = async (req, res) => {
+  console.log("instructor dashboard..........")
+  try {
+    // all courses of particular instructor 
+    const courseDetails = await Course.find({ instructor: req.user.id })
+
+    // return array of object
+    const courseData = courseDetails.map((course) => {
+      const totalStudentsEnrolled = course.studentsEnrolled.length
+      const totalAmountGenerated = totalStudentsEnrolled * course.price
+      // create a new object with the additional field
+      const courseDataWithStats = {
+        _id: course._id,
+        courseName: course.courseName,
+        courseDescription: course.courseDescription,
+        totalStudentsEnrolled,
+        totalAmountGenerated
+      }
+      return courseDataWithStats
+    })
+    return res.status(200).json({
+      success: true,
+      courses: courseData
+    })
+  } catch (error) {
+    console.log(error)
+    return res.json({
+      success: false,
+      message: error
+    })
+
+  }
+
+}

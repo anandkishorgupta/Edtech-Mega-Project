@@ -139,7 +139,7 @@ const VideoDetails = () => {
                 loading ? (<div className="flex items-center justify-center h-[calc(100vh-3.5rem)]">
                     <Spinner />
                 </div>) : (
-                    <div className="">
+                    <div className="shadow-lg">
                         {
                             !videoData ? (<div>no data found</div>) : (
                                 <Player

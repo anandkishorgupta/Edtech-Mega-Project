@@ -51,6 +51,7 @@ const CourseDetails = () => {
 
     const [isActive, setIsActive] = useState([])
 
+    // for showing subsectkion data and for collapse features
     const handleActive = (id) => {
         setIsActive(
             !isActive.includes(id)
@@ -118,14 +119,14 @@ const CourseDetails = () => {
                             <div className='flex flex-col gap-y-3 w-[65%]'>
                                 <p className='text-4xl font-bold text-richblack-5 sm:text-[42px]'>{courseData.courseName}</p>
                                 <p className='text-richblack-200'>{courseData.courseDescription}</p>
-                                <div className='flex flex-row items-center'>
+                                <div className='flex flex-row items-center gap-x-2'>
                                     <span>{avgReviewCount}</span>
                                     {" "}
                                     <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
                                     {" "}
                                     <span>{`(${courseData.ratingAndReviews.length} reviews )`}</span>
-                                    {" "}
-                                    <span>{`${courseData.courseContent.length} students`}</span>
+                                    {" "}{" "}
+                                    <span>{`${courseData.courseContent.length} student(s)`}</span>
                                 </div>
                                 <p>Created By: {courseData.instructor.firstName} {courseData.instructor.lastName}</p>
                                 <div className='flex flex-row items-center gap-x-2 text-richblack-5'>

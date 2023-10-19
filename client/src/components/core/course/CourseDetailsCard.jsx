@@ -13,8 +13,8 @@ const CourseDetailsCard = ({ courseData, handleBuyCourse, setConfirmationModal }
     console.log("from course detail card .................", user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    
     function handleAddToCart() {
-
         if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
             toast.error("you are instructor, you are not allowed ")
             return

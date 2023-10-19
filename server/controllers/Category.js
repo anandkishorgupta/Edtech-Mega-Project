@@ -81,14 +81,22 @@ export const categoryPageDetails = async (req, res) => {
             _id: { $ne: new mongoose.Types.ObjectId(categoryId) }
         })
         // console.log("categoriesExceptSelected....", categoriesExceptSelected)
-        let differentCategory = await Category.findOne(
-            categoriesExceptSelected[Math.floor(Math.random() * (categoriesExceptSelected.length))]
-                ._id
-        ).populate({
-            path: "courses",
-            match: { status: "Published" },
-            populate: "ratingAndReviews"
-        }).exec()
+
+        let differentCategory;
+        if (categoriesExceptSelected.length > 0) {
+            differentCategory = await Category.findOne(
+                {
+                    _id: categoriesExceptSelected[Math.floor(Math.random() * (categoriesExceptSelected.length))]
+                        ._id
+                }
+
+            ).populate({
+                path: "courses",
+                match: { status: "Published" },
+                populate: "ratingAndReviews"
+            }).exec()
+        }
+
 
         // top selling courses
         const allCategories = await Category.find()
