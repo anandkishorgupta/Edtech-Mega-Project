@@ -27,12 +27,13 @@ const CourseReviewModal = ({ setReviewModal }) => {
         console.log("...........", data.courseExperience)
         console.log("...........", courseId)
 
-        await createRating({
+       await createRating({
             rating: data.courseRating,
             review: data.courseExperience,
             courseId
         }, token)
     }
+
 
     function ratingChange(newRating) {
         setValue("courseRating", newRating)
@@ -50,7 +51,7 @@ const CourseReviewModal = ({ setReviewModal }) => {
                         <p
                             onClick={() => setReviewModal(null)}
                         >
-                            <RxCross2 className='cursor-pointer'/>
+                            <RxCross2 className='cursor-pointer' />
                         </p>
                     </div>
 

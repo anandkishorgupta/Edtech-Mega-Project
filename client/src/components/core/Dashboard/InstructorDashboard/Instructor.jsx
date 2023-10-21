@@ -41,53 +41,86 @@ const Instructor = () => {
     return (
         <div>
             <div>
-                <h1>Hi {user.firstName}</h1>
-                <p>lets start something new </p>
+                <h1 className="text-2xl font-bold text-richblack-5">Hi {user.firstName}</h1>
+                <p className="font-medium text-richblack-200">lets start something new </p>
             </div>
             {
                 loading ? (<div>loading...</div>) : (
                     courses.length > 0 ? (
                         <div>
-                            <div>
-                                <InstructorChat courses={instructorData} />
-                                <div>
-                                    <p>Statistics</p>
+                            <div className="my-4 flex h-[450px] space-x-4">
+                                {
+                                    totalAmount > 0 || totalStudents > 0 ? (
+                                        <InstructorChat courses={instructorData} />
+
+                                    ) : (
+                                        <div className="flex-1 rounded-md bg-richblack-800 p-6">
+                                            <p className="text-lg font-bold text-richblack-5">Visualize</p>
+                                            <p className="mt-4 text-xl font-medium text-richblack-50">
+                                                Not Enough Data To Visualize
+                                            </p>
+                                        </div>
+                                    )
+                                }
+                                {/* total statistics */}
+                                <div
+                                    className="flex min-w-[250px] flex-col rounded-md bg-richblack-800 p-6"
+                                >
+                                    <p
+                                        className="text-lg font-bold text-richblack-5"
+                                    >Statistics
+                                    </p>
                                     <div>
-                                        <p>Total Courses </p>
-                                        <p>{courses.length}</p>
+                                        <p
+                                            className="text-lg text-richblack-200"
+                                        >Total Courses </p>
+                                        <p
+                                            className="text-3xl font-semibold text-richblack-50"
+                                        >{courses.length}</p>
                                     </div>
                                     <div>
-                                        <p>Total Students</p>
-                                        <p>{totalStudents}</p>
+                                        <p className="text-lg text-richblack-200">Total Students</p>
+                                        <p className="text-3xl font-semibold text-richblack-50">{totalStudents}</p>
                                     </div>
                                     <div>
-                                        <p>Total Income</p>
-                                        <p>{totalAmount}</p>
+                                        <p className="text-lg text-richblack-200">Total Income</p>
+                                        <p className="text-3xl font-semibold text-richblack-50">Rs {totalAmount}</p>
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <div>
-                                    <p>Your Courses</p>
-                                    <Link to={"/dashboard/my-courses"}>
-                                        View all
-                                    </Link>
+                                    <p className='font-semibold'>Your Courses</p>
+                                    {/* <Link to={"/dashboard/my-courses"}>
+                                        <p className="text-xs font-semibold text-yellow-50">View All</p>
+                                    </Link> */}
                                 </div>
-                                <div>
+                                <div className="grid grid-cols-3 gap-x-3 mt-2">
                                     {
-                                        courses.slice(0, 3).map((course) => (
-                                            <div key={course._id}>
-                                                <img src={course.thumbnail} alt="" />
-                                                <div>
-                                                    <p>{course.courseName}</p>
-                                                    <div>
-                                                        <p> {course.studentsEnrolled.length} student(s)</p>
-                                                        <p>|</p>
-                                                        <p>Rs {course.price}</p>
+                                        courses
+                                            // .slice(0, 3)
+                                            .map((course) => (
+                                                <div key={course._id} >
+                                                    <img src={course.thumbnail} alt=""
+                                                        className="h-[201px] w-full rounded-md object-cover "
+
+                                                    />
+
+
+                                                    <div className="flex flex-col gap-y-1 mt-2">
+                                                        <p className="text-sm font-medium text-richblack-50">{course.courseName}</p>
+                                                        <div className="flex flex-row gap-x-2">
+                                                            <p
+                                                                className="text-xs font-medium text-richblack-300"
+                                                            > {course.studentsEnrolled.length} student(s)</p>
+                                                            <p className="text-xs font-medium text-richblack-300">|</p>
+                                                            <p
+                                                                className="text-xs font-medium text-richblack-300"
+                                                            >Rs {course.price}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        ))
+                                            ))
                                     }
                                 </div>
                             </div>

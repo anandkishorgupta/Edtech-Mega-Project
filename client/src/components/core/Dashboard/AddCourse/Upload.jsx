@@ -74,7 +74,7 @@ const Upload = ({
                 } flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}>
                 {previewSource ? (
                     <div
-                        className="p-5  flex justify-center flex-col items-center"
+                        className="p-5  flex justify-center flex-col items-center w-full object-cover"
 
                     >
                         {!video ? (
@@ -84,7 +84,9 @@ const Upload = ({
                                 className="rounded-md object-cover"
                             />
                         ) : (
-                            <Player src={previewSource} aspectRatio="16:9" playsInline />
+                            <Player src={previewSource} aspectRatio="16:9"  
+                            
+                            />
                            
                         )}
                         {!viewData && (

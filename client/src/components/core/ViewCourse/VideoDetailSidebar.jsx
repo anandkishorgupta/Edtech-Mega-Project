@@ -57,6 +57,8 @@ const VideoDetailSidebar = ({ setReviewModal }) => {
                     className="px-5  py-2 rounded-md text-base bg-yellow-50"
                     onClick={() => setReviewModal(true)}
                 >
+
+                    
                     Add Review
                 </button>
             </div>

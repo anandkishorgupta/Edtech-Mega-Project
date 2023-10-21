@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { BiChevronDown } from "react-icons/bi";
+import { BiChevronDown, BiMenuAltLeft } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks } from "../../data/navbar-links";
 import { fetchCourseCategories } from "../../services/operations/courseDetailsAPI";
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
-
 export const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
@@ -15,7 +14,7 @@ export const Navbar = () => {
   const location = useLocation();
   const { course } = useSelector((state) => state.course)
   const [subLinks, setSubLinks] = useState([]);
-
+  const [showMenu, setShowMenu] = useState(false)
   const fetchSublinks = async () => {
     try {
       const result = await fetchCourseCategories()
@@ -36,13 +35,22 @@ export const Navbar = () => {
   };
   return (
     <div className=" flex  h-14 items-center justify-center border-b-[1px] border-b-richblack-700 bg-richblack-800">
-      <div className="flex w-11/12 max-w-maxContent items-center justify-between">
+      <div className="relative lg:static flex w-11/12 max-w-maxContent items-center justify-between">
+        <BiMenuAltLeft className="lg:hidden cursor-pointer w-fit"
+          onClick={() => setShowMenu(!showMenu)}
+          size={20}
+        />
         <Link to={"/"}>
           <img src={logo} alt="" width={160} height={42} loading="lazy" />
         </Link>
+
         {/* nav links */}
-        <nav>
-          <ul className="flex gap-x-6 text-richblack-25">
+        <nav className={`absolute lg:static left-[-32px] top-0 translate-y-[2.7rem] lg:translate-y-0 z-50 bg-richblue-700 lg:bg-transparent
+        pl-8 lg:px-0 pr-12 lg:pr-0
+        py-8 lg:py-0 rounded-md ${showMenu ? "block" : "hidden"}
+        border border-richblack-600 lg:border-none
+               `}>
+          <ul className="lg:flex lg:gap-x-6 text-richblack-25  lg:flex-row flex flex-col gap-y-5 lg:gap-y-0">
             {NavbarLinks.map((link, index) => (
               <li key={index}>
                 {link.title === "Catalog" ? (

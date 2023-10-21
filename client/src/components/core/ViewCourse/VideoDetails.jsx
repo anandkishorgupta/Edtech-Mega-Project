@@ -19,26 +19,27 @@ const VideoDetails = () => {
     const [videoData, setVideoData] = useState(null)
     const [videoEnded, setVideoEnded] = useState(false)
     const [loading, setLoading] = useState(false)
-    const setVideoSpecificDetails = () => {
-        setLoading(true)
-        if (!courseSectionData) {
-            return
-        }
-        if (!courseId && !sectionId && !subSectionId) {
-            return
 
-        }
-        const filteredData = courseSectionData.filter((section) => section._id === sectionId)
-        console.log(filteredData)
-        const filteredVideoData = filteredData?.[0].subSection.filter((data) => data._id === subSectionId)
-        console.log(filteredVideoData[0])
-        setVideoData(filteredVideoData[0]) //subSection object
-        setVideoEnded(false)
-        setLoading(false)
-    }
     useEffect(() => {
         if (courseSectionData.length > 0) {
             console.log(courseSectionData.length)
+            const setVideoSpecificDetails = () => {
+                setLoading(true)
+                if (!courseSectionData) {
+                    return
+                }
+                if (!courseId && !sectionId && !subSectionId) {
+                    return
+
+                }
+                const filteredData = courseSectionData.filter((section) => section._id === sectionId)
+                console.log(filteredData)
+                const filteredVideoData = filteredData?.[0].subSection.filter((data) => data._id === subSectionId)
+                console.log(filteredVideoData[0])
+                setVideoData(filteredVideoData[0]) //subSection object
+                setVideoEnded(false)
+                setLoading(false)
+            }
             setVideoSpecificDetails()
             console.log(location.pathname)
         }
@@ -150,11 +151,11 @@ const VideoDetails = () => {
                                 >
                                     <source src={videoData.videoUrl} />
                                     <AiOutlinePlayCircle />
-                                    <div>
+                                    <div className="flex flex-row gap-x-5 items-center justify-center">
 
                                         {
                                             videoEnded && (
-                                                <div>
+                                                <div className="flex items-center flex-row gap-x-3">
                                                     {
                                                         !completedLectures.includes(subSectionId) &&
                                                         <IconBtn
@@ -175,24 +176,23 @@ const VideoDetails = () => {
                                                 </div>
                                             )
                                         }
-                                        <div className="flex gap-x-3"
+                                        <div className="flex gap-x-3 mt-3"
                                         >
                                             {!isFirstVideo() && (
-                                                <button
-                                                    disabled={loading}
+                                                <IconBtn
                                                     onClick={goToPreviousVideo}
-                                                    className='text-caribbeangreen-600 bg-yellow-25'
                                                 >
                                                     Prev
-                                                </button>
+                                                </IconBtn>
                                             )}
                                             {!isLastVideo() && (
-                                                <button
+                                                <IconBtn
                                                     // disabled={loading}
                                                     onClick={goToNextVideo}
-                                                    className='text-caribbeangreen-600 bg-yellow-25'>
+
+                                                >
                                                     Next
-                                                </button>
+                                                </IconBtn>
                                             )}
                                         </div>
                                     </div>
