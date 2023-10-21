@@ -1,4 +1,6 @@
 import ChangeProfilePicture from "./ChangeProfilePicture"
+import PasswordUpdate from "./PasswordUpdate"
+import UpdateProfileInfo from "./UpdateProfileInfo"
 
 const Settings = () => {
   return (
@@ -9,9 +11,9 @@ const Settings = () => {
       {/* change profile picture */}
       <ChangeProfilePicture />
       {/* edit profile */}
-
+      <UpdateProfileInfo />
       {/* password update  */}
-
+      <PasswordUpdate />
       {/* delete account */}
 
     </div>

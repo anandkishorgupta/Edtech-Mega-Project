@@ -5,6 +5,7 @@ import IconBtn from "../../common/IconBtn"
 const MyProfile = () => {
     const { user } = useSelector((state) => state.profile)
     const navigate = useNavigate()
+    console.log("user slice from my profile component......", user)
     return (
         <div className="flex flex-col gap-y-10  ">
             <h1 className="text-3xl text-start">My Profile</h1>
@@ -37,7 +38,7 @@ const MyProfile = () => {
                     </IconBtn>
 
                 </div>
-                <p className="text-sm text-richblack-300">{user?.additioanlDetails?.about ?? "Write Something about Yourself"}</p>
+                <p className="text-sm text-richblack-300">{user?.additionalDetails?.about ?? "Write Something about Yourself"}</p>
             </div>
             {/* section3 */}
             <div className=" bg-richblack-800 px-10 py-8 border  border-richblack-600 rounded-md flex flex-col gap-y-7">

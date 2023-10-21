@@ -11,6 +11,7 @@ import RatingStars from '../components/common/RatingStars'
 import { Spinner } from '../components/common/Spinner'
 import CourseDetailsCard from '../components/core/course/CourseDetailsCard'
 import CoursesCollapse from '../components/core/course/CoursesCollapse'
+import RatingAndReviewDisplay from '../components/core/course/RatingAndReviewDisplay'
 import { fetchCourseDetails } from '../services/operations/courseDetailsAPI'
 import { buyCourse } from "../services/operations/studentsFeaturesAPI"
 import { GetAvgRatings } from '../utils/avgratings'
@@ -112,7 +113,7 @@ const CourseDetails = () => {
         <>
             <div >
                 {
-                    courseData &&    
+                    courseData &&
                     <div className=' bg-richblack-800'>
                         {/* section 1 */}
                         <div className='relative w-11/12 max-w-maxContent mx-auto'>
@@ -131,7 +132,7 @@ const CourseDetails = () => {
                                 </div>
                                 <p>Created By: {courseData.instructor.firstName} {courseData.instructor.lastName}</p>
                                 <div className='flex flex-row items-center gap-x-2 text-richblack-5'>
-                                    <AiOutlineInfoCircle/>
+                                    <AiOutlineInfoCircle />
                                     <p>Created at : {dateFormatter(courseData.createdAt)}</p>
                                     {" "}
                                     <CiGlobe className='text-richblack-5' />
@@ -197,11 +198,24 @@ const CourseDetails = () => {
                                             setIsActive={setIsActive}
                                         />
                                     </div>
+
                                 </div>
                             </div>
                         </div>
+
+
+
+
                     </div>
+
                 }
+
+                {/* section 3 rating and review  */}
+                <div className='mb-20 bg-richblack-900 w-11/12 mx-auto max-w-maxContent border border-richblack-600 rounded-md'>
+                    <p className='text-4xl font-semibold text-richblack-5 border-b border-richblack-600 py-3 px-4'>     Rating & Reviews</p>
+                    <RatingAndReviewDisplay ratingData={courseData?.ratingAndReviews} />
+                </div>
+
                 <Footer />
             </div>
             {

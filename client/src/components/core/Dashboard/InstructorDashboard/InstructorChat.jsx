@@ -1,6 +1,6 @@
 import { Chart, registerables } from "chart.js"
+import { useState } from "react"
 Chart.register(...registerables)
-
 const InstructorChat = () => {
     const [currChart, setCurrChart] = useState("students")
 

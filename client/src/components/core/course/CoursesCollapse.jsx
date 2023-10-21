@@ -26,7 +26,7 @@ const CoursesCollapse = ({ isActive, courseData, handleActive, setIsActive }) =>
 
                     {/* subSection */}
                     <div
-                    
+
                     >
                         {section?.subSection?.map((subSection) => (
                             <div key={subSection._id}

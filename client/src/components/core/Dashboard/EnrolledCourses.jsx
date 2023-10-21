@@ -39,10 +39,10 @@ const EnrolledCourses = () => {
           {/* cards  */}
           <div className="border-l border-r border-richblack-600">
             {enrolledCourses.map((course, index) => (
-              <div key={index} className="cursor-pointer grid grid-cols-4 py-2 border-b border-b-richblack-600 px-2"
+              <div key={index} className="cursor-pointer grid grid-cols-4 py-2 border-b border-b-richblack-600 px-2 items-center"
                 onClick={() => navigate(`/view-course/${course?._id}/section/${course?.courseContent[0]._id}/sub-section/${course?.courseContent[0].subSection[0]._id}`)}
-              >
-                <div className="flex gap-x-3 col-span-2 lg:max-w-[300px] items-center">
+                    >
+                <div className="flex gap-x-3 col-span-2 lg:max-w-[300px] items-center ">
                   <img src={course.thumbnail} alt="" className="max-w-[75px] h-[75px] object-cover rounded-md" />
                   <div>
                     <p>{course.courseName}</p>
@@ -50,11 +50,11 @@ const EnrolledCourses = () => {
                     {/* <p>{course.instructor.firstName}</p> */}
                   </div>
                 </div>
-                <div>{course?.totalDuration}</div>
+                <div>{course?.duration?.time}</div>
                 <div className="max-w-[200px] flex flex-col justify-center">
-                  <p>Progress:{course.progressPercentage || 0}%</p>
+                  <p>Progress:{course.progressPercent || 0}%</p>
                   <ProgressBar
-                    completed={course?.courseProgress?.length || 0}
+                    completed={course?.progressPercent || 0}
                     height="8px"
                     isLabelVisible={false}
                   />

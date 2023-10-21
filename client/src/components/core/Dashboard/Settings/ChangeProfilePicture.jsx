@@ -1,14 +1,16 @@
 import { useRef, useState } from "react"
 import { FiUpload } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
+import { updateDisplayPicture } from "../../../../services/operations/settingsAPI"
 import IconBtn from "../../../common/IconBtn"
 const ChangeProfilePicture = () => {
     const { user } = useSelector((state) => state.profile)
-    const {token}=useSelector((state)=>state.auth)
+    const { token } = useSelector((state) => state.auth)
     const fileInputRef = useRef(null)
     const [imageFile, setImageFile] = useState(null)
     const [previewSource, setPreviewSource] = useState(null)
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
+    const [loading, setLoading] = useState(null)
     const handleClick = () => {
         console.log(fileInputRef.current)
         fileInputRef.current.click()
@@ -32,13 +34,19 @@ const ChangeProfilePicture = () => {
         // Read the image as a data URL
         reader.readAsDataURL(file);
     };
-    function handleFileUpload() {
-        const formData=new FormData()
-        formData.append("displayPicture",imageFile)
+    async function handleFileUpload() {
+        const formData = new FormData()
+        formData.append("displayPicture", imageFile)
         // dispatch(updateDisplayPicture(token,formData))
+        setLoading(true)
+        await updateDisplayPicture(formData, token, dispatch)
+        setLoading(false)
     }
     return (
-        <div className="flex items-center justify-between rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12 text-richblack-5">
+        <div className="flex items-center justify-between rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12 text-richblack-5"
+        onClick={(e)=>e.stopPropagation()}
+        
+        >
             <div className="flex flex-row items-center gap-x-4">
                 <img
                     src={previewSource || user?.image}
@@ -61,9 +69,13 @@ const ChangeProfilePicture = () => {
                         >
                             Select
                         </button>
-                        <IconBtn text={"upload"}
+                        <IconBtn text={`${loading ? "updating..." : "update"}`}
                             onClick={handleFileUpload}>
-                            <FiUpload />
+                            {
+                                !loading &&
+                                <FiUpload />
+
+                            }
                         </IconBtn>
                     </div>
                 </div>
