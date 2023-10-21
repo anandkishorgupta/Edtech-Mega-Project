@@ -171,7 +171,7 @@ export const showAllCourses = async (req, res) => {
   }
 };
 
-// get  particular course details-- used when user click on specific course 
+// get  particular course details-- used when user student click on specific course to view course , consisting but and add to cart options 
 export const getCourseDetails = async (req, res) => {
   try {
     // fetch courseId
@@ -188,7 +188,12 @@ export const getCourseDetails = async (req, res) => {
     // find courseDetails from db
     const courseDetails = await Course.findById(courseId)
       .populate("instructor")
-      .populate("ratingAndReviews")
+      .populate({
+        path: "ratingAndReviews",
+        populate: {
+          path: "user"
+        }
+      })
       .populate("category")
       .populate({
         path: "courseContent",
@@ -209,6 +214,7 @@ export const getCourseDetails = async (req, res) => {
       message: "Course data fetched successfully",
       data: courseDetails,
     });
+
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -216,6 +222,7 @@ export const getCourseDetails = async (req, res) => {
       error: error.message,
     });
   }
+
 };
 
 // get full course details authenticated       
@@ -368,12 +375,53 @@ export const getInstructorCourses = async (req, res) => {
     // Find the courses belonging to the instructor
     const instructorCourses = await Course.find({
       instructor: instructorId
-    }).sort({ createdAt: -1 });
+    }).sort({ createdAt: -1 }).populate({
+      path: "courseContent",
+      populate: {
+        path: "subSection"
+      }
+    })
+
+    if (!instructorCourses) {
+      return res.status(400).json({
+        success: false,
+        message: "Instructor course not found"
+      })
+    }
+
+    // append duration of course to each course object
+
+    let instructorCoursesWithDuration = instructorCourses.map((course) => {
+      let duration = 0
+
+
+
+      course.courseContent.forEach((section) => {
+        section.subSection.forEach((sub) => {
+          duration += parseFloat(sub.timeDuration)
+        })
+
+
+
+
+
+
+
+      })
+      return {
+        // convert mongoose object to js object 
+        ...course.toObject(),
+        duration: secondsToHMS(duration)
+      }
+    })
+
 
     // Respond with the instructor's courses
     res.status(200).json({
       success: true,
-      data: instructorCourses
+      // data: instructorCourses,
+      data: instructorCoursesWithDuration
+
     });
   } catch (error) {
     console.error(error);

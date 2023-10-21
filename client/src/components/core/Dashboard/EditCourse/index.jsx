@@ -13,6 +13,7 @@ const EditCourse = () => {
     const { token } = useSelector((state) => state.auth)
     const populateCourseDetails = async () => {
         setLoading(true)
+        // authenticated
         const result = await getFullCourseDetails(courseId, token)
         if (result) {
             dispatch(setEditCourse(true))

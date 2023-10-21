@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { IoAddOutline } from 'react-icons/io5'
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { fetchInstructorCourse } from "../../../services/operations/courseDetailsAPI"
@@ -13,6 +14,7 @@ const MyCourses = () => {
     const fetchCourses = async () => {
         setLoading(true)
         const result = await fetchInstructorCourse(token);
+        console.log(result)
         if (result) {
             setCourses(result)
         }
@@ -23,17 +25,17 @@ const MyCourses = () => {
     }, [])
     return (
         <div>
-            <div>
+            <div className="flex justify-between items-center mb-4">
                 <h1>My Courses</h1>
-                <IconBtn text={"Add Course "}
+                <IconBtn text={`Add Course `}
                     onClick={() => navigate("/dashboard/add-course")}
                 >
-
+                    <IoAddOutline  className="text-2xl"/>
                 </IconBtn>
             </div>
 
             {
-                loading ? (<Spinner  />) : (
+                loading ? (<Spinner />) : (
                     courses && <CoursesTable courses={courses} setCourses={setCourses} loading={loading} setLoading={setLoading} />
                 )
             }

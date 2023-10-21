@@ -1,46 +1,48 @@
 import Course from "../models/Course.js";
+import CourseProgress from "../models/CourseProgress.js";
 import Profile from "../models/Profile.js";
 import User from "../models/User.js";
 import { uploadToCloudinary } from "../utils/imageUploader.js";
-
+import { secondsToHMS } from "../utils/secondsToHMS.js";
 // update Profile 
 export const updateProfile = async (req, res) => {
   try {
     // fetch user Id
-    const { gender, dateOfBirth = "", about = "", contactNumber } = req.body;
+    const { firstName, lastName, gender, dateOfBirth, about, contactNumber } = req.body;
 
     // get userId
     const id = req.user.id
-    // validation
-    if (!contactNumber || !gender || !id) {
-      return res.status(400).json({
-        success: false,
-        message: "All fields are  required"
-      })
-    }
+
     // find profile 
-    const userDetails = await User.findById(id);
+    // const userDetails = await User.findById(id);
+    const userDetails = await User.findByIdAndUpdate(id, {
+      firstName,
+      lastName
+    }, {
+      new: true
+    })
+
     const profileId = userDetails.additionalDetails;
-    // find and update it
-    // const updatedProfile = await Profile.findByIdAndUpdate(profileId, {
-    //     gender,
-    //     dateOfBirth,
-    //     about,
-    //     contactNumber
-    // })
+
     const profileDetail = await Profile.findById(profileId)
+    console.log(profileDetail)
     // update profile
     profileDetail.dateOfBirth = dateOfBirth;
     profileDetail.about = about;
     profileDetail.gender = gender
     profileDetail.contactNumber = contactNumber
+
     // save to db
     await profileDetail.save();
+
+    // find the updated user details
+    const updatedUserDetails = await User.findById(id).populate("additionalDetails").exec()
+
     // return response
     res.status(200).json({
       success: true,
       message: "profile updated successfully",
-      profileDetail
+      updatedUserDetails
     })
 
   } catch (error) {
@@ -150,7 +152,8 @@ export const updateDisplayPicture = async (req, res) => {
       { _id: userId },
       { image: image.secure_url },
       { new: true }
-    )
+    ).populate("additionalDetails");
+
     res.send({
       success: true,
       message: `Image Updated successfully`,
@@ -178,16 +181,81 @@ export const getEnrolledCourses = async (req, res) => {
         }
       })
       .exec();
+
     if (!userDetails) {
       return res.status(400).json({
         success: false,
         message: `Could not find user with id: ${userDetails}`,
       })
     }
+
+
+    // let coursesWithDuration = userDetails.courses.map((course) => {
+    //   let duration = 0
+    //   course.courseContent.forEach((section) => {
+    //     section.subSection.forEach((sub) => {
+    //       duration += parseFloat(sub.timeDuration)
+    //     })
+
+    //   })
+    //   return {
+    //     // convert mongoose object to js object 
+    //     ...course.toObject(),
+    //     duration: secondsToHMS(duration)
+    //   }
+    // })
+
+    // this array contain courses with duration and progress info
+    let coursesWithDuration = [];
+
+    for (let i = 0; i < userDetails.courses.length; i++) {
+      let course = userDetails.courses[i];
+      let duration = 0;
+      let subsectionLength = 0
+      let progressCount = 0
+      let progressPercent = 0
+      //  progress
+      let progress = await CourseProgress.findOne({
+        courseID: course._id,
+        userID: userId
+      })
+      // total no. of completed videos 
+      progressCount = progress?.completedVideo?.length
+      // subsectionLength = course.courseContent?.subSection?.length
+
+      for (let j = 0; j < course.courseContent.length; j++) {
+        let section = course.courseContent[j];
+        subsectionLength +=section.subSection.length
+        for (let k = 0; k < section.subSection.length; k++) {
+          let sub = section.subSection[k];
+          duration += parseFloat(sub.timeDuration);
+        }
+        const multiplier = Math.pow(10, 2)
+        progressPercent = Math.round(
+          (parseFloat(progressCount) / parseFloat(subsectionLength)) * 100 * multiplier
+        ) / multiplier
+
+      }
+      coursesWithDuration.push({
+        ...course.toObject(),
+        duration: secondsToHMS(duration),
+        progressPercent
+      });
+      console.log(progressCount)
+      console.log(subsectionLength)
+    }
+
+
     return res.status(200).json({
       success: true,
-      data: userDetails.courses,
+      data: coursesWithDuration,
     })
+
+
+
+
+
+
   } catch (error) {
     return res.status(500).json({
       success: false,

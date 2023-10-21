@@ -1,3 +1,4 @@
+// this component is used by student to watch the lectures 
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Outlet, useParams } from "react-router-dom"

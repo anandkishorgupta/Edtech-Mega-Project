@@ -155,7 +155,7 @@ export const login = async (req, res) => {
             })
         }
         // user exist check
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email }).populate("additionalDetails")
         // .populate("additionalDetails")
         if (!user) {
             return res.status(401).json({
@@ -214,8 +214,11 @@ export const changePassword = async (req, res) => {
         const user = await User.findById(id)
         // get data from req body
         // get old password , new password , confirmNewPassword 
-        const { oldPassword, newPassword, confirmPassword } = req.body
+        const { oldPassword, newPassword } = req.body
+        console.log(oldPassword)
+        console.log(newPassword)
         // validate old password
+
         const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
         if (!isPasswordMatch) {
             return res.status(401).json({
@@ -226,13 +229,13 @@ export const changePassword = async (req, res) => {
         }
 
         // match newPassword and confim password 
-        if (newPassword != confirmPassword) {
-            return res.status(400).json({
-                success: false, message: "Password and Confirm Password does not match"
-            })
-        }
+        // if (newPassword != confirmPassword) {
+        //     return res.status(400).json({
+        //         success: false, message: "Password and Confirm Password does not match"
+        //     })
+        // }
         // hash password 
-        const hashedPassword = await bcrypt.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(newPassword, 10)
         const updatedUser = await User.findByIdAndUpdate(id,
             {
                 password: hashedPassword

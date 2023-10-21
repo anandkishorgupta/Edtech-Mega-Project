@@ -175,6 +175,9 @@ export const fetchInstructorCourse = async (token) => {
 
 }
 
+
+
+
 // delete course
 export const deleteCourse = async (data, token) => {
     let result;

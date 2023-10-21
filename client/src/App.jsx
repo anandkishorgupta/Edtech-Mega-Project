@@ -93,7 +93,7 @@ const App = () => {
               <>
                 <Route path="/dashboard/add-course" element={<AddCourse />} />
                 <Route path="/dashboard/my-courses" element={<MyCourses />} />
-                <Route path="/dashboard/add-course/:courseId" element={<EditCourse />} />
+                <Route path="/dashboard/edit-course/:courseId" element={<EditCourse />} />
                 <Route path="/dashboard/instructor" element={<Instructor />} />
               </>
             )

@@ -1,3 +1,4 @@
+// this  is the  course detail  page consist of buy and add to catrt options 
 import { useEffect, useState } from 'react'
 import { toast } from "react-hot-toast"
 import { AiOutlineInfoCircle } from "react-icons/ai"
@@ -111,7 +112,7 @@ const CourseDetails = () => {
         <>
             <div >
                 {
-                    courseData &&
+                    courseData &&    
                     <div className=' bg-richblack-800'>
                         {/* section 1 */}
                         <div className='relative w-11/12 max-w-maxContent mx-auto'>
