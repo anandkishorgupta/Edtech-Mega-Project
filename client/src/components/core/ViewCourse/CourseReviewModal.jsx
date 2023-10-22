@@ -27,11 +27,13 @@ const CourseReviewModal = ({ setReviewModal }) => {
         console.log("...........", data.courseExperience)
         console.log("...........", courseId)
 
-       await createRating({
+        await createRating({
             rating: data.courseRating,
             review: data.courseExperience,
             courseId
         }, token)
+
+        setReviewModal(null)
     }
 
 
