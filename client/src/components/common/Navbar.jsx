@@ -47,7 +47,8 @@ export const Navbar = () => {
         {/* nav links */}
         <nav className={`absolute lg:static left-[-32px] top-0 translate-y-[2.7rem] lg:translate-y-0 z-50 bg-richblue-700 lg:bg-transparent
         pl-8 lg:px-0 pr-12 lg:pr-0
-        py-8 lg:py-0 rounded-md ${showMenu ? "block" : "hidden"}
+        py-8 lg:py-0 rounded-md 
+        ${showMenu ? "block" : "hidden"} lg:block
         border border-richblack-600 lg:border-none
                `}>
           <ul className="lg:flex lg:gap-x-6 text-richblack-25  lg:flex-row flex flex-col gap-y-5 lg:gap-y-0">
