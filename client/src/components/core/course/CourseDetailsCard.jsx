@@ -1,6 +1,6 @@
 import copy from 'copy-to-clipboard';
 import { toast } from "react-hot-toast";
-import { AiFillCaretRight } from "react-icons/ai";
+// import { AiFillCaretRight } from "react-icons/ai";
 import { IoMdShareAlt } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -61,7 +61,7 @@ const CourseDetailsCard = ({ courseData, handleBuyCourse, setConfirmationModal }
                 </button>
             }
             <p className='text-sm text-richblack-25 text-center'>30-Day Money-Back Guarantee</p>
-            <p className='text-xl font-semibold'>This Course Includes :</p>
+            {/* <p className='text-xl font-semibold'>This Course Includes :</p>
             <div className='text-sm text-caribbeangreen-100'>
                 {
                     courseData?.instructions.map((item, index) => (
@@ -70,7 +70,7 @@ const CourseDetailsCard = ({ courseData, handleBuyCourse, setConfirmationModal }
                             {item}</p>
                     ))
                 }
-            </div>
+            </div> */}
             <div onClick={
                 handleShare
 
