@@ -68,11 +68,18 @@ const Catalog = () => {
                             className={`${clickedTab === "New" ? " border-b border-b-yellow-25 text-yellow-25 " : " "} cursor-pointer px-4 py-2`}
                         >new</p>
                     </div>
-                    <CourseSlider courses={catalogPageData?.data?.selectedCategory?.courses} />
+                    {
+                        clickedTab === "Most popular" &&
+                        <CourseSlider courses={catalogPageData?.data?.popular} />
+                    }
+                    {
+                        clickedTab === "New" &&
+                        <CourseSlider courses={catalogPageData?.data?.latest} />
+                    }
                 </div>
                 {/* section 2 */}
                 <div>
-                    <p className="font-bold text-4xl mb-10">Top courses in {catalogPageData?.data?.selectedCategory?.name}</p>
+                    <p className="font-bold text-4xl mb-10">Top courses in {catalogPageData?.data?.differentCategory?.name}</p>
                     <div  >
                         <CourseSlider courses={catalogPageData?.data?.differentCategory?.courses} />
                     </div>

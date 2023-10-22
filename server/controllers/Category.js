@@ -59,6 +59,8 @@ export const categoryPageDetails = async (req, res) => {
                 populate: "ratingAndReviews"
             }).exec()  //return the document having course status "published"
 
+        const latest = selectedCategory.courses.sort((a, b) => b.createdAt - a.createdAt);
+        const popular = selectedCategory.courses.sort((a, b) => b.studentsEnrolled.length - a.studentsEnrolled.length)
         // console.log("selected category data ....", selectedCategory)
         // validation
         if (!selectedCategory) {
@@ -106,8 +108,12 @@ export const categoryPageDetails = async (req, res) => {
                 populate: {
                     path: "instructor",
                     select: '-password' //password is ignored 
-                }
-            }).exec()
+                },
+                populate: { path: "ratingAndReviews" }
+            })
+            .exec()
+        console.log(allCategories)
+
         // console.log("allCategories...............", allCategories)
         // const allCourses = [].concat(...allCategories.map(category => category.courses))
         const allCourses = allCategories.flatMap((category) => category.courses)
@@ -115,14 +121,16 @@ export const categoryPageDetails = async (req, res) => {
         const mostSellingCourses = allCourses
             .sort((a, b) => b.sold - a.sold)
             .slice(0, 10)
-        console.log("mostSellingCourses.....", mostSellingCourses)
+        // console.log("mostSellingCourses.....", mostSellingCourses)
         // return response 
         res.status(200).json({
             success: true,
             data: {
                 selectedCategory,
                 differentCategory,
-                mostSellingCourses
+                mostSellingCourses,
+                latest,
+                popular
             }
         })
 
