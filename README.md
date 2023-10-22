@@ -11,11 +11,17 @@ Demo Login Credentials:
 - Instructor: [username]: guptaanand50588@gmail.com, [password]:12345
 
 ## few screenshots
-![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/ba75fdc8-5c73-4557-80e4-4ea4d6e73156)
 
-![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/a2194da3-5542-4d20-b97b-7e49488dffaf)
 
-![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/bccfe4a3-242d-4d4d-a40b-720d8a9e3d21)
+![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/b1e83496-aa3d-4da7-bf79-ee9ab0fa3952)
+<br>
+![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/d0174746-407f-4837-bcf4-2a85f24e5f92)
+<br>
+![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/08065081-21c5-4685-a117-603fc63f13c9)
+<br>
+![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/6be2a18d-6de2-4940-ae3a-4c0d670f670b)
+<br>
+![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/c8d40eec-d159-4feb-8e02-8f3472035fb0)
 
 
 ## Table of Contents
