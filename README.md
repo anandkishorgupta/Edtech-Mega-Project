@@ -7,8 +7,8 @@ This repository contains the codebase for a Udemy-like website developed using t
 Explore our live demo at [https://studynotion-il88.onrender.com](https://studynotion-il88.onrender.com)
 
 Demo Login Credentials:
-- Student: [email]: [guptaanand40588@gmail.com], [password]: [12345]
-- Instructor: [username]: [guptaanand50588@gmail.com], [password]: [12345]
+- Student: [email]:guptaanand40588@gmail.com, [password]:12345
+- Instructor: [username]: guptaanand50588@gmail.com, [password]:12345
 
 ## few screenshots
 ![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/ba75fdc8-5c73-4557-80e4-4ea4d6e73156)
