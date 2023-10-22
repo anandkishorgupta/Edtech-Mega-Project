@@ -16,13 +16,14 @@ import { connectDB } from "./config/database.js";
 
 const PORT = process.env.PORT || 4000
 // db connect
-connectDB()       
+connectDB()
 // middlewares
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "http://localhost:3000"
+    origin: process.env.CLIENT
 }))
+
 app.use(
     fileUpload({
         useTempFiles: true,
@@ -35,10 +36,10 @@ cloudinaryConnect()
 
 // routes mount 
 app.use("/api/v1/auth", userRoutes)
-app.use("/api/v1/profile", profileRoutes)   
-app.use("/api/v1/course",courseRoute)
+app.use("/api/v1/profile", profileRoutes)
+app.use("/api/v1/course", courseRoute)
 app.use("/api/v1/payment", paymentRoutes)
-app.use("/api/v1/reach",contactUsRoute)
+app.use("/api/v1/reach", contactUsRoute)
 
 // default route
 app.get("/", (req, res) => {
