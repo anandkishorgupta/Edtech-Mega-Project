@@ -10,6 +10,14 @@ Demo Login Credentials:
 - Student: [email]: [guptaanand40588@gmail.com], [password]: [12345]
 - Instructor: [username]: [guptaanand50588@gmail.com], [password]: [12345]
 
+## few screenshots
+![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/ba75fdc8-5c73-4557-80e4-4ea4d6e73156)
+
+![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/a2194da3-5542-4d20-b97b-7e49488dffaf)
+
+![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/bccfe4a3-242d-4d4d-a40b-720d8a9e3d21)
+
+
 ## Table of Contents
 - [Getting Started](#getting-started)
 - [Prerequisites](#prerequisites)
