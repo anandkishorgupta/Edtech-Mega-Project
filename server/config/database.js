@@ -34,7 +34,7 @@ export const connectToDatabase = async () => {
       console.error(error);
 
       // Increase the delay between retry attempts (e.g., exponential backoff).
-      const retryDelay = Math.pow(2, retryCount) * 1000;
+      const retryDelay = Math.pow(1, retryCount) * 1000;
       retryCount++;
       console.log(`Retrying in ${retryDelay / 1000} seconds...`);
 
