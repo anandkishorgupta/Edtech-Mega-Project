@@ -12,11 +12,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 import { cloudinaryConnect } from "./config/cloudinary.js";
-import { connectDB } from "./config/database.js";
+import { connectToDatabase } from "./config/database.js";
 
 const PORT = process.env.PORT || 4000
 // db connect
-connectDB()
 // middlewares
 app.use(express.json())
 app.use(cookieParser())
@@ -48,6 +47,8 @@ app.get("/", (req, res) => {
         message: "Your server is up and running"
     })
 })
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+    // await connectDB()
+    await connectToDatabase()
     console.log(`App is running at ${PORT}`)
 })
