@@ -22,7 +22,7 @@ export const connectToDatabase = async () => {
 
   while (!isConnected) {
     try {
-      await mongoose.connect("mongodb+srv://escbdc:dscusbcsc@cluster0.6guliqn.mongodb.net/Studynotion", {
+      await mongoose.connect(process.env.MONGODB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
