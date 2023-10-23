@@ -29,11 +29,11 @@ const Footer = () => {
             <div className="w-11/12 max-w-maxContent mx-auto flex-col items-center justify-between gap-8">
                 <div className="h-16"></div>
                 <div className="flex flex-col">
-                    <div className="flex gap-9 text-richblack-400">
+                    <div className="lg:flex lg:gap-9 text-richblack-400 lg:flex-row flex-col">
                         {/* left section  */}
-                        <div className=" flex flex-row justify-between w-[50%] gap-10">
+                        <div className=" lg:flex lg:flex-row lg:justify-between lg:w-[50%] lg:gap-10 grid grid-cols-2 mb-10 lg:mb-0">
 
-                            <div className="flex flex-col gap-2  flex-1 text-richblack-400">
+                            <div className="flex flex-col gap-2  flex-1 text-richblack-400 w-[40%]">
                                 <img src={Logo} alt="Logo" />
                                 <h1 className="font-semibold text-xl text-richblack-50">Company</h1>
                                 {
@@ -108,7 +108,9 @@ const Footer = () => {
 
                         </div>
                         {/* right section  */}
-                        <div className="flex flex-row justify-between w-[50%] lg:border-l lg:border-richblack-700 ps-4 pb-4">
+                        <div className="lg:flex lg:flex-row lg:justify-between lg:w-[50%] lg:border-l lg:border-richblack-700 lg:ps-4 lg:pb-0
+                        grid grid-cols-2 gap-x-5 gap-y-5
+                        ">
                             {
                                 FooterLink2.map((element, index) => (
                                     <div key={index} className="flex flex-col gap-2 flex-1 ">
@@ -126,10 +128,12 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    <div className="flex flex-row justify-between items-center border-t border-richblack-700 mt-5 pt-7 text-richblack-400">
+                    <div className="flex lg:flex-row lg:justify-between lg:items-center border-t border-richblack-700 mt-5 pt-7 text-richblack-400 flex-col items-center gap-y-2 lg:gap-y-0">
                         <div className="flex flex-row items-center gap-4 cursor-pointer ">
                             <p className="hover:text-richblack-50 transition-all duration-200">Privacy Policy</p>
-                            <p className="border-l-2 border-r-2 px-4 hover:text-richblack-50 transition-all duration-200" >Cookie Policy </p>
+                            <p>|</p>
+                            <p className=" hover:text-richblack-50 transition-all duration-200" >Cookie Policy </p>
+                            <p>|</p>
                             <p className="hover:text-richblack-50 transition-all duration-200">Terms </p>
                         </div>
                         <div className="">
