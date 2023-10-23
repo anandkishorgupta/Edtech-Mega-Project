@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BiChevronDown, BiMenuAltLeft } from "react-icons/bi";
 import { useSelector } from "react-redux";
@@ -15,13 +16,18 @@ export const Navbar = () => {
   const { course } = useSelector((state) => state.course)
   const [subLinks, setSubLinks] = useState([]);
   const [showMenu, setShowMenu] = useState(false)
+  const [loading, setLoading] = useState(false)
   const fetchSublinks = async () => {
     try {
+      setLoading(true)
       const result = await fetchCourseCategories()
       console.log("categories...................", result)
       setSubLinks(result);
+      setLoading(false)
     } catch (error) {
+      toast.error("cannot fetch the category list")
       console.log("cannot fetch the category list");
+      setLoading(false)
     }
   };
   console.log(subLinks)
@@ -64,6 +70,11 @@ export const Navbar = () => {
                         group-hover:visible group-hover:opacity-100 lg:w-[300px] z-10"
                     >
                       <div className="absolute left-[50%] top-0 h-6 w-6 rotate-45 bg-richblack-5 translate-x-[80%] translate-y-[-45%] "></div>
+                      
+                      {
+                        subLinks?.length===0&&
+                        <p>Loading...</p>
+                      }
                       {
                         subLinks?.length > 0
                         && subLinks.filter((sublink) => sublink?.courses?.length > 0)
