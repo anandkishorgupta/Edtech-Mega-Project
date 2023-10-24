@@ -25,6 +25,7 @@ const {
 // fetch the available course category
 export const fetchCourseCategories = async () => {
     let result = []
+    let toastId = toast.loading("loading categories list")
     try {
         const response = await apiConnector("GET", COURSE_CATEGORIES_API)
         console.log(response)
@@ -36,6 +37,7 @@ export const fetchCourseCategories = async () => {
         console.log(error)
         toast.error(error.message)
     }
+    toast.dismiss(toastId)
     return result
 }
 
@@ -353,7 +355,7 @@ export const createRating = async (data, token) => {
     let toastId = toast.loading("loading....")
     try {
         console.log("from create rating api.........", data)
-        const response = await apiConnector("POST",CREATE_RATING_API,data, {
+        const response = await apiConnector("POST", CREATE_RATING_API, data, {
             Authorization: `Bearer ${token}`
         })
 
