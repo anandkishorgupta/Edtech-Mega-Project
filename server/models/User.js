@@ -58,6 +58,14 @@ const userSchema = new mongoose.Schema({
     },
     resetPasswordExpires: {
         type: Date
+    },
+    deleteRequested: {
+        type: Boolean,
+        default: false
+    },
+    deletedAt: {
+        type: Date,
+        default: null
     }
 },
     { timestamps: true }

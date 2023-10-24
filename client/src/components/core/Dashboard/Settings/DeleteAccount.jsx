@@ -21,7 +21,7 @@ const DeleteAccount = () => {
           <p>Would you like to delete account?</p>
           <p>This account may contain Paid Courses. Deleting your account is permanent and will remove all the contain associated with it.</p>
           <br />
-   
+          <p className="italic">You will be logged out, and your account will be completely removed in 10 days. Logging in again will cancel the deletion process.</p>
           <p className="w-fit cursor-pointer italic text-pink-300 transition-all duration-200 ease-linear hover:scale-110"
             onClick={handleAccountDeletion}
           >I want to delete my account</p>

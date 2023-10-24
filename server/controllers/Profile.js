@@ -1,9 +1,9 @@
 import Course from "../models/Course.js";
 import CourseProgress from "../models/CourseProgress.js";
 import Profile from "../models/Profile.js";
-import RatingAndReviews from "../models/RatingAndReviews.js";
 import User from "../models/User.js";
 import { uploadToCloudinary } from "../utils/imageUploader.js";
+import mailSender from "../utils/mailSender.js";
 import { secondsToHMS } from "../utils/secondsToHMS.js";
 // update Profile 
 export const updateProfile = async (req, res) => {
@@ -55,6 +55,7 @@ export const updateProfile = async (req, res) => {
   }
 }
 
+
 // delete account 
 export const deleteAccount = async (req, res) => {
   try {
@@ -76,28 +77,34 @@ export const deleteAccount = async (req, res) => {
         message: "User does not exist"
       })
     }
-    // find profile id 
-    const profileId = user.additionalDetails;
-    // delete from profile model
-    await Profile.findByIdAndDelete(profileId)
-    //unenroll user from all enrolled courses 
-    await Course.deleteMany({ studentsEnrolled: id })
-    // delete rating and reviews
-    await RatingAndReviews.deleteMany({ user: id })
-    // delete from course progress
-    await CourseProgress.deleteMany({ userID: id })
 
-    // if user is instructor then delete his all courses 
-    if (user.accountType == "Instructor") {
-      await Course.deleteMany({ instructor: id })
-    }
-    // delete from user model
-    await User.findByIdAndDelete({ _id: id })
+    user.deleteRequested = true
+    user.deletedAt = new Date(Date.now() + 10 * 24 * 60 * 60 * 1000); // 10 days
+
+    await user.save()
+    mailSender(user.email, "Account deletion", "Your account is schedule for deletion & will be deleted in 10 days,login again will cancel the deletion process")
+    // // find profile id 
+    // const profileId = user.additionalDetails;
+    // // delete from profile model
+    // await Profile.findByIdAndDelete(profileId)
+    // //unenroll user from all enrolled courses 
+    // await Course.deleteMany({ studentsEnrolled: id })
+    // // delete rating and reviews
+    // await RatingAndReviews.deleteMany({ user: id })
+    // // delete from course progress
+    // await CourseProgress.deleteMany({ userID: id })
+
+    // // if user is instructor then delete his all courses 
+    // if (user.accountType == "Instructor") {
+    //   await Course.deleteMany({ instructor: id })
+    // }
+    // // delete from user model
+    // await User.findByIdAndDelete({ _id: id })
 
     // sending response 
     res.status(200).json({
       success: true,
-      message: "Account deleted successfully"
+      message: "Account will be deleted after 10 days"
     })
   } catch (error) {
     res.status(500).json({
@@ -107,6 +114,12 @@ export const deleteAccount = async (req, res) => {
     })
   }
 }
+
+
+
+
+
+
 
 
 // getAllUserDetail

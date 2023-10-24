@@ -44,7 +44,7 @@ export const getInstructorData = async (token) => {
 }
 
 // DELETE ACCOUNT 
-export const deleteAccount = async (token,dispatch,navigate) => {
+export const deleteAccount = async (token, dispatch, navigate) => {
     const toastId = toast.loading("Loading...")
     try {
         const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
@@ -54,7 +54,7 @@ export const deleteAccount = async (token,dispatch,navigate) => {
             throw new Error(response.data.message)
         }
         console.log("DELETE_PROFILE_API reponse......", response)
-        toast.success("account deleted successfully")
+        toast.success("account is schedule for deletion")
         dispatch(logout(navigate))
     } catch (error) {
         console.log(error)

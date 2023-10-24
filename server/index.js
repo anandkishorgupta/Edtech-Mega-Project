@@ -5,6 +5,7 @@ import courseRoute from "./routes/Course.js";
 import paymentRoutes from "./routes/Payments.js";
 import profileRoutes from "./routes/Profile.js";
 import userRoutes from "./routes/User.js";
+import { deleteAccountSchedule } from "./utils/deleteAccountSchedule.js";
 const app = express();
 dotenv.config();
 
@@ -32,7 +33,7 @@ app.use(
 
 // cloudinary connection
 cloudinaryConnect()
-
+deleteAccountSchedule()
 // routes mount 
 app.use("/api/v1/auth", userRoutes)
 app.use("/api/v1/profile", profileRoutes)

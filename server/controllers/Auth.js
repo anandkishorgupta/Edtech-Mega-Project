@@ -173,6 +173,12 @@ export const login = async (req, res) => {
             // const token = jwt.sign(payload, process.env.JWT_SECRET, {
             //     expiresIn: "2h"
             // })
+            if (
+                user.deleteRequested == true
+            ) {
+                user.deleteRequested = false
+                mailSender(user.email, "Account deletion ", "Account deletion is cancelled ")
+            }
             const token = jwt.sign(payload, process.env.JWT_SECRET)
             user.token = token  //token generated using jwt
             user.password = undefined
