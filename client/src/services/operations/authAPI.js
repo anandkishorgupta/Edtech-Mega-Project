@@ -111,8 +111,10 @@ export function signUp(
             if (!response.data.success) {
                 throw new Error(response.data.message)
             }
+            // response.data.success is true
             toast.success("Sign up successful")
-            navigate("/login")
+            // navigate("/login")
+            dispatch(login(email, password, navigate))
         } catch (error) {
             console.log("Signup api error........", error);
             toast.error("signup failed ")
@@ -147,7 +149,6 @@ export function login(email, password, navigate) {
 
             navigate("/dashboard/my-profile")
         } catch (error) {
-
             console.log("login api error.......", error)
             toast.error(error.response.data.message)
         }
