@@ -1,6 +1,7 @@
 import Course from "../models/Course.js";
 import CourseProgress from "../models/CourseProgress.js";
 import Profile from "../models/Profile.js";
+import RatingAndReviews from "../models/RatingAndReviews.js";
 import User from "../models/User.js";
 import { uploadToCloudinary } from "../utils/imageUploader.js";
 import { secondsToHMS } from "../utils/secondsToHMS.js";
@@ -81,6 +82,15 @@ export const deleteAccount = async (req, res) => {
     await Profile.findByIdAndDelete(profileId)
     //unenroll user from all enrolled courses 
     await Course.deleteMany({ studentsEnrolled: id })
+    // delete rating and reviews
+    await RatingAndReviews.deleteMany({ user: id })
+    // delete from course progress
+    await CourseProgress.deleteMany({ userID: id })
+
+    // if user is instructor then delete his all courses 
+    if (user.accountType == "Instructor") {
+      await Course.deleteMany({ instructor: id })
+    }
     // delete from user model
     await User.findByIdAndDelete({ _id: id })
 
@@ -225,7 +235,7 @@ export const getEnrolledCourses = async (req, res) => {
 
       for (let j = 0; j < course.courseContent.length; j++) {
         let section = course.courseContent[j];
-        subsectionLength +=section.subSection.length
+        subsectionLength += section.subSection.length
         for (let k = 0; k < section.subSection.length; k++) {
           let sub = section.subSection[k];
           duration += parseFloat(sub.timeDuration);

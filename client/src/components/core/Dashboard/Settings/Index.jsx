@@ -1,4 +1,5 @@
 import ChangeProfilePicture from "./ChangeProfilePicture"
+import DeleteAccount from "./DeleteAccount"
 import PasswordUpdate from "./PasswordUpdate"
 import UpdateProfileInfo from "./UpdateProfileInfo"
 
@@ -15,7 +16,7 @@ const Settings = () => {
       {/* password update  */}
       <PasswordUpdate />
       {/* delete account */}
-
+      <DeleteAccount />
     </div>
   )
 }

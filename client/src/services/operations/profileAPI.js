@@ -1,7 +1,8 @@
 import toast from "react-hot-toast";
 import { apiConnector } from "../apiconnector";
 import { profileEndpoints } from "../apis";
-const { GET_USER_ENROLLED_COURSES_API, GET_USER_DETAILS_API, GET_INSTRUCTOR_DATA_API } = profileEndpoints
+import { logout } from "./authAPI";
+const { GET_USER_ENROLLED_COURSES_API, GET_USER_DETAILS_API, GET_INSTRUCTOR_DATA_API, DELETE_PROFILE_API } = profileEndpoints
 
 export const geUserEnrolledCourses = async (token) => {
     const toastId = toast.loading("Loading....")
@@ -40,4 +41,24 @@ export const getInstructorData = async (token) => {
     }
     toast.dismiss(toastId)
     return result
+}
+
+// DELETE ACCOUNT 
+export const deleteAccount = async (token,dispatch,navigate) => {
+    const toastId = toast.loading("Loading...")
+    try {
+        const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
+            Authorization: `Bearer ${token}`
+        })
+        if (!response.data.success) {
+            throw new Error(response.data.message)
+        }
+        console.log("DELETE_PROFILE_API reponse......", response)
+        toast.success("account deleted successfully")
+        dispatch(logout(navigate))
+    } catch (error) {
+        console.log(error)
+        toast.error(error)
+    }
+    toast.dismiss(toastId)
 }
