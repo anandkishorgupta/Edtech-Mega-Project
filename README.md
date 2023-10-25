@@ -15,6 +15,10 @@ Demo Login Credentials:
 
 ![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/b1e83496-aa3d-4da7-bf79-ee9ab0fa3952)
 <br>
+<br>
+![image](https://github.com/anandkishorgupta/StudyNotion/assets/85511831/6fc2f9f1-2938-4381-ac07-a10f33813266)
+
+<br>
 ![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/d0174746-407f-4837-bcf4-2a85f24e5f92)
 <br>
 ![image](https://github.com/anandkishorgupta/Edtech-Mega-Project/assets/85511831/08065081-21c5-4685-a117-603fc63f13c9)
