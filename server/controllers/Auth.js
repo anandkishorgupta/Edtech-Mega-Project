@@ -177,10 +177,11 @@ export const login = async (req, res) => {
                 user.deleteRequested == true
             ) {
                 user.deleteRequested = false
+                await user.save()
                 mailSender(user.email, "Account deletion ", "Account deletion is cancelled ")
             }
             const token = jwt.sign(payload, process.env.JWT_SECRET)
-            user.token = token  //token generated using jwt
+            user.token = token  //token generated using jwt    
             user.password = undefined
             // create cookie and send response
             const options = {
