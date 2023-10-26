@@ -64,3 +64,8 @@ export const settingsEndpoints = {
     CHANGE_PASSWORD_API: BASE_URL + "/auth/changepassword"
 
 }
+
+// search api
+export const searchEndpoints = {
+    SEARCH_COURSE_API: BASE_URL + "/search"
+}

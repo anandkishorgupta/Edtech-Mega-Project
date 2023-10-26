@@ -14,7 +14,7 @@ const Course_Card = ({ course, Height }) => {
             <Link to={`/courses/${course._id}`}>
                 <div className='flex flex-col gap-y-2 '>
                     <div>
-                        <img src={course?.thumbnail} alt="" className={`${Height} w-full rounded-xl object-cover`} />
+                        <img src={course?.thumbnail} alt="" className={`${Height} w-full rounded-xl object-cover `} />
                     </div>
                     <div className='flex flex-col gap-y-1'>
                         <p className='text-xl text-richblack-5 font-semibold'>{course.courseName}</p>

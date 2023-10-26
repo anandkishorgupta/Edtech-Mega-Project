@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { FcMenu } from "react-icons/fc"
+import { RxCross1 } from "react-icons/rx"
 import { VscSignOut } from "react-icons/vsc"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -10,6 +12,7 @@ const Sidebar = () => {
     const { user, loading: profileLoading } = useSelector((state) => state.profile)
     const { loading: authLoading } = useSelector((state) => state.auth)
     const dispatch = useDispatch()
+    const [isopen, setIsopen] = useState(false)
     const navigate = useNavigate()
     const [confirmationModal, setConfirmationModal] = useState(null)
     if (authLoading || profileLoading) {
@@ -20,8 +23,10 @@ const Sidebar = () => {
         )
     }
     return (
-        <div>
-            <div className="flex min-w-[222px] flex-col border-r-[1px] border-r-richblack-700 h-[calc(100vh-3.5rem)] bg-richblack-800 py-10">
+
+        <div className="relative">
+            <div className={`${isopen ? "block fixed" : "hidden"}  lg:block flex min-w-[222px] flex-col border-r-[1px] border-r-richblack-700 h-[calc(100vh-3.5rem)] bg-richblack-800 py-10`}
+            >
                 <div className="flex flex-col">
                     {
                         sidebarLinks.map((link) => {
@@ -64,6 +69,20 @@ const Sidebar = () => {
 
                 </div>
             </div>
+       
+            {
+                !isopen &&
+                <FcMenu className="absolute text-4xl text-richblack-5 cursor-pointer " style={{ color: 'white' }} 
+                onClick={()=>setIsopen(true)}
+                />
+
+            }
+            {
+                isopen &&
+                <RxCross1 className="absolute left-28 translate-y-[90%] top-0 translate-x-[500%] text-3xl cursor-pointer"
+                    onClick={() => setIsopen(false)}
+                />
+            }
             {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
         </div>
     )

@@ -89,7 +89,6 @@ const Catalog = () => {
                     <p className="font-bold text-4xl mb-10">Frequently bought </p>
                     <div className="py-8">
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-10 gap-x-10">
-
                             {
                                 catalogPageData?.data?.mostSellingCourses?.slice(0, 4).map((course, index) => (
                                     <Course_Card course={course} key={index} Height={"h-[250px]"} />

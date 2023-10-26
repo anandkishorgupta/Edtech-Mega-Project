@@ -1,22 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BiChevronDown, BiMenuAltLeft } from "react-icons/bi";
+
+// import { BsSearch } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks } from "../../data/navbar-links";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { fetchCourseCategories } from "../../services/operations/courseDetailsAPI";
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
+
 export const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
   const location = useLocation();
+  const ref = useRef()
   const { course } = useSelector((state) => state.course)
   const [subLinks, setSubLinks] = useState([]);
   const [showMenu, setShowMenu] = useState(false)
   const [loading, setLoading] = useState(false)
+  // const navigate = useNavigate()
+  // const [searchData, setSearchData] = useState("")
   const fetchSublinks = async () => {
     try {
       setLoading(true)
@@ -39,6 +46,8 @@ export const Navbar = () => {
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname);
   };
+  useOnClickOutside(ref, () => setShowMenu(false))
+
   return (
     <div className=" flex  h-14 items-center justify-center border-b-[1px] border-b-richblack-700 bg-richblack-800">
       <div className="relative lg:static flex w-11/12 max-w-maxContent items-center justify-between">
@@ -49,14 +58,24 @@ export const Navbar = () => {
         <Link to={"/"}>
           <img src={logo} alt="" width={160} height={42} loading="lazy" />
         </Link>
-
+        {/* search */}
+        {/* <div className="relative hidden lg:block" onClick={(e) => e.stopPropagation()}>
+          <input type="text" placeholder="search a course" className="form-style py-1 w-[350px]"
+            onChange={(e) => setSearchData(e.target.value)}
+          />
+          <BsSearch className="absolute right-0 top-0 translate-y-[60%] -translate-x-[50%] cursor-pointer"
+            onClick={()=>navigate(`/search/${searchData}`)}
+          />
+        </div> */}
         {/* nav links */}
         <nav className={`absolute lg:static left-[-32px] top-0 translate-y-[2.7rem] lg:translate-y-0 z-50 bg-richblue-700 lg:bg-transparent
         pl-8 lg:px-0 pr-12 lg:pr-0
         py-8 lg:py-0 rounded-md 
-        ${showMenu ? "block" : "hidden"} lg:block
+        ${showMenu ? "block " : "hidden"} lg:block
         border border-richblack-600 lg:border-none
-               `}>
+               `}  
+
+          ref={ref}>
           <ul className="lg:flex lg:gap-x-6 text-richblack-25  lg:flex-row flex flex-col gap-y-5 lg:gap-y-0">
             {NavbarLinks.map((link, index) => (
               <li key={index}>
@@ -70,9 +89,9 @@ export const Navbar = () => {
                         group-hover:visible group-hover:opacity-100 lg:w-[300px] z-10"
                     >
                       <div className="absolute left-[50%] top-0 h-6 w-6 rotate-45 bg-richblack-5 translate-x-[80%] translate-y-[-45%] "></div>
-                      
+
                       {
-                        subLinks?.length===0&&
+                        subLinks?.length === 0 &&
                         <p>Loading...</p>
                       }
                       {

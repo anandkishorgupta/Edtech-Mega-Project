@@ -41,8 +41,8 @@ const About = () => {
 
             {/* founding story section */}
             <div className="h-[100px]"></div>
-            <section className="flex flex-row justify-between w-11/12 max-w-maxContent mx-auto">
-                <div className="flex flex-col w-[44%] gap-10 ">
+            <section className="flex lg:flex-row flex-col lg:justify-between items-center gap-y-10 lg:gap-y-0 w-11/12 max-w-maxContent mx-auto">
+                <div className="flex flex-col lg:w-[44%] gap-10 ">
                     <p className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
                         Our Founding Story
 
@@ -60,13 +60,13 @@ const About = () => {
             </section>
             {/* vision mission section  */}
             <div className="h-[250px]"></div>
-            <section className="flex flex-row justify-between w-11/12 max-w-maxContent mx-auto ">
-                <div className="flex flex-col gap-y-8 w-[35%]">
+            <section className="flex lg:flex-row flex-col justify-between w-11/12 max-w-maxContent mx-auto ">
+                <div className="flex flex-col gap-y-8 lg:w-[35%]">
                     <h1 className="bg-gradient-to-b from-[#FF512F] to-[#F09819] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%]">Our Vision</h1>
                     <p className="text-base text-richblack-300 font-medium">With this vision in mind, we set out on a journey to create an e-learning platform that would revolutionize the way people learn. Our team of dedicated experts worked tirelessly to develop a robust and intuitive platform that combines cutting-edge technology with engaging content, fostering a dynamic and interactive learning experience.</p>
 
                 </div>
-                <div className="flex flex-col gap-y-8 w-[35%]">
+                <div className="flex flex-col gap-y-8 lg:w-[35%]">
                     <h1 className="bg-gradient-to-b from-[#FF512F] to-[#F09819] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%]">Our Mission</h1>
                     <p className="text-base font-medium text-richblack-300">Our mission goes beyond just delivering courses online. We wanted to create a vibrant community of learners, where individuals can connect, collaborate, and learn from one another. We believe that knowledge thrives in an environment of sharing and dialogue, and we foster this spirit of collaboration through forums, live sessions, and networking opportunities.</p>
                 </div>
@@ -82,7 +82,7 @@ const About = () => {
                 <div className="h-[75px]"></div>
                 <ContactFormSection />
                 <div className="mt-24 mb-24">
-                    <h1 className="text-4xl font-bold text-center">Reviews From Other Learners </h1>
+                    {/* <h1 className="text-4xl font-bold text-center">Reviews From Other Learners </h1> */}
                 </div>
                 {/* reviews  */}
 

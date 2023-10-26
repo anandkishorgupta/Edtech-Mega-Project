@@ -9,6 +9,6 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     cart: cartReducer,
     viewCourse: viewCourseSlice,
-    course:courseSlice
+    course:courseSlice,
 })
 export default rootReducer

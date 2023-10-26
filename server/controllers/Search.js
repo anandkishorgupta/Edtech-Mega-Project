@@ -27,6 +27,7 @@ export const SearchCourse = async (req, res) => {
                         { courseName: { $regex: query, $options: "i" } },
                         { courseDescription: { $regex: query, $options: 'i' } },
                         { "instructorData.firstName": { $regex: query, $options: 'i' } },
+                        { "instructorData.lastName": { $regex: query, $options: 'i' } },
                         { "categoryData.name": { $regex: query, $options: 'i' } },
                         { tag: { $regex: query, $options: 'i' } },
 

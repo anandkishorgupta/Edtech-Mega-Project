@@ -8,9 +8,9 @@ const ContactUs = () => {
         <div>
 
             <div
-                className="w-11/12 max-w-maxContent mx-auto mt-20 flex flex-row justify-between gap-12"
-            >
-                <div className="flex flex-col gap-y-10 bg-richblack-800 rounded-xl p-8 w-[52%] h-fit">
+                className="w-11/12 max-w-maxContent mx-auto mt-20 flex lg:flex-row flex-col justify-between gap-12"
+                  >
+                <div className="flex flex-col gap-y-10 bg-richblack-800 rounded-xl p-8 lg:w-[52%] h-fit">
                     <div>
                         <div className="flex flex-row gap-2 items-center text-lg font-semibold text-richblack-5">
                             <IoMdChatbubbles />
