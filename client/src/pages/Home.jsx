@@ -51,9 +51,9 @@ const Home = () => {
         {/* code section 1 */}
         <div>
           <CodeBlock
-            position={"lg:flex-row"}
+            position={"lg:flex-row  flex-col"}
             heading={
-              <div className="text-4xl font-semibold">
+              <div className="text-4xl font-semibold ">
                 Unlock Your
                 <HighLightText text={"coding potential"} /> {" "}
                 with our online courses
@@ -94,7 +94,7 @@ const Home = () => {
 
         <div>
           <CodeBlock
-            position={"lg:flex-row-reverse"}
+            position={"lg:flex-row-reverse flex-col"}
             heading={
               <div className="text-4xl font-semibold">
                 Start
@@ -158,11 +158,11 @@ const Home = () => {
           </div>
         </div>
         <div className="w-11/12 max-w-maxContent mx-auto flex gap-7 flex-col items-center justify-between">
-          <div className="flex flex-row gap-5 mt-[90px] mb-10 justify-between">
-            <div className="w-[45%] text-4xl font-semibold">
+          <div className="flex lg:flex-row flex-col gap-5 mt-[90px] mb-10 justify-between">
+            <div className="lg:w-[45%] text-4xl font-semibold">
               Get the skills you need for a <HighLightText text={"job that is in demand"} />
             </div>
-            <div className="flex flex-col gap-10 w-[40%] items-start">
+            <div className="flex flex-col gap-10 lg:w-[40%] items-start">
               <div className="text-[16px]">
                 The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
               </div>
@@ -182,7 +182,8 @@ const Home = () => {
       {/* section 3 */}
       <div className="w-11/12 max-w-maxContent mx-auto flex-col items-center justify-between gap-8 first-letter:bg-richblack-900 text-white">
         <InstructorSection />
-        <h2 className="text-center text-4xl font-semibold mt-10">Review from other learners </h2>
+        <div className="h-[50px]"></div>
+        {/* <h2 className="text-center text-4xl font-semibold mt-10">Review from other learners </h2> */}
       </div>
       {/* Footer */}
       <Footer />

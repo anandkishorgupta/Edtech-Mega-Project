@@ -21,13 +21,13 @@ const ExploreMore = () => {
         setCurrentCard(result[0].courses[0].heading)
     }
     return (
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
             <div className="text-4xl font-semibold text-center">
                 Unlock the <HighLightText text={"Power of Code"} />
             </div>
-            <div className="text-center text-richblack-300 text-[16px] mt-3">Learn to build anything you can imagine</div>
+            <div className="text-center text-richblack-300 text-[16px] lg:mt-3">Learn to build anything you can imagine</div>
 
-            <div className="flex flex-row items-center gap-4 bg-richblack-800 px-1 py-1 rounded-full mb-10 mt-5 ">
+            <div className="lg:flex flex-row items-center gap-4 bg-richblack-800 px-1 py-1 rounded-full lg:mb-10 lg:mt-5 hidden ">
                 {
                     tabsName.map((ele, index) => (
                         <div key={index}
@@ -40,9 +40,9 @@ const ExploreMore = () => {
                     ))
                 }
             </div>
-            <div className="lg:h-[150px]"></div>
+            <div className="lg:h-[150px] hidden lg:block"></div>
             {/* course card  */}
-            <div className="absolute flex flex-row justify-between translate-y-[62%] left-0">
+            <div className=" lg:absolute lg:flex lg:flex-row lg:justify-between lg:translate-y-[62%] left-0 flex-col items-center  mt-5 ">
                 {
                     courses.map((element, index) => (
                         <CourseCard key={index} cardData={element} currentCard={currentCard} setCurrentCard={setCurrentCard} />

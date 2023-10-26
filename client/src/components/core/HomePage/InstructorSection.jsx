@@ -6,11 +6,11 @@ import HighLightText from "./HighLightText";
 const InstructorSection = () => {
     return (
         <div>
-            <div className="mt-16 flex flex-row gap-20 items-center">
-                <div className="w-[50%]">
+            <div className="mt-16 flex lg:flex-row flex-col gap-20 items-center">
+                <div className="lg:w-[50%]">
                     <img src={instructorImg} alt="" />
                 </div>
-                <div className="w-[50%] flex flex-col gap-10">
+                <div className="lg:w-[50%] flex flex-col gap-10">
                     <div className="text-4xl font-semibold w-[50%]">
                         Become an <HighLightText text={"instructor"} />
                     </div>

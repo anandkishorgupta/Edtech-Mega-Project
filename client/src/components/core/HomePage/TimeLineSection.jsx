@@ -28,7 +28,7 @@ const timeline = [
 const TimeLineSection = () => {
   return (
     <div>
-      <div className="flex flex-row gap-14 items-center">
+      <div className="flex lg:flex-row lg:gap-14 items-center flex-col">
         {/* left part */}
         <div className="w-[45%] flex flex-col gap-5">
           {timeline.map((element, index) => (
@@ -44,7 +44,7 @@ const TimeLineSection = () => {
           ))}
         </div>
         {/* right part */}
-        <div className="relative">
+        <div className="relative w-[80%] lg:w-auto mt-5 lg:mt-0">
           <img src={timelineImage} alt="timlelineImage " />
 
           <div className="absolute bg-caribbeangreen-700 flex flex-row text-white uppercase py-7 

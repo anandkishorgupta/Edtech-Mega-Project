@@ -5,7 +5,7 @@ const CodeBlocks = ({ position, heading, subheading, ctabtn1, ctabtn2, codeblock
   return (
     <div className={`flex ${position} my-20 justify-between gap-10`}>
       {/* SECTION 1 */}
-      <div className='w-[50%] flex flex-col gap-8'>
+      <div className='lg:w-[50%] flex flex-col gap-8'>
         {heading}
         <div className='text-richblack-300 font-bold'>
           {subheading}
@@ -28,7 +28,7 @@ const CodeBlocks = ({ position, heading, subheading, ctabtn1, ctabtn2, codeblock
           background: "linear-gradient(135deg, #212121, #1a1a1a)"
         }}
 
-      >
+                >
         {/* bg gradient -------- */}
         <div className='text-center flex flex-col w-[10%] text-richblack-400 font-inter font-bold'>
           <p>1</p>
