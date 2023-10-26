@@ -50,13 +50,16 @@ export const showAllCategory = async (req, res) => {
 export const categoryPageDetails = async (req, res) => {
     const { categoryId } = req.body
     try {
-
         // get from db
         const selectedCategory = await Category.findById(categoryId)
             .populate({
                 path: "courses",
                 match: { status: "Published" },
-                populate: "ratingAndReviews"
+                populate: "ratingAndReviews",
+                populate: {
+                    path: "instructor",
+                    select: '-password' //password is ignored 
+                }
             }).exec()  //return the document having course status "published"
 
         const latest = selectedCategory.courses.sort((a, b) => b.createdAt - a.createdAt);
@@ -95,7 +98,12 @@ export const categoryPageDetails = async (req, res) => {
             ).populate({
                 path: "courses",
                 match: { status: "Published" },
-                populate: "ratingAndReviews"
+                populate: "ratingAndReviews",
+                populate: {
+                    path: "instructor",
+                    select: '-password' //password is ignored 
+                }
+
             }).exec()
         }
 
