@@ -10,6 +10,9 @@ Demo Login Credentials:
 - Student: [email]:guptaanand40588@gmail.com, [password]:12345
 - Instructor: [username]: guptaanand50588@gmail.com, [password]:12345
 
+## unique feature
+- account deletion in 10 days using node cron & deletions cancellation on login again 
+- auto login if signup
 ## few screenshots
 
 
