@@ -4,6 +4,7 @@ import contactUsRoute from "./routes/Contact.js";
 import courseRoute from "./routes/Course.js";
 import paymentRoutes from "./routes/Payments.js";
 import profileRoutes from "./routes/Profile.js";
+import searchRoute from "./routes/Search.js";
 import userRoutes from "./routes/User.js";
 import { deleteAccountSchedule } from "./utils/deleteAccountSchedule.js";
 const app = express();
@@ -40,7 +41,7 @@ app.use("/api/v1/profile", profileRoutes)
 app.use("/api/v1/course", courseRoute)
 app.use("/api/v1/payment", paymentRoutes)
 app.use("/api/v1/reach", contactUsRoute)
-
+app.use("/api/v1/search",searchRoute)
 // default route
 app.get("/", (req, res) => {
     return res.json({
