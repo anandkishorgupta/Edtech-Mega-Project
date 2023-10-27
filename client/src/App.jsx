@@ -22,7 +22,7 @@ import Error from "./pages/Error"
 import ForgotPassword from "./pages/ForgotPassword"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
-// import Search from "./pages/Search"
+import Search from "./pages/Search"
 import Signup from "./pages/Signup"
 import UpdatePassword from "./pages/UpdatePassword"
 import VerifyEmail from "./pages/VerifyEmail"
@@ -119,7 +119,7 @@ const App = () => {
           }
 
         </Route>
-        {/* <Route path="/search/:query" element={<Search />} /> */}
+        <Route path="/search/:query" element={<Search />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </div>

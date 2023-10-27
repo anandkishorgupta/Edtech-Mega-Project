@@ -3,9 +3,9 @@ import toast from "react-hot-toast";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BiChevronDown, BiMenuAltLeft } from "react-icons/bi";
 
-// import { BsSearch } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { Link, matchPath, useLocation } from "react-router-dom";
+import { Link, matchPath, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks } from "../../data/navbar-links";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
@@ -22,8 +22,8 @@ export const Navbar = () => {
   const [subLinks, setSubLinks] = useState([]);
   const [showMenu, setShowMenu] = useState(false)
   const [loading, setLoading] = useState(false)
-  // const navigate = useNavigate()
-  // const [searchData, setSearchData] = useState("")
+  const navigate = useNavigate()
+  const [searchData, setSearchData] = useState("")
   const fetchSublinks = async () => {
     try {
       setLoading(true)
@@ -48,6 +48,15 @@ export const Navbar = () => {
   };
   useOnClickOutside(ref, () => setShowMenu(false))
 
+  function naviateToSearchPage() {
+    if (searchData) {
+      navigate(`/search/${searchData}`)
+      setSearchData("")
+    } else {
+      toast.error("search field is empty")
+      setSearchData("")
+    }
+  }
   return (
     <div className=" flex  h-14 items-center justify-center border-b-[1px] border-b-richblack-700 bg-richblack-800">
       <div className="relative lg:static flex w-11/12 max-w-maxContent items-center justify-between">
@@ -59,21 +68,31 @@ export const Navbar = () => {
           <img src={logo} alt="" width={160} height={42} loading="lazy" />
         </Link>
         {/* search */}
-        {/* <div className="relative hidden lg:block" onClick={(e) => e.stopPropagation()}>
+        <div className="relative hidden lg:block" onClick={(e) => e.stopPropagation()}>
           <input type="text" placeholder="search a course" className="form-style py-1 w-[350px]"
+            value={searchData}
             onChange={(e) => setSearchData(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                e.preventDefault()
+                naviateToSearchPage()
+              }
+            }}
           />
           <BsSearch className="absolute right-0 top-0 translate-y-[60%] -translate-x-[50%] cursor-pointer"
-            onClick={()=>navigate(`/search/${searchData}`)}
+            onClick={() => {
+              naviateToSearchPage()
+            }
+            }
           />
-        </div> */}
+        </div>
         {/* nav links */}
         <nav className={`absolute lg:static left-[-32px] top-0 translate-y-[2.7rem] lg:translate-y-0 z-50 bg-richblue-700 lg:bg-transparent
         pl-8 lg:px-0 pr-12 lg:pr-0
         py-8 lg:py-0 rounded-md 
         ${showMenu ? "block " : "hidden"} lg:block
         border border-richblack-600 lg:border-none
-               `}  
+               `}
 
           ref={ref}>
           <ul className="lg:flex lg:gap-x-6 text-richblack-25  lg:flex-row flex flex-col gap-y-5 lg:gap-y-0">

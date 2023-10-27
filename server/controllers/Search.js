@@ -14,11 +14,29 @@ export const SearchCourse = async (req, res) => {
                 },
             },
             {
+                $addFields: {
+                    instructorData: { $arrayElemAt: ["$instructorData", 0] } //used because in course instructor in object not array of objects
+                }
+            },
+            {
                 $lookup: {
                     from: "categories",
                     localField: "category",
                     foreignField: "_id",
                     as: "categoryData",
+                },
+            },
+            {
+                $addFields: {
+                    categoryData: { $arrayElemAt: ["$categoryData", 0] }
+                }
+            },
+            {
+                $lookup: {
+                    from: "ratingandreviews",
+                    localField: "ratingAndReviews",
+                    foreignField: "_id",
+                    as: "ratingAndReviewsData",
                 },
             },
             {
@@ -31,10 +49,10 @@ export const SearchCourse = async (req, res) => {
                         { "categoryData.name": { $regex: query, $options: 'i' } },
                         { tag: { $regex: query, $options: 'i' } },
 
-                    ]  
+                    ]
                 }
             }
-        ]);
+        ])
 
         res.json({
             success: true,
