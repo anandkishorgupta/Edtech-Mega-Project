@@ -64,7 +64,7 @@ Demo Login Credentials:
 <br>
 ![image](https://github.com/anandkishorgupta/StudyNotion/assets/85511831/706a8159-c4db-4909-a22f-201384f21a26)
 
-#instructor side
+## instructor side
 ![image](https://github.com/anandkishorgupta/StudyNotion/assets/85511831/cbd60b48-73bb-42e4-a60d-cf814e004a98)
 ![image](https://github.com/anandkishorgupta/StudyNotion/assets/85511831/30acef95-76b9-404b-84ad-44b13d571bc8)
 <br>
