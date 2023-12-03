@@ -14,6 +14,7 @@ import MyProfile from "./components/core/Dashboard/MyProfile"
 import Settings from "./components/core/Dashboard/Settings/Index"
 import VideoDetails from "./components/core/ViewCourse/VideoDetails"
 import About from "./pages/About"
+import Catagory from "./pages/Catagory"
 import Catalog from "./pages/Catalog"
 import ContactUs from "./pages/ContactUs"
 import CourseDetails from "./pages/CourseDetails"
@@ -65,6 +66,9 @@ const App = () => {
         <Route path="/contact" element={<ContactUs />} />
 
         <Route path="/catalog/:catalogName" element={<Catalog />} />
+        <Route path="/catagory/:catagoryName" element={<Catagory />} />
+
+
         <Route path="/courses/:courseId" element={<CourseDetails />} />
 
 

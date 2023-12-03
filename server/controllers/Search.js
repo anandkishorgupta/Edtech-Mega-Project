@@ -48,7 +48,6 @@ export const SearchCourse = async (req, res) => {
                         { "instructorData.lastName": { $regex: query, $options: 'i' } },
                         { "categoryData.name": { $regex: query, $options: 'i' } },
                         { tag: { $regex: query, $options: 'i' } },
-
                     ]
                 }
             }

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom"
 import { getFullCourseDetails } from "../../../../services/operations/courseDetailsAPI"
 import { setCourse, setEditCourse } from "../../../../slices/courseSlice"
 import RenderSteps from "../AddCourse/RenderSteps"
-
 const EditCourse = () => {
     const dispatch = useDispatch()
     const { courseId } = useParams()

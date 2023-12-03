@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 
 function OpenRoute({ children }) {
+  // console.log("from open route..................................")
   const { token } = useSelector((state) => state.auth)
 
   if (token === null) {

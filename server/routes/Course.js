@@ -1,6 +1,6 @@
 import express from "express";
 import { categoryPageDetails, createCategory, showAllCategory } from "../controllers/Category.js";
-import { createCourse, deleteCourse, getCourseDetails, getFullCourseDetails, getInstructorCourses, showAllCourses, updateCourse } from "../controllers/Course.js";
+import { createCourse, deleteCourse, filterCourse, getCourseDetails, getFullCourseDetails, getInstructorCourses, showAllCourses, updateCourse } from "../controllers/Course.js";
 import { createRating, getAllRating, getAverageRating } from "../controllers/RatingAndReview.js";
 import { createSection, deleteSection, updateSection } from "../controllers/Section.js";
 import { createSubSection, deleteSubSection, updateSubSection } from "../controllers/SubSection.js";
@@ -24,6 +24,8 @@ router.patch("/editCourse", auth, isInstructor, updateCourse)
 router.post("/deleteCourse", auth, isInstructor, deleteCourse)
 // getInstructorCourses
 router.post("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
+router.post("/filterCourse", filterCourse)
+
 
 
 

@@ -173,8 +173,7 @@ export const fetchInstructorCourse = async (token) => {
         toast.error(error.message)
     }
     toast.dismiss(toastId)
-    return result
-
+    return result 
 }
 
 

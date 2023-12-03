@@ -23,7 +23,7 @@ const Search = () => {
     return (
         <div className="w-11/12 max-w-maxContent mx-auto">
 
-            <div className="flex flex-row justify-between flex-wrap mt-5 gap-6">
+            <div className="flex flex-row flex-wrap mt-5 gap-7">
                 {
                     searchCourseData.length > 0 ? (
                         searchCourseData.map((course) => (

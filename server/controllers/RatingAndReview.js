@@ -65,8 +65,8 @@ export const createRating = async (req, res) => {
         })
     }
 }
-// get average rating
 
+// get average rating
 export const getAverageRating = async (req, res) => {
     try {
         // get course id 

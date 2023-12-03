@@ -460,7 +460,7 @@ export const deleteCourse = async (req, res) => {
     // }
     // alternative way
     await User.updateMany(
-      { _id: { $in: studentsEnrolled } },
+      { _id: { $in: studentsEnrolled } }, //studentsEnrolled is array of id
       {
         $pull: { courses: new mongoose.Types.ObjectId(courseId) }
       }
@@ -509,61 +509,49 @@ export const deleteCourse = async (req, res) => {
 }
 
 
-// DELETE MANY COURSES AT ONCE 
-export const deleteManyCourses = async (req, res) => {
+
+// FETCH COURSE BY CATEGORY ID AND AVG RATING
+export const filterCourse = async (req, res) => {
   try {
-
-    const { courseId } = req.body
-
-    // find the course 
-    const course = await Course.findById(courseId)
-
-    if (!course) {
-      return res.status(404).json({
-        message: "Course not found"
-      })
-    }
-    // Unenroll students from the course ************
-
-    const studentsEnrolled = course.studentsEnrolled
-    await User.updateMany(
-      { _id: { $in: studentsEnrolled } },
+    const { categoryId, avgrating } = req.body
+    const courses = await Course.find(
       {
-        $pull: { courses: new mongoose.Types.ObjectId(courseId) }
+        status: "Published",
       }
     )
-    // DELETE SECTION AND SUBSECTION OF THIS COURSE 
-    const courseSections = course.courseContent //courseSection contains the section id of that course -- not populated 
+      .populate("ratingAndReviews")
+      .exec()
 
-    for (const sectionId of courseSections) {
-      const { subSection } = await Section.findById(sectionId).select("subSection").exec()
-      console.log("susectionsid...........", subSection)
-      // delete subsections
-      await SubSection.deleteMany({
-        _id: { $in: subSection }
-      })
-
-    }
-
-    // delete section***************
-    await Section.deleteMany(
-      { _id: { $in: courseSections } }
-    )
-
-    // FINALLY DELETE THE COURSE 
-    await Course.findByIdAndDelete(courseId)
-
-    return res.status(200).json({
-      success: true,
-      message: "Course deleted successfully",
+    let filteredCourse = courses.map((course) => {
+      let totalReviewCount = 0
+      let avgReviewCount = 0
+      if (categoryId && !avgrating) {
+        if (course.category == categoryId
+        ) {
+          return course
+        }
+      }
+      if (categoryId && avgrating) {
+        if (course.ratingAndReviews.length === 0) {
+          return null
+        }
+        totalReviewCount = course.ratingAndReviews.reduce((acc, curr) => {
+          acc += curr.rating
+          return acc
+        }, 0)
+        avgReviewCount = Math.round((totalReviewCount + course.ratingAndReviews.length) * 10) / 10
+        if (course.category == categoryId && avgReviewCount >= avgrating) {
+          return course
+        }
+      }
+    })
+    // TODO: I will study aggregate, operator and others in mongodb then implement here later
+    res.json({
+      message: "hello",
+      data: filteredCourse
     })
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: "Server error",
-      error: error.message,
-    })
+    console.log(error)
   }
 }
-
 

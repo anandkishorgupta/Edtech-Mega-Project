@@ -146,9 +146,9 @@ export function login(email, password, navigate) {
             dispatch(setUser({ ...response.data.user, image: userImage }))
             localStorage.setItem("token", JSON.stringify(response.data.token))
             localStorage.setItem("user", JSON.stringify(response.data.user))
+            // navigate("/dashboard/my-profile") 
 
-            navigate("/dashboard/my-profile")
-        } catch (error) {
+        } catch (error) {  
             console.log("login api error.......", error)
             toast.error(error.response.data.message)
         }
