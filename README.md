@@ -16,6 +16,9 @@
 - user based authentication and authorization
 - nodemailer
 
+- 
+
+-showing loading during api call
 
 
 
