@@ -6,7 +6,7 @@
 - Nested Routing using Outlets
 - api call using axios
 - cloudinary for media server (here used for image and video)
------ useFormHook 
+-   ----useformhook 
 - node cron to delete account in 10 days if request for deletion
 - Bcrypt for password hashing
 - JsonWebToken for authentication
