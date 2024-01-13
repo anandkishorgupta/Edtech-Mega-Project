@@ -1,27 +1,3 @@
-# Udemy-Like Website (MERN Stack)
-## Concepts used
-- Hooks (useState,useEffect,useRef)
-- React router dom
-- Redux Toolkit for state management
-- Nested Routing using Outlets
-- api call using axios
-- cloudinary for media server (here used for image and video)
-- useformhook 
-- node cron to delete account in 10 days if request for deletion
-- Bcrypt for password hashing
-- JsonWebToken for authentication
-- MVC concept
-- Mongoose ODM
-- user based authentication and authorization
-- nodemailer
-
-- 
-
--showing loading during api call
-
-
-
-
 
 ## Description
 This repository contains the codebase for a Udemy-like website developed using the MERN (MongoDB, Express, React, Node.js) stack. This platform enables students to browse, enroll in courses, make payments, watch lectures, and rate courses. Instructors can create and manage courses, view their income, and track the number of students enrolled. Administrators can create categories for courses.
